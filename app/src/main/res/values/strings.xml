@@ -10,4 +10,18 @@
     <string name="facebook_icon">facebook icon</string>
     <string name="new_user_register_now">New User? Register Now</string>
     <string name="new_user_login_now">Already have an account? Login</string>
+    <string name="dateformat">dd-MM-yyyy</string>
+    <string-array name="items">
+        <item>Select Item</item>
+        <item>Transport</item>
+        <item>Food</item>
+        <item>House</item>
+        <item>Entertainment</item>
+        <item>Education</item>
+        <item>Charity</item>
+        <item>Apparel</item>
+        <item>Health</item>
+        <item>Personal</item>
+        <item>Other</item>
+    </string-array>
 </resources>
