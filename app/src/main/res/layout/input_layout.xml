@@ -35,7 +35,8 @@
                 android:background="#fff"
                 android:entries="@array/items"
                 android:gravity="center"
-                android:padding="5dp"></Spinner>
+                android:padding="5dp"
+                android:layout_margin="5dp"></Spinner>
 
             <EditText
                 android:id="@+id/amount"
