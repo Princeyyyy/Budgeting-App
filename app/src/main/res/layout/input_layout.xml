@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Select a Budget Item"
+            android:text="Add a Budget Item"
             android:textColor="#000"
             android:textSize="18sp" />
 
@@ -36,7 +36,7 @@
                 android:entries="@array/items"
                 android:gravity="center"
                 android:padding="5dp"
-                android:layout_margin="5dp"></Spinner>
+                android:layout_margin="8dp" />
 
             <EditText
                 android:id="@+id/amount"

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.joda.time.DateTime;
 import org.joda.time.Months;
 import org.joda.time.MutableDateTime;
+import org.joda.time.Weeks;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -54,6 +54,10 @@ public class BudgetActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ProgressDialog loader;
     private RecyclerView recyclerView;
+
+    private String post_key = "";
+    private String item = "";
+    private int amount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +85,7 @@ public class BudgetActivity extends AppCompatActivity {
                 for (DataSnapshot snap : snapshot.getChildren()) {
                     Data data = snap.getValue(Data.class);
                     totalAmount += data.getAmount();
-                    String sTotal = String.valueOf("Month Budget Ksh." + totalAmount);
+                    String sTotal = String.valueOf("Budget Ksh." + totalAmount);
                     totalBudgetAmountTextView.setText(sTotal);
                 }
             }
@@ -92,7 +96,7 @@ public class BudgetActivity extends AppCompatActivity {
             }
         });
 
-//        fab = findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,14 +189,15 @@ public class BudgetActivity extends AppCompatActivity {
 
         FirebaseRecyclerAdapter<Data, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Data, MyViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Data model) {
-                holder.setItemAmount("Amount: Ksh." + model.getAmount());
-                holder.setDate("On: " + model.getDate());
-                holder.setItemName("Item: " + model.getIem());
+            protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull final Data model) {
+
+                holder.setItemAmount("Amount: ksh." + model.getAmount());
+                holder.setDate("Added On: " + model.getDate());
+                holder.setItemName("Item: " + model.getItem());
 
                 holder.notes.setVisibility(View.GONE);
 
-                switch (model.getIem()) {
+                switch (model.getItem()) {
                     case "Transport":
                         holder.imageView.setImageResource(R.drawable.ic_transport);
                         break;
@@ -224,6 +229,18 @@ public class BudgetActivity extends AppCompatActivity {
                         holder.imageView.setImageResource(R.drawable.ic_other);
                         break;
                 }
+
+                holder.myView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        post_key = getRef(position).getKey();
+                        item = model.getItem();
+                        amount = model.getAmount();
+                        updateData();
+                    }
+                });
+
+
             }
 
             @NonNull
@@ -238,4 +255,81 @@ public class BudgetActivity extends AppCompatActivity {
         adapter.startListening();
         adapter.notifyDataSetChanged();
     }
+
+    private void updateData() {
+        AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View mView = inflater.inflate(R.layout.update_layout, null);
+
+        myDialog.setView(mView);
+        final AlertDialog dialog = myDialog.create();
+
+        final TextView mItem = mView.findViewById(R.id.itemName);
+        final TextView mAmount = mView.findViewById(R.id.amount);
+        final TextView mNotes = mView.findViewById(R.id.note);
+
+        mNotes.setVisibility(View.GONE);
+
+        mItem.setText(item);
+
+        mAmount.setText(String.valueOf(amount));
+
+        Button delBut = mView.findViewById(R.id.btnDelete);
+        Button btnUpdate = mView.findViewById(R.id.btnUpdate);
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                amount = Integer.parseInt(mAmount.getText().toString());
+
+                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                Calendar cal = Calendar.getInstance();
+                String date = dateFormat.format(cal.getTime());
+
+                MutableDateTime epoch = new MutableDateTime();
+                epoch.setDate(0);
+                DateTime now = new DateTime();
+                Months months = Months.monthsBetween(epoch, now);
+
+                Data data = new Data(item, date, post_key, null, amount, months.getMonths());
+                budgetRef.child(post_key).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(BudgetActivity.this, "Updated successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(BudgetActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+                dialog.dismiss();
+
+            }
+        });
+
+        delBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                budgetRef.child(post_key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(BudgetActivity.this, "Deleted  successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(BudgetActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
 }

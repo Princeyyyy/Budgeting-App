@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Budgeting-App</string>
+    <string name="app_name">Budgeting\nApp</string>
     <string name="top_icon">Top Icon</string>
     <string name="email">Email</string>
     <string name="password">Password</string>

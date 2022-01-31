@@ -2,14 +2,14 @@ package com.example.budgeting_app;
 
 public class Data {
 
-    String iem, date, id, notes;
+    String item, date, id, notes;
     int amount, month;
 
     public Data() {
     }
 
-    public Data(String iem, String date, String id, String notes, int amount, int month) {
-        this.iem = iem;
+    public Data(String item, String date, String id, String notes, int amount, int month) {
+        this.item = item;
         this.date = date;
         this.id = id;
         this.notes = notes;
@@ -17,12 +17,12 @@ public class Data {
         this.month = month;
     }
 
-    public String getIem() {
-        return iem;
+    public String getItem() {
+        return item;
     }
 
-    public void setIem(String iem) {
-        this.iem = iem;
+    public void setItem(String item) {
+        this.item = item;
     }
 
     public String getDate() {

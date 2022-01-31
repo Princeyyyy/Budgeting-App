@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/input_layout.xml" value="0.25343999226562525" />
+        <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/retreive_layout.xml" value="0.1539855072463768" />
+        <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/update_layout.xml" value="0.25343999226562525" />
         <entry key="app/src/main/res/drawable/borders.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/ic_baseline_today_24.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/ic_education.xml" value="1.596875" />
