@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BudgetingApp">
-        <activity android:name=".BudgetActivity"></activity>
+        <activity
+            android:name=".TodaysSpendingActivity"
+            android:exported="false" />
+        <activity android:name=".BudgetActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".LoginActivity" />

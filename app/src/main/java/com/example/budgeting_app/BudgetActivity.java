@@ -33,7 +33,6 @@ import com.google.firebase.database.ValueEventListener;
 import org.joda.time.DateTime;
 import org.joda.time.Months;
 import org.joda.time.MutableDateTime;
-import org.joda.time.Weeks;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -59,11 +58,15 @@ public class BudgetActivity extends AppCompatActivity {
     private String item = "";
     private int amount = 0;
 
+    private TextView error;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_budget);
         ButterKnife.bind(this);
+
+        error = findViewById(R.id.error);
 
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -249,11 +252,23 @@ public class BudgetActivity extends AppCompatActivity {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.retreive_layout, parent, false);
                 return new MyViewHolder(view);
             }
+
+            @NonNull
+            @Override
+            public void onError(@NonNull DatabaseError error) {
+                error();
+            }
         };
 
         recyclerView.setAdapter(adapter);
         adapter.startListening();
         adapter.notifyDataSetChanged();
+    }
+
+    private void error() {
+        error.setText("Error");
+        error.setVisibility(View.VISIBLE);
+        totalBudgetAmountTextView.setVisibility(View.GONE);
     }
 
     private void updateData() {

@@ -11,6 +11,7 @@
     <string name="new_user_register_now">New User? Register Now</string>
     <string name="new_user_login_now">Already have an account? Login</string>
     <string name="dateformat">dd-MM-yyyy</string>
+    <string name="error">Error Retrieving Your Data.\nKindly Check your Internet Connection and Try Again</string>
     <string-array name="items">
         <item>Select Item</item>
         <item>Transport</item>

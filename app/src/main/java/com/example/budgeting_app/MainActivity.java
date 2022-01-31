@@ -14,6 +14,8 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.budgetCardView)
     CardView budgetCardView;
+    @BindView(R.id.todayCardView)
+    CardView todayCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +26,15 @@ public class MainActivity extends AppCompatActivity {
         budgetCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,BudgetActivity.class);
+                Intent intent = new Intent(MainActivity.this, BudgetActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        todayCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, TodaysSpendingActivity.class);
                 startActivity(intent);
             }
         });
