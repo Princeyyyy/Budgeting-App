@@ -109,7 +109,7 @@ public class TodaysSpendingActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 myDataList.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Data data = dataSnapshot.getValue(Data.class);
                     myDataList.add(data);
                 }
@@ -118,13 +118,13 @@ public class TodaysSpendingActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
 
                 int totalAmount = 0;
-                for (DataSnapshot ds: snapshot.getChildren()){
-                    Map<String, Object> map = (Map<String, Object>)ds.getValue();
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Map<String, Object> map = (Map<String, Object>) ds.getValue();
                     Object total = map.get("amount");
                     int pTotal = Integer.parseInt(String.valueOf(total));
                     totalAmount += pTotal;
 
-                    totalAmountSpentOn.setText("Total Day's Spending: $"+totalAmount);
+                    totalAmountSpentOn.setText("Total Day's Spending: ksh." + totalAmount);
 
 
                 }
