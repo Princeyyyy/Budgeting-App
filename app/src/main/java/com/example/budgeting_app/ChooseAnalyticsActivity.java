@@ -14,6 +14,10 @@ public class ChooseAnalyticsActivity extends AppCompatActivity {
 
     @BindView(R.id.analyticsTodayCardView)
     CardView analyticsTodayCardView;
+    @BindView(R.id.analyticsWeekCardView)
+    CardView analyticsWeekCardView;
+    @BindView(R.id.analyticsMonthCardView)
+    CardView analyticsMonthCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,22 @@ public class ChooseAnalyticsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ChooseAnalyticsActivity.this, DailyAnalyticsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        analyticsWeekCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChooseAnalyticsActivity.this, WeeklyAnalyticsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        analyticsMonthCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChooseAnalyticsActivity.this, MonthlyAnalyticsActivity.class);
                 startActivity(intent);
             }
         });
