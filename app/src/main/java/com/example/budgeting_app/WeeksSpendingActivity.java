@@ -41,14 +41,14 @@ public class WeeksSpendingActivity extends AppCompatActivity {
     private String onlineUserId = "";
     private DatabaseReference expensesRef;
 
+    private String type = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weeks_spending);
 
         toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Week's Spending");
         totalWeekAmountTextView = findViewById(R.id.totalWeekAmountTextView);
         progressBar = findViewById(R.id.progressBar);
         recyclerView = findViewById(R.id.recyclerView);
@@ -67,9 +67,62 @@ public class WeeksSpendingActivity extends AppCompatActivity {
         weeksSpendingAdapter = new WeeksSpendingAdapter(WeeksSpendingActivity.this, myDataList);
         recyclerView.setAdapter(weeksSpendingAdapter);
 
-        readWeeksSpendingItems();
+        if (getIntent().getExtras() != null) {
+            type = getIntent().getStringExtra("type");
+            if (type.equals("week")) {
+                setSupportActionBar(toolbar);
+                getSupportActionBar().setTitle("Week's Spending");
+                readWeeksSpendingItems();
+            } else if (type.equals("month")) {
+                setSupportActionBar(toolbar);
+                getSupportActionBar().setTitle("Month's Spending");
+                readMonthsSpendingItems();
+            }
+        }
 
 
+    }
+
+    private void readMonthsSpendingItems() {
+        MutableDateTime epoch = new MutableDateTime();
+        epoch.setDate(0);
+        DateTime now = new DateTime();
+        Months months = Months.monthsBetween(epoch, now);
+
+        expensesRef = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
+        Query query = expensesRef.orderByChild("month").equalTo(months.getMonths());
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                myDataList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Data data = dataSnapshot.getValue(Data.class);
+                    myDataList.add(data);
+                }
+
+                weeksSpendingAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
+
+                int totalAmount = 0;
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Map<String, Object> map = (Map<String, Object>) ds.getValue();
+                    Object total = map.get("amount");
+                    int pTotal = Integer.parseInt(String.valueOf(total));
+                    totalAmount += pTotal;
+
+                    totalWeekAmountTextView.setText("Total Month's Spending: ksh.$" + totalAmount);
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void readWeeksSpendingItems() {

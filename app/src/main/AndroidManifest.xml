@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BudgetingApp">
         <activity
+            android:name=".ChooseAnalyticsActivity"
+            android:exported="false" />
+        <activity
             android:name=".WeeksSpendingActivity"
             android:exported="false" />
         <activity

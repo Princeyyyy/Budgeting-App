@@ -18,6 +18,10 @@ public class MainActivity extends AppCompatActivity {
     CardView todayCardView;
     @BindView(R.id.weekCardView)
     CardView weekCardView;
+    @BindView(R.id.monthCardView)
+    CardView monthCardView;
+    @BindView(R.id.analyticsCardView)
+    CardView analyticsCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, WeeksSpendingActivity.class);
+                intent.putExtra("type", "week");
+                startActivity(intent);
+            }
+        });
+
+        monthCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, WeeksSpendingActivity.class);
+                intent.putExtra("type", "month");
+                startActivity(intent);
+            }
+        });
+
+        analyticsCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ChooseAnalyticsActivity.class);
                 startActivity(intent);
             }
         });
