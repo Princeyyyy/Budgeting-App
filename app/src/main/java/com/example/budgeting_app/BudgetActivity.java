@@ -89,7 +89,7 @@ public class BudgetActivity extends AppCompatActivity {
                 for (DataSnapshot snap : snapshot.getChildren()) {
                     Data data = snap.getValue(Data.class);
                     totalAmount += data.getAmount();
-                    String sTotal = String.valueOf("Budget Ksh." + totalAmount);
+                    String sTotal = String.valueOf("My Budget Ksh." + totalAmount);
                     totalBudgetAmountTextView.setText(sTotal);
                 }
             }
