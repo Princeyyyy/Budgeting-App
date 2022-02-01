@@ -163,7 +163,7 @@ public class TodaysSpendingActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String Amount = amount.getText().toString();
-                String item = itemSpinner.getSelectedItem().toString();
+                String Item = itemSpinner.getSelectedItem().toString();
                 String notes = note.getText().toString();
 
                 if (TextUtils.isEmpty(Amount)) {
@@ -171,7 +171,7 @@ public class TodaysSpendingActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (item.equals("Select Item")) {
+                if (Item.equals("Select Item")) {
                     Toast.makeText(TodaysSpendingActivity.this, "Select a valid item", Toast.LENGTH_SHORT).show();
                     return;
 
@@ -195,7 +195,11 @@ public class TodaysSpendingActivity extends AppCompatActivity {
                     Months months = Months.monthsBetween(epoch, now);
                     Weeks weeks = Weeks.weeksBetween(epoch, now);
 
-                    Data data = new Data(item, date, id, notes, Integer.parseInt(Amount), months.getMonths(),weeks.getWeeks());
+                    String itemNday = Item + date;
+                    String itemNweek = Item + weeks.getWeeks();
+                    String itemNmonth = Item + months.getMonths();
+
+                    Data data = new Data(Item, date, id, itemNday, itemNweek, itemNmonth, Integer.parseInt(Amount), weeks.getWeeks(), months.getMonths(), notes);
                     expensesRef.child(id).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
