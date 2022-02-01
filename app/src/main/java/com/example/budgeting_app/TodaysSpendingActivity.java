@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.joda.time.DateTime;
 import org.joda.time.Months;
 import org.joda.time.MutableDateTime;
+import org.joda.time.Weeks;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -192,8 +193,9 @@ public class TodaysSpendingActivity extends AppCompatActivity {
                     epoch.setDate(0);
                     DateTime now = new DateTime();
                     Months months = Months.monthsBetween(epoch, now);
+                    Weeks weeks = Weeks.weeksBetween(epoch, now);
 
-                    Data data = new Data(item, date, id, notes, Integer.parseInt(Amount), months.getMonths());
+                    Data data = new Data(item, date, id, notes, Integer.parseInt(Amount), months.getMonths(),weeks.getWeeks());
                     expensesRef.child(id).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

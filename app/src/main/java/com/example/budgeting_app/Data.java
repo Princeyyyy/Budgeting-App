@@ -3,18 +3,19 @@ package com.example.budgeting_app;
 public class Data {
 
     String item, date, id, notes;
-    int amount, month;
+    int amount, month, week;
 
     public Data() {
     }
 
-    public Data(String item, String date, String id, String notes, int amount, int month) {
+    public Data(String item, String date, String id, String notes, int amount, int month, int week) {
         this.item = item;
         this.date = date;
         this.id = id;
         this.notes = notes;
         this.amount = amount;
         this.month = month;
+        this.week = week;
     }
 
     public String getItem() {
@@ -63,5 +64,13 @@ public class Data {
 
     public void setMonth(int month) {
         this.month = month;
+    }
+
+    public int getWeek() {
+        return week;
+    }
+
+    public void setWeek(int week) {
+        this.week = week;
     }
 }
