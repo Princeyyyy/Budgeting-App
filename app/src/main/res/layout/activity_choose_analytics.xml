@@ -19,7 +19,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/todayCardView"
+        android:id="@+id/analyticsTodayCardView"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center"
@@ -57,7 +57,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/weekCardView"
+        android:id="@+id/analyticsWeekCardView"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center"
@@ -95,7 +95,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/monthCardView"
+        android:id="@+id/analyticsMonthCardView"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center"
