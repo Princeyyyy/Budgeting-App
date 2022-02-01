@@ -10,22 +10,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BudgetingApp">
         <activity
-            android:name=".DailyAnalyticsActivity"
+            android:name=".MonthlyAnalyticsActivity"
             android:exported="false" />
         <activity
-            android:name=".ChooseAnalyticsActivity"
+            android:name=".WeeklyAnalyticsActivity"
             android:exported="false" />
-        <activity
-            android:name=".WeeksSpendingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".TodaysSpendingActivity"
-            android:exported="false" />
+        <activity android:name=".DailyAnalyticsActivity" />
+        <activity android:name=".ChooseAnalyticsActivity" />
+        <activity android:name=".WeeksSpendingActivity" />
+        <activity android:name=".TodaysSpendingActivity" />
         <activity android:name=".BudgetActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".Splash_ScreenActivity">
+        <activity
+            android:name=".Splash_ScreenActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
