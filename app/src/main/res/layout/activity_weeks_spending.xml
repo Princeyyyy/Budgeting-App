@@ -20,7 +20,7 @@
         android:id="@+id/totalWeekAmountTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="total week amount: $0"
+        android:text="Total Amount:"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textAlignment="center"
@@ -30,6 +30,18 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/display"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text="No expense has been entered!\nEnter new expense to view them here"
+            android:layout_gravity="center"
+            android:textColor="#000"
+            android:visibility="gone"
+            android:textSize="15sp" />
 
         <ProgressBar
             android:id="@+id/progressBar"

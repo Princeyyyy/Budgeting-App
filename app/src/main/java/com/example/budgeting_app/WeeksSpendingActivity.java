@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.joda.time.DateTime;
 import org.joda.time.Months;
 import org.joda.time.MutableDateTime;
+import org.joda.time.Weeks;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +44,14 @@ public class WeeksSpendingActivity extends AppCompatActivity {
 
     private String type = "";
 
+    private TextView display;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weeks_spending);
+
+        display = findViewById(R.id.display);
 
         toolbar = findViewById(R.id.toolbar);
         totalWeekAmountTextView = findViewById(R.id.totalWeekAmountTextView);
@@ -101,21 +106,27 @@ public class WeeksSpendingActivity extends AppCompatActivity {
                 }
 
                 weeksSpendingAdapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.GONE);
 
-                int totalAmount = 0;
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    Map<String, Object> map = (Map<String, Object>) ds.getValue();
-                    Object total = map.get("amount");
-                    int pTotal = Integer.parseInt(String.valueOf(total));
-                    totalAmount += pTotal;
+                if (myDataList.isEmpty()) {
+                    totalWeekAmountTextView.setVisibility(View.GONE);
+                    display.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    display.setVisibility(View.GONE);
 
-                    totalWeekAmountTextView.setText("Total Month's Spending: ksh.$" + totalAmount);
+                    int totalAmount = 0;
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
+                        Object total = map.get("amount");
+                        int pTotal = Integer.parseInt(String.valueOf(total));
+                        totalAmount += pTotal;
 
+                        totalWeekAmountTextView.setText("Month's Spending: Ksh." + totalAmount);
+                        totalWeekAmountTextView.setVisibility(View.VISIBLE);
 
+                    }
                 }
-
-
             }
 
             @Override
@@ -129,33 +140,40 @@ public class WeeksSpendingActivity extends AppCompatActivity {
         MutableDateTime epoch = new MutableDateTime();
         epoch.setDate(0);
         DateTime now = new DateTime();
-        Months months = Months.monthsBetween(epoch, now);
+        Weeks weeks = Weeks.weeksBetween(epoch, now);
 
         expensesRef = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
-        Query query = expensesRef.orderByChild("month").equalTo(months.getMonths());
+        Query query = expensesRef.orderByChild("week").equalTo(weeks.getWeeks());
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 myDataList.clear();
-
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Data data = dataSnapshot.getValue(Data.class);
                     myDataList.add(data);
                 }
 
                 weeksSpendingAdapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.GONE);
 
-                int totalAmount = 0;
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    Map<String, Object> map = (Map<String, Object>) ds.getValue();
-                    Object total = map.get("amount");
-                    int pTotal = Integer.parseInt(String.valueOf(total));
-                    totalAmount += pTotal;
+                if (myDataList.isEmpty()) {
+                    totalWeekAmountTextView.setVisibility(View.GONE);
+                    display.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    display.setVisibility(View.GONE);
 
-                    totalWeekAmountTextView.setText("Total Week's Spending: ksh." + totalAmount);
+                    int totalAmount = 0;
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
+                        Object total = map.get("amount");
+                        int pTotal = Integer.parseInt(String.valueOf(total));
+                        totalAmount += pTotal;
 
+                        totalWeekAmountTextView.setText("Week's Spending: Ksh." + totalAmount);
+                        totalWeekAmountTextView.setVisibility(View.VISIBLE);
 
+                    }
                 }
             }
 

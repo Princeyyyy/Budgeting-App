@@ -58,10 +58,14 @@ public class TodaysSpendingActivity extends AppCompatActivity {
     private TodayItemsAdapter todayItemsAdapter;
     private List<Data> myDataList;
 
+    private TextView display;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todays_spending);
+
+        display = findViewById(R.id.display);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -116,24 +120,32 @@ public class TodaysSpendingActivity extends AppCompatActivity {
                 }
 
                 todayItemsAdapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.GONE);
 
-                int totalAmount = 0;
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    Map<String, Object> map = (Map<String, Object>) ds.getValue();
-                    Object total = map.get("amount");
-                    int pTotal = Integer.parseInt(String.valueOf(total));
-                    totalAmount += pTotal;
+                if (myDataList.isEmpty()) {
+                    totalAmountSpentOn.setVisibility(View.GONE);
+                    display.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    display.setVisibility(View.GONE);
 
-                    totalAmountSpentOn.setText("Total Day's Spending: ksh." + totalAmount);
+                    int totalAmount = 0;
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
+                        Object total = map.get("amount");
+                        int pTotal = Integer.parseInt(String.valueOf(total));
+                        totalAmount += pTotal;
 
+                        totalAmountSpentOn.setText("Today's Spending: Ksh." + totalAmount);
+                        totalAmountSpentOn.setVisibility(View.VISIBLE);
 
+                    }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                display.setVisibility(View.VISIBLE);
             }
         });
 
