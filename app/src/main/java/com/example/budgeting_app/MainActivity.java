@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     CardView monthCardView;
     @BindView(R.id.analyticsCardView)
     CardView analyticsCardView;
+    @BindView(R.id.historyCardView)
+    CardView historyCardView;
 
     private Toolbar toolbar;
 
@@ -119,6 +121,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ChooseAnalyticsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        historyCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
                 startActivity(intent);
             }
         });

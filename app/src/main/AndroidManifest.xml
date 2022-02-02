@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BudgetingApp">
         <activity
+            android:name=".HistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".MonthlyAnalyticsActivity"
             android:exported="false" />
         <activity
