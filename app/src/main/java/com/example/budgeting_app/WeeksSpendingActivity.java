@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -76,14 +77,27 @@ public class WeeksSpendingActivity extends AppCompatActivity {
             type = getIntent().getStringExtra("type");
             if (type.equals("week")) {
                 setSupportActionBar(toolbar);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setDisplayShowHomeEnabled(true);
                 getSupportActionBar().setTitle("Week's Spending");
                 readWeeksSpendingItems();
             } else if (type.equals("month")) {
                 setSupportActionBar(toolbar);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setDisplayShowHomeEnabled(true);
                 getSupportActionBar().setTitle("Month's Spending");
                 readMonthsSpendingItems();
             }
         }
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(WeeksSpendingActivity.this, MainActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
+            }
+        });
 
 
     }

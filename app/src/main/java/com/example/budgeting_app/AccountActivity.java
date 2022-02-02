@@ -30,6 +30,15 @@ public class AccountActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("My Account");
 
+        settingsToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AccountActivity.this,MainActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
+            }
+        });
+
         logoutBtn = findViewById(R.id.logoutBtn);
         userEmail = findViewById(R.id.userEmail);
 

@@ -1,6 +1,7 @@
 package com.example.budgeting_app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
@@ -19,11 +20,28 @@ public class ChooseAnalyticsActivity extends AppCompatActivity {
     @BindView(R.id.analyticsMonthCardView)
     CardView analyticsMonthCardView;
 
+    private Toolbar analyticsToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_analytics);
         ButterKnife.bind(this);
+
+        analyticsToolbar = findViewById(R.id.analyticsToolbar);
+        setSupportActionBar(analyticsToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Analytics");
+
+        analyticsToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChooseAnalyticsActivity.this,MainActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
+            }
+        });
 
         analyticsTodayCardView.setOnClickListener(new View.OnClickListener() {
             @Override
