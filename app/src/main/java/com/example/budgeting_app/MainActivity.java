@@ -7,6 +7,9 @@ import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -211,12 +214,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int totalAmount = 0;
-                for (DataSnapshot ds :  dataSnapshot.getChildren()){
-                    Map<String, Object> map = (Map<String, Object>)ds.getValue();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Map<String, Object> map = (Map<String, Object>) ds.getValue();
                     Object total = map.get("amount");
                     int pTotal = Integer.parseInt(String.valueOf(total));
-                    totalAmount+=pTotal;
-                    monthSpendingTv.setText("Ksh."+ totalAmount);
+                    totalAmount += pTotal;
+                    monthSpendingTv.setText("Ksh." + totalAmount);
 
                 }
                 personalRef.child("month").setValue(totalAmount);
@@ -243,12 +246,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int totalAmount = 0;
-                for (DataSnapshot ds :  dataSnapshot.getChildren()){
-                    Map<String, Object> map = (Map<String, Object>)ds.getValue();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Map<String, Object> map = (Map<String, Object>) ds.getValue();
                     Object total = map.get("amount");
                     int pTotal = Integer.parseInt(String.valueOf(total));
-                    totalAmount+=pTotal;
-                    weekSpendingTv.setText("Ksh."+ totalAmount);
+                    totalAmount += pTotal;
+                    weekSpendingTv.setText("Ksh." + totalAmount);
                 }
                 personalRef.child("week").setValue(totalAmount);
             }
@@ -271,12 +274,12 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 int totalAmount = 0;
-                for (DataSnapshot ds :  dataSnapshot.getChildren()){
-                    Map<String, Object> map = (Map<String, Object>)ds.getValue();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Map<String, Object> map = (Map<String, Object>) ds.getValue();
                     Object total = map.get("amount");
                     int pTotal = Integer.parseInt(String.valueOf(total));
-                    totalAmount+=pTotal;
-                    todaySpendingTv.setText("Ksh."+ totalAmount);
+                    totalAmount += pTotal;
+                    todaySpendingTv.setText("Ksh." + totalAmount);
                 }
                 personalRef.child("today").setValue(totalAmount);
             }
@@ -293,17 +296,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                if (snapshot.exists() && snapshot.getChildrenCount()>0){
-                    for (DataSnapshot ds :  snapshot.getChildren()){
-                        Map<String, Object> map = (Map<String, Object>)ds.getValue();
+                if (snapshot.exists() && snapshot.getChildrenCount() > 0) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
-                        totalAmountBudget+=pTotal;
-                        budgetTv.setText("Ksh."+String.valueOf(totalAmountBudget));
+                        totalAmountBudget += pTotal;
+                        budgetTv.setText("Ksh." + String.valueOf(totalAmountBudget));
                     }
-                }else {
-                    totalAmountBudget=0;
-                    budgetTv.setText("Ksh."+String.valueOf(0));
+                } else {
+                    totalAmountBudget = 0;
+                    budgetTv.setText("Ksh." + String.valueOf(0));
                 }
             }
 
@@ -312,5 +315,21 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.account) {
+            Intent intent = new Intent(MainActivity.this, AccountActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
