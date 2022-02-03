@@ -3,17 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/activity_account.xml" value="0.20244565217391305" />
+        <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/activity_account.xml" value="0.25343999226562525" />
         <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/activity_budget.xml" value="0.25343999226562525" />
         <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/activity_choose_analytics.xml" value="0.25343999226562525" />
         <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/activity_daily_analytics.xml" value="0.25343999226562525" />
         <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/activity_history.xml" value="0.25343999226562525" />
         <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/activity_main.xml" value="0.25343999226562525" />
         <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/activity_monthly_analytics.xml" value="0.25343999226562525" />
-        <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/activity_pass_code.xml" value="0.20244565217391305" />
+        <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/activity_pass_code.xml" value="0.25343999226562525" />
         <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/activity_todays_spending.xml" value="0.25343999226562525" />
         <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/activity_weekly_analytics.xml" value="0.25343999226562525" />
         <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/activity_weeks_spending.xml" value="0.25343999226562525" />
+        <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/content_months_spending.xml" value="0.19199999414062519" />
         <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/input_layout.xml" value="0.25343999226562525" />
         <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/retreive_layout.xml" value="0.1539855072463768" />
         <entry key="..\:/Users/Prince/AndroidStudioProjects/Budgeting-App/app/src/main/res/layout/splash_screen.xml" value="0.25625" />

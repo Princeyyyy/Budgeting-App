@@ -8,14 +8,13 @@
     tools:context=".AccountActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_Feed_Toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#000"
-        android:id="@+id/my_Feed_Toolbar"
+        android:background="@color/register_bk_color"
+        android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:elevation="4dp">
-    </androidx.appcompat.widget.Toolbar>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,53 +25,123 @@
             android:id="@+id/logo"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/image2"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:src="@drawable/image2" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
             android:text="Account Information"
-            android:textStyle="bold"
             android:textColor="#000"
             android:textSize="25sp"
-            android:layout_marginTop="10dp"
-            android:gravity="center"/>
+            android:textStyle="bold" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_marginTop="4dp"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="5dp"
             android:background="#000" />
 
-        <TextView
+        <EditText
+            android:id="@+id/userFName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        <!--            android:background="@null"/>-->
+
+        <EditText
+            android:id="@+id/userLName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <EditText
             android:id="@+id/userEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="-"
-            android:textSize="18sp"
-            android:textColor="#000"
-            android:textStyle="bold"
+            android:layout_margin="8dp"
             android:gravity="center"
-            android:layout_margin="10dp"
-            />
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/logoutBtn"
+        <EditText
+            android:id="@+id/userPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
-            android:text="Log Out"
-            android:textColor="#fff"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
-    </LinearLayout>
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:inputType="textPassword"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
+        <Switch
+            android:id="@+id/enableEncryption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:switchMinWidth="56dp"
+            android:text="Enable Passcode:" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/updateBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="Update Details"
+                    android:textAllCaps="false"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/logoutBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:text="Logout"
+                    android:textAllCaps="false"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

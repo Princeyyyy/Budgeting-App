@@ -88,7 +88,7 @@ public class BudgetActivity extends AppCompatActivity {
         budgetToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BudgetActivity.this,MainActivity.class);
+                Intent intent = new Intent(BudgetActivity.this, MainActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
             }

@@ -6,23 +6,31 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 public class AccountActivity extends AppCompatActivity {
 
     private Toolbar settingsToolbar;
-    private TextView userEmail;
+    private TextView userFName, userLName, userEmail, userPassword, userEnablePasscode;
     private Button logoutBtn;
+    private Switch aSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+
+        aSwitch = findViewById(R.id.enableEncryption);
 
         settingsToolbar = findViewById(R.id.my_Feed_Toolbar);
         setSupportActionBar(settingsToolbar);
@@ -33,7 +41,7 @@ public class AccountActivity extends AppCompatActivity {
         settingsToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AccountActivity.this,MainActivity.class);
+                Intent intent = new Intent(AccountActivity.this, MainActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
             }
@@ -42,7 +50,22 @@ public class AccountActivity extends AppCompatActivity {
         logoutBtn = findViewById(R.id.logoutBtn);
         userEmail = findViewById(R.id.userEmail);
 
-        userEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        SharedPreferences sharedPreferences = getSharedPreferences("State", MODE_PRIVATE);
+        SharedPreferences.Editor preferences = sharedPreferences.edit();
+        aSwitch.setChecked(sharedPreferences.getBoolean("isChecked", false));
+        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    preferences.putBoolean("isChecked", true);
+                } else {
+                    preferences.putBoolean("isChecked", false);
+                }
+                preferences.commit();
+            }
+        });
+
+//        value = sharedPreferences.getBoolean("isChecked", value);
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override

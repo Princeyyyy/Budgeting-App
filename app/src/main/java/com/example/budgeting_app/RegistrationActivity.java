@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +36,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private ProgressDialog progressDialog;
+
+    private DatabaseReference users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +67,13 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 if (TextUtils.isEmpty(password)) {
                     regPassword.setError("Password is Required");
-                }else {
+                } else {
 
                     progressDialog.setMessage("Registration in Progress");
                     progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.show();
 
+                    UserDetails userDetails = new UserDetails(null, null, email, password, null, "false");
                     mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -77,6 +82,15 @@ public class RegistrationActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                                 progressDialog.dismiss();
+
+                                users = FirebaseDatabase.getInstance().getReference().child("user-details").child(mAuth.getCurrentUser().getUid());
+
+                                users.setValue(userDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        //Do nothing
+                                    }
+                                });
                             } else {
                                 Toast.makeText(RegistrationActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                                 progressDialog.dismiss();
