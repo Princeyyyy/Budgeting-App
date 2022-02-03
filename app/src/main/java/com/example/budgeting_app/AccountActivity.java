@@ -11,10 +11,12 @@ import android.content.SharedPreferences;
 import android.graphics.ColorSpace;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,14 +36,18 @@ public class AccountActivity extends AppCompatActivity {
 
     private Toolbar settingsToolbar;
     private TextView userFName, userLName, userEmail, userPassword, userPin;
-    private Button logoutBtn;
+    private Button logoutBtn, updateDetailsBtn;
     private Switch aSwitch;
 
     private FirebaseAuth auth;
     private String onlineUserId = "";
     private DatabaseReference reference;
 
-    String fname, lname, email, password, passcode, enable, key;
+    String fname;
+    String lname;
+    String pin;
+    String email;
+    String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +61,8 @@ public class AccountActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("My Account");
+
+        updateDetailsBtn = findViewById(R.id.updateDetailsBtn);
 
         settingsToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +94,11 @@ public class AccountActivity extends AppCompatActivity {
                 userPassword.setText("Password: " + user.getPassword());
                 userPin.setText("Pin: " + user.getPasscode());
 
-                updateUser();
+                fname = String.valueOf(userFName);
+                lname = String.valueOf(userLName);
+                pin = String.valueOf(userPin);
+                email = String.valueOf(userEmail);
+                password = String.valueOf(userPassword);
             }
 
             @Override
@@ -110,7 +122,13 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
 
-//        value = sharedPreferences.getBoolean("isChecked", value);
+
+        updateDetailsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateUser();
+            }
+        });
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +152,54 @@ public class AccountActivity extends AppCompatActivity {
     }
 
     private void updateUser() {
+        DatabaseReference updateData = FirebaseDatabase.getInstance().getReference("user-details").child(onlineUserId);
+        AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.update_user, null);
+        myDialog.setView(view);
 
+        AlertDialog dialog = myDialog.create();
+
+        EditText uFname = view.findViewById(R.id.updateFname);
+        EditText uLname = view.findViewById(R.id.updateLname);
+        EditText uPin = view.findViewById(R.id.updatePin);
+
+        uFname.setText(fname);
+        uFname.setSelection(fname.length());
+        uLname.setText(lname);
+        uLname.setSelection(lname.length());
+        uPin.setText(pin);
+        uPin.setSelection(pin.length());
+
+        Button cancelBtn = view.findViewById(R.id.cancelBtn);
+        Button updateButton = view.findViewById(R.id.update);
+
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fname = uFname.getText().toString().trim();
+                lname = uLname.getText().toString().trim();
+                pin = uPin.getText().toString().trim();
+
+                updateData.child("fname").setValue(fname);
+                updateData.child("lname").setValue(lname);
+                updateData.child("passcode").setValue(pin);
+
+                Toast.makeText(AccountActivity.this, "Account Update Successful", Toast.LENGTH_SHORT).show();
+
+                dialog.dismiss();
+
+            }
+        });
+
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 }
