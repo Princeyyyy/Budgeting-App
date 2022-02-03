@@ -25,6 +25,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:textColor="#000"
+                android:text="Search for a date below to view its entries!!"
+                android:textSize="14dp" />
+
             <Button
                 android:id="@+id/search"
                 android:layout_width="match_parent"
@@ -41,12 +51,22 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
-                android:background="#808080"
                 android:gravity="center_horizontal"
                 android:text="0.00"
                 android:textColor="#000"
-                android:textSize="17dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/displayError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:textColor="#000"
+                android:textSize="18dp"
                 android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -54,7 +74,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="20dp"
-                android:background="#808080"
                 android:visibility="gone"/>
 
         </LinearLayout>

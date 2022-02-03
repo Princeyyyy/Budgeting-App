@@ -44,10 +44,14 @@ public class HistoryActivity extends AppCompatActivity implements DatePickerDial
     private Button search;
     private TextView historyTotalAmountSpent;
 
+    private TextView displayError;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+
+        displayError = findViewById(R.id.displayError);
 
         settingsToolbar = findViewById(R.id.my_Feed_Toolbar);
         setSupportActionBar(settingsToolbar);
@@ -122,19 +126,26 @@ public class HistoryActivity extends AppCompatActivity implements DatePickerDial
 
                 todayItemsAdapter2.notifyDataSetChanged();
 
-                recyclerView.setVisibility(View.VISIBLE);
+                if (myDataList.isEmpty()) {
+                    historyTotalAmountSpent.setVisibility(View.GONE);
+                    displayError.setText("No data was entered on this day\nKindly pick another day");
+                    displayError.setVisibility(View.VISIBLE);
+                } else {
+                    displayError.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
 
-                int totalAmount = 0;
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    Map<String, Object> map = (Map<String, Object>) ds.getValue();
-                    Object total = map.get("amount");
-                    int pTotal = Integer.parseInt(String.valueOf(total));
-                    totalAmount += pTotal;
-                    if (totalAmount > 0) {
-                        historyTotalAmountSpent.setText("This day you spent Ksh." + totalAmount);
-                        historyTotalAmountSpent.setVisibility(View.VISIBLE);
+                    int totalAmount = 0;
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
+                        Object total = map.get("amount");
+                        int pTotal = Integer.parseInt(String.valueOf(total));
+                        totalAmount += pTotal;
+                        if (totalAmount > 0) {
+                            historyTotalAmountSpent.setText("This day you spent Ksh." + totalAmount);
+                            historyTotalAmountSpent.setVisibility(View.VISIBLE);
+                        }
+
                     }
-
                 }
             }
 
