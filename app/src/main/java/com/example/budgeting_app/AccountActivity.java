@@ -94,11 +94,11 @@ public class AccountActivity extends AppCompatActivity {
                 userPassword.setText("Password: " + user.getPassword());
                 userPin.setText("Pin: " + user.getPasscode());
 
-                fname = String.valueOf(userFName);
-                lname = String.valueOf(userLName);
-                pin = String.valueOf(userPin);
-                email = String.valueOf(userEmail);
-                password = String.valueOf(userPassword);
+                fname = user.getFname();
+                lname = user.getLname();
+                pin = user.getPasscode();
+                email = user.getEmail();
+                password = user.getPasscode();
             }
 
             @Override
@@ -165,11 +165,8 @@ public class AccountActivity extends AppCompatActivity {
         EditText uPin = view.findViewById(R.id.updatePin);
 
         uFname.setText(fname);
-        uFname.setSelection(fname.length());
         uLname.setText(lname);
-        uLname.setSelection(lname.length());
         uPin.setText(pin);
-        uPin.setSelection(pin.length());
 
         Button cancelBtn = view.findViewById(R.id.cancelBtn);
         Button updateButton = view.findViewById(R.id.update);
