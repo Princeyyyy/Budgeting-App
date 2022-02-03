@@ -73,7 +73,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.show();
 
-                    UserDetails userDetails = new UserDetails(null, null, email, password, null, "false");
+                    UserDetails userDetails = new UserDetails("null", "null", email, password, "null");
                     mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {

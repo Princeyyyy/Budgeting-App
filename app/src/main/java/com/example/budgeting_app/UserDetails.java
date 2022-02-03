@@ -12,13 +12,12 @@ public class UserDetails {
     public UserDetails() {
     }
 
-    public UserDetails(String fname, String lname, String email, String password, String passcode, String enablePasscode) {
+    public UserDetails(String fname, String lname, String email, String password, String passcode) {
         this.fname = fname;
         this.lname = lname;
         this.email = email;
         this.password = password;
         this.passcode = passcode;
-        this.enablePasscode = enablePasscode;
     }
 
     public String getFname() {
@@ -59,13 +58,5 @@ public class UserDetails {
 
     public void setPasscode(String passcode) {
         this.passcode = passcode;
-    }
-
-    public String getEnablePasscode() {
-        return enablePasscode;
-    }
-
-    public void setEnablePasscode(String enablePasscode) {
-        this.enablePasscode = enablePasscode;
     }
 }

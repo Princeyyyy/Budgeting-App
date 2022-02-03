@@ -47,47 +47,54 @@
             android:layout_marginEnd="5dp"
             android:background="#000" />
 
-        <EditText
+        <TextView
             android:id="@+id/userFName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="center"
+            android:text="Fname"
             android:textColor="#000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-        <!--            android:background="@null"/>-->
+            android:textSize="18sp" />
 
-        <EditText
+        <TextView
             android:id="@+id/userLName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="center"
+            android:text="Lname"
             android:textColor="#000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="18sp" />
 
-        <EditText
+        <TextView
             android:id="@+id/userEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="center"
             android:textColor="#000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/userPassword"
+            android:text="Email"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/userPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="center"
-            android:inputType="textPassword"
             android:textColor="#000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:text="Password"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/userPin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:textColor="#000"
+            android:text="Account Pin"
+            android:textSize="18sp" />
 
         <Switch
             android:id="@+id/enableEncryption"
