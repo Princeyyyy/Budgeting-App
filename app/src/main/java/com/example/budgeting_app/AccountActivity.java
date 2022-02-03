@@ -142,6 +142,12 @@ public class AccountActivity extends AppCompatActivity {
                                 FirebaseAuth.getInstance().signOut();
                                 Intent intent = new Intent(AccountActivity.this, LoginActivity.class);
                                 startActivity(intent);
+
+                                SharedPreferences sharedPreferences3 = getSharedPreferences("State3", MODE_PRIVATE);
+                                SharedPreferences.Editor preferences3 = sharedPreferences3.edit();
+                                preferences3.putString("status", "logout");
+                                preferences3.commit();
+
                                 finish();
                             }
                         })
@@ -181,6 +187,12 @@ public class AccountActivity extends AppCompatActivity {
                 updateData.child("fname").setValue(fname);
                 updateData.child("lname").setValue(lname);
                 updateData.child("passcode").setValue(pin);
+
+                SharedPreferences sharedPreferences2 = getSharedPreferences("State2", MODE_PRIVATE);
+                SharedPreferences.Editor preferences2 = sharedPreferences2.edit();
+                preferences2.putString("pin", pin);
+                preferences2.commit();
+
 
                 Toast.makeText(AccountActivity.this, "Account Update Successful", Toast.LENGTH_SHORT).show();
 

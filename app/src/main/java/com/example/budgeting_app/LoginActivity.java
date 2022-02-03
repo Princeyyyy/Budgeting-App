@@ -2,6 +2,7 @@ package com.example.budgeting_app;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -44,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
 
-        if(mAuth.getCurrentUser() != null){
+        if (mAuth.getCurrentUser() != null) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         }
@@ -80,6 +81,11 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
+
+                                SharedPreferences sharedPreferences3 = getSharedPreferences("State3", MODE_PRIVATE);
+                                SharedPreferences.Editor preferences3 = sharedPreferences3.edit();
+                                preferences3.putString("status", "login");
+                                preferences3.commit();
                                 finish();
                                 progressDialog.dismiss();
                             } else {
@@ -95,8 +101,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onRegistrationClick(View view) {
-        Intent intent =  new Intent(this,RegistrationActivity.class);
+        Intent intent = new Intent(this, RegistrationActivity.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
     }
 }
