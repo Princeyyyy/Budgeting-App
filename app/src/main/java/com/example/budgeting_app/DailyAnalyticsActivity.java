@@ -161,7 +161,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                         setStatusAndImageResource();
                     }
                 },
-                2000
+                1000
         );
     }
 
@@ -187,7 +187,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsTransportAmount.setText("Spent: " + totalAmount);
+                        analyticsTransportAmount.setText("Spent: Ksh." + totalAmount);
                     }
                     personalRef.child("dayTrans").setValue(totalAmount);
 
@@ -226,7 +226,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsFoodAmount.setText("Spent: " + totalAmount);
+                        analyticsFoodAmount.setText("Spent: Ksh." + totalAmount);
                     }
                     personalRef.child("dayFood").setValue(totalAmount);
                 } else {
@@ -263,7 +263,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsHouseExpensesAmount.setText("Spent: " + totalAmount);
+                        analyticsHouseExpensesAmount.setText("Spent: Ksh." + totalAmount);
                     }
                     personalRef.child("dayHouse").setValue(totalAmount);
                 } else {
@@ -300,7 +300,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsEntertainmentAmount.setText("Spent: " + totalAmount);
+                        analyticsEntertainmentAmount.setText("Spent: Ksh." + totalAmount);
                     }
                     personalRef.child("dayEnt").setValue(totalAmount);
                 } else {
@@ -337,7 +337,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsEducationAmount.setText("Spent: " + totalAmount);
+                        analyticsEducationAmount.setText("Spent: Ksh." + totalAmount);
                     }
                     personalRef.child("dayEdu").setValue(totalAmount);
                 } else {
@@ -374,7 +374,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsCharityAmount.setText("Spent: " + totalAmount);
+                        analyticsCharityAmount.setText("Spent: Ksh." + totalAmount);
                     }
                     personalRef.child("dayCha").setValue(totalAmount);
                 } else {
@@ -411,7 +411,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsApparelAmount.setText("Spent: " + totalAmount);
+                        analyticsApparelAmount.setText("Spent: Ksh." + totalAmount);
                     }
                     personalRef.child("dayApp").setValue(totalAmount);
                 } else {
@@ -448,7 +448,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsHealthAmount.setText("Spent: " + totalAmount);
+                        analyticsHealthAmount.setText("Spent: Ksh." + totalAmount);
                     }
                     personalRef.child("dayHea").setValue(totalAmount);
                 } else {
@@ -485,7 +485,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsPersonalExpensesAmount.setText("Spent: " + totalAmount);
+                        analyticsPersonalExpensesAmount.setText("Spent: Ksh." + totalAmount);
                     }
                     personalRef.child("dayPer").setValue(totalAmount);
                 } else {
@@ -522,7 +522,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsOtherAmount.setText("Spent: " + totalAmount);
+                        analyticsOtherAmount.setText("Spent: Ksh." + totalAmount);
                     }
                     personalRef.child("dayOther").setValue(totalAmount);
                 } else {
@@ -557,8 +557,8 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                         totalAmount += pTotal;
 
                     }
-                    totalBudgetAmountTextView.setText("Total day's spending: $ " + totalAmount);
-                    monthSpentAmount.setText("Total Spent: $ " + totalAmount);
+                    totalBudgetAmountTextView.setText("Total day's spending: Ksh." + totalAmount);
+                    monthSpentAmount.setText("Total Spent: Ksh." + totalAmount);
                 } else {
                     totalBudgetAmountTextView.setText("You've not spent today");
                     anyChartView.setVisibility(View.GONE);
@@ -853,117 +853,117 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
 
                     float monthPercent = (monthTotalSpentAmount / monthTotalSpentAmountRatio) * 100;
                     if (monthPercent < 50) {
-                        monthRatioSpending.setText(monthPercent + " %" + " used of " + monthTotalSpentAmountRatio + ". Status:");
+                        monthRatioSpending.setText(monthPercent + "%" + " used of " + monthTotalSpentAmountRatio + ". Status:");
                         monthRatioSpending_Image.setImageResource(R.drawable.green);
                     } else if (monthPercent >= 50 && monthPercent < 100) {
-                        monthRatioSpending.setText(monthPercent + " %" + " used of " + monthTotalSpentAmountRatio + ". Status:");
+                        monthRatioSpending.setText(monthPercent + "%" + " used of " + monthTotalSpentAmountRatio + ". Status:");
                         monthRatioSpending_Image.setImageResource(R.drawable.brown);
                     } else {
-                        monthRatioSpending.setText(monthPercent + " %" + " used of " + monthTotalSpentAmountRatio + ". Status:");
+                        monthRatioSpending.setText(monthPercent + "%" + " used of " + monthTotalSpentAmountRatio + ". Status:");
                         monthRatioSpending_Image.setImageResource(R.drawable.red);
 
                     }
 
                     float transportPercent = (traTotal / traRatio) * 100;
                     if (transportPercent < 50) {
-                        progress_ratio_transport.setText(transportPercent + " %" + " used of " + traRatio + ". Status:");
+                        progress_ratio_transport.setText(transportPercent + "%" + " used of " + traRatio + ". Status:");
                         status_Image_transport.setImageResource(R.drawable.green);
                     } else if (transportPercent >= 50 && transportPercent < 100) {
-                        progress_ratio_transport.setText(transportPercent + " %" + " used of " + traRatio + ". Status:");
+                        progress_ratio_transport.setText(transportPercent + "%" + " used of " + traRatio + ". Status:");
                         status_Image_transport.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_transport.setText(transportPercent + " %" + " used of " + traRatio + ". Status:");
+                        progress_ratio_transport.setText(transportPercent + "%" + " used of " + traRatio + ". Status:");
                         status_Image_transport.setImageResource(R.drawable.red);
 
                     }
 
                     float foodPercent = (foodTotal / foodRatio) * 100;
                     if (foodPercent < 50) {
-                        progress_ratio_food.setText(foodPercent + " %" + " used of " + foodRatio + ". Status:");
+                        progress_ratio_food.setText(foodPercent + "%" + " used of " + foodRatio + ". Status:");
                         status_Image_food.setImageResource(R.drawable.green);
                     } else if (foodPercent >= 50 && foodPercent < 100) {
-                        progress_ratio_food.setText(foodPercent + " %" + " used of " + foodRatio + ". Status:");
+                        progress_ratio_food.setText(foodPercent + "%" + " used of " + foodRatio + ". Status:");
                         status_Image_food.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_food.setText(foodPercent + " %" + " used of " + foodRatio + ". Status:");
+                        progress_ratio_food.setText(foodPercent + "%" + " used of " + foodRatio + ". Status:");
                         status_Image_food.setImageResource(R.drawable.red);
 
                     }
 
                     float housePercent = (houseTotal / houseRatio) * 100;
                     if (housePercent < 50) {
-                        progress_ratio_house.setText(housePercent + " %" + " used of " + houseRatio + ". Status:");
+                        progress_ratio_house.setText(housePercent + "%" + " used of " + houseRatio + ". Status:");
                         status_Image_house.setImageResource(R.drawable.green);
                     } else if (housePercent >= 50 && housePercent < 100) {
-                        progress_ratio_house.setText(housePercent + " %" + " used of " + houseRatio + ". Status:");
+                        progress_ratio_house.setText(housePercent + "%" + " used of " + houseRatio + ". Status:");
                         status_Image_house.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_house.setText(housePercent + " %" + " used of " + houseRatio + ". Status:");
+                        progress_ratio_house.setText(housePercent + "%" + " used of " + houseRatio + ". Status:");
                         status_Image_house.setImageResource(R.drawable.red);
 
                     }
 
                     float entPercent = (entTotal / entRatio) * 100;
                     if (entPercent < 50) {
-                        progress_ratio_ent.setText(entPercent + " %" + " used of " + entRatio + ". Status:");
+                        progress_ratio_ent.setText(entPercent + "%" + " used of " + entRatio + ". Status:");
                         status_Image_ent.setImageResource(R.drawable.green);
                     } else if (entPercent >= 50 && entPercent < 100) {
-                        progress_ratio_ent.setText(entPercent + " %" + " used of " + entRatio + ". Status:");
+                        progress_ratio_ent.setText(entPercent + "%" + " used of " + entRatio + ". Status:");
                         status_Image_ent.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_ent.setText(entPercent + " %" + " used of " + entRatio + ". Status:");
+                        progress_ratio_ent.setText(entPercent + "%" + " used of " + entRatio + ". Status:");
                         status_Image_ent.setImageResource(R.drawable.red);
 
                     }
 
                     float eduPercent = (eduTotal / eduRatio) * 100;
                     if (eduPercent < 50) {
-                        progress_ratio_edu.setText(eduPercent + " %" + " used of " + eduRatio + ". Status:");
+                        progress_ratio_edu.setText(eduPercent + "%" + " used of " + eduRatio + ". Status:");
                         status_Image_edu.setImageResource(R.drawable.green);
                     } else if (eduPercent >= 50 && eduPercent < 100) {
-                        progress_ratio_edu.setText(eduPercent + " %" + " used of " + eduRatio + ". Status:");
+                        progress_ratio_edu.setText(eduPercent + "%" + " used of " + eduRatio + ". Status:");
                         status_Image_edu.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_edu.setText(eduPercent + " %" + " used of " + eduRatio + ". Status:");
+                        progress_ratio_edu.setText(eduPercent + "%" + " used of " + eduRatio + ". Status:");
                         status_Image_edu.setImageResource(R.drawable.red);
 
                     }
 
                     float chaPercent = (chaTotal / chaRatio) * 100;
                     if (chaPercent < 50) {
-                        progress_ratio_cha.setText(chaPercent + " %" + " used of " + chaRatio + ". Status:");
+                        progress_ratio_cha.setText(chaPercent + "%" + " used of " + chaRatio + ". Status:");
                         status_Image_cha.setImageResource(R.drawable.green);
                     } else if (chaPercent >= 50 && chaPercent < 100) {
-                        progress_ratio_cha.setText(chaPercent + " %" + " used of " + chaRatio + ". Status:");
+                        progress_ratio_cha.setText(chaPercent + "%" + " used of " + chaRatio + ". Status:");
                         status_Image_cha.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_cha.setText(chaPercent + " %" + " used of " + chaRatio + ". Status:");
+                        progress_ratio_cha.setText(chaPercent + "%" + " used of " + chaRatio + ". Status:");
                         status_Image_cha.setImageResource(R.drawable.red);
 
                     }
 
                     float appPercent = (appTotal / appRatio) * 100;
                     if (appPercent < 50) {
-                        progress_ratio_app.setText(appPercent + " %" + " used of " + appRatio + ". Status:");
+                        progress_ratio_app.setText(appPercent + "%" + " used of " + appRatio + ". Status:");
                         status_Image_app.setImageResource(R.drawable.green);
                     } else if (appPercent >= 50 && appPercent < 100) {
-                        progress_ratio_app.setText(appPercent + " %" + " used of " + appRatio + ". Status:");
+                        progress_ratio_app.setText(appPercent + "%" + " used of " + appRatio + ". Status:");
                         status_Image_app.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_app.setText(appPercent + " %" + " used of " + appRatio + ". Status:");
+                        progress_ratio_app.setText(appPercent + "%" + " used of " + appRatio + ". Status:");
                         status_Image_app.setImageResource(R.drawable.red);
 
                     }
 
                     float heaPercent = (heaTotal / heaRatio) * 100;
                     if (heaPercent < 50) {
-                        progress_ratio_hea.setText(heaPercent + " %" + " used of " + heaRatio + ". Status:");
+                        progress_ratio_hea.setText(heaPercent + "%" + " used of " + heaRatio + ". Status:");
                         status_Image_hea.setImageResource(R.drawable.green);
                     } else if (heaPercent >= 50 && heaPercent < 100) {
-                        progress_ratio_hea.setText(heaPercent + " %" + " used of " + heaRatio + ". Status:");
+                        progress_ratio_hea.setText(heaPercent + "%" + " used of " + heaRatio + ". Status:");
                         status_Image_hea.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_hea.setText(heaPercent + " %" + " used of " + heaRatio + ". Status:");
+                        progress_ratio_hea.setText(heaPercent + "%" + " used of " + heaRatio + ". Status:");
                         status_Image_hea.setImageResource(R.drawable.red);
 
                     }
@@ -971,26 +971,26 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
 
                     float perPercent = (perTotal / perRatio) * 100;
                     if (perPercent < 50) {
-                        progress_ratio_per.setText(perPercent + " %" + " used of " + perRatio + " . Status:");
+                        progress_ratio_per.setText(perPercent + "%" + " used of " + perRatio + " . Status:");
                         status_Image_per.setImageResource(R.drawable.green);
                     } else if (perPercent >= 50 && perPercent < 100) {
-                        progress_ratio_per.setText(perPercent + " %" + " used of " + perRatio + " . Status:");
+                        progress_ratio_per.setText(perPercent + "%" + " used of " + perRatio + " . Status:");
                         status_Image_per.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_per.setText(perPercent + " %" + " used of " + perRatio + " . Status:");
+                        progress_ratio_per.setText(perPercent + "%" + " used of " + perRatio + " . Status:");
                         status_Image_per.setImageResource(R.drawable.red);
                     }
 
 
                     float otherPercent = (othTotal / othRatio) * 100;
                     if (otherPercent < 50) {
-                        progress_ratio_oth.setText(otherPercent + " %" + " used of " + othRatio + ". Status:");
+                        progress_ratio_oth.setText(otherPercent + "%" + " used of " + othRatio + ". Status:");
                         status_Image_oth.setImageResource(R.drawable.green);
                     } else if (otherPercent >= 50 && otherPercent < 100) {
-                        progress_ratio_oth.setText(otherPercent + " %" + " used of " + othRatio + ". Status:");
+                        progress_ratio_oth.setText(otherPercent + "%" + " used of " + othRatio + ". Status:");
                         status_Image_oth.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_oth.setText(otherPercent + " %" + " used of " + othRatio + ". Status:");
+                        progress_ratio_oth.setText(otherPercent + "%" + " used of " + othRatio + ". Status:");
                         status_Image_oth.setImageResource(R.drawable.red);
 
                     }
