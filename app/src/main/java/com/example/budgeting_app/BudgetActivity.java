@@ -107,7 +107,7 @@ public class BudgetActivity extends AppCompatActivity {
                 for (DataSnapshot snap : snapshot.getChildren()) {
                     Data data = snap.getValue(Data.class);
                     totalAmount += data.getAmount();
-                    String sTotal = String.valueOf("My Budget Ksh." + totalAmount);
+                    String sTotal = "My Budget Ksh." + totalAmount;
                     totalBudgetAmountTextView.setText(sTotal);
                 }
             }
@@ -446,7 +446,7 @@ public class BudgetActivity extends AppCompatActivity {
     }
 
     private void getHouseBudgetRatios() {
-        Query query = budgetRef.orderByChild("item").equalTo("House Expenses");
+        Query query = budgetRef.orderByChild("item").equalTo("House");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -586,7 +586,7 @@ public class BudgetActivity extends AppCompatActivity {
     }
 
     private void getApparelBudgetRatios() {
-        Query query = budgetRef.orderByChild("item").equalTo("Apparel and Services");
+        Query query = budgetRef.orderByChild("item").equalTo("Apparel");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -656,7 +656,7 @@ public class BudgetActivity extends AppCompatActivity {
     }
 
     private void getPersonalBudgetRatios() {
-        Query query = budgetRef.orderByChild("item").equalTo("Personal Expenses");
+        Query query = budgetRef.orderByChild("item").equalTo("Personal");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
