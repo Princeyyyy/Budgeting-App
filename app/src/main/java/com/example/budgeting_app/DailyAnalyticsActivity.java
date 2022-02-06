@@ -695,6 +695,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
+
                     float traTotal;
                     if (snapshot.hasChild("dayTrans")) {
                         traTotal = Integer.parseInt(snapshot.child("dayTrans").getValue().toString());

@@ -126,16 +126,16 @@ public class BudgetActivity extends AppCompatActivity {
             }
         });
 
-        getMonthTransportBudgetRatios();
-        getMonthFoodBudgetRatios();
-        getMonthHouseBudgetRatios();
-        getMonthEntBudgetRatios();
-        getMonthEduBudgetRatios();
-        getMonthCharityBudgetRatios();
-        getMonthAppBudgetRatios();
-        getMonthHealthBudgetRatios();
-        getMonthPerBudgetRatios();
-        getMonthOtherBudgetRatios();
+        getTransportBudgetRatios();
+        getFoodBudgetRatios();
+        getHouseBudgetRatios();
+        getEntertainmentBudgetRatios();
+        getEducationBudgetRatios();
+        getCharityBudgetRatios();
+        getApparelBudgetRatios();
+        getHealthBudgetRatios();
+        getPersonalBudgetRatios();
+        geOtherBudgetRatios();
     }
 
     private void addItems() {
@@ -375,7 +375,7 @@ public class BudgetActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void getMonthTransportBudgetRatios() {
+    private void getTransportBudgetRatios() {
         Query query = budgetRef.orderByChild("item").equalTo("Transport");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -410,7 +410,7 @@ public class BudgetActivity extends AppCompatActivity {
         });
     }
 
-    private void getMonthFoodBudgetRatios() {
+    private void getFoodBudgetRatios() {
         Query query = budgetRef.orderByChild("item").equalTo("Food");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -445,7 +445,7 @@ public class BudgetActivity extends AppCompatActivity {
         });
     }
 
-    private void getMonthHouseBudgetRatios() {
+    private void getHouseBudgetRatios() {
         Query query = budgetRef.orderByChild("item").equalTo("House Expenses");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -480,7 +480,7 @@ public class BudgetActivity extends AppCompatActivity {
         });
     }
 
-    private void getMonthEntBudgetRatios() {
+    private void getEntertainmentBudgetRatios() {
         Query query = budgetRef.orderByChild("item").equalTo("Entertainment");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -515,7 +515,7 @@ public class BudgetActivity extends AppCompatActivity {
         });
     }
 
-    private void getMonthEduBudgetRatios() {
+    private void getEducationBudgetRatios() {
         Query query = budgetRef.orderByChild("item").equalTo("Education");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -550,7 +550,7 @@ public class BudgetActivity extends AppCompatActivity {
         });
     }
 
-    private void getMonthCharityBudgetRatios() {
+    private void getCharityBudgetRatios() {
         Query query = budgetRef.orderByChild("item").equalTo("Charity");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -585,7 +585,7 @@ public class BudgetActivity extends AppCompatActivity {
         });
     }
 
-    private void getMonthAppBudgetRatios() {
+    private void getApparelBudgetRatios() {
         Query query = budgetRef.orderByChild("item").equalTo("Apparel and Services");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -620,7 +620,7 @@ public class BudgetActivity extends AppCompatActivity {
         });
     }
 
-    private void getMonthHealthBudgetRatios() {
+    private void getHealthBudgetRatios() {
         Query query = budgetRef.orderByChild("item").equalTo("Health");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -655,7 +655,7 @@ public class BudgetActivity extends AppCompatActivity {
         });
     }
 
-    private void getMonthPerBudgetRatios() {
+    private void getPersonalBudgetRatios() {
         Query query = budgetRef.orderByChild("item").equalTo("Personal Expenses");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -690,7 +690,7 @@ public class BudgetActivity extends AppCompatActivity {
         });
     }
 
-    private void getMonthOtherBudgetRatios() {
+    private void geOtherBudgetRatios() {
         Query query = budgetRef.orderByChild("item").equalTo("Other");
         query.addValueEventListener(new ValueEventListener() {
             @Override

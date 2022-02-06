@@ -183,7 +183,7 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsTransportAmount.setText("Spent: " + totalAmount);
+                        analyticsTransportAmount.setText("Spent Ksh." + totalAmount);
                     }
                     personalRef.child("monthTrans").setValue(totalAmount);
 
@@ -222,7 +222,7 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsFoodAmount.setText("Spent: " + totalAmount);
+                        analyticsFoodAmount.setText("Spent Ksh." + totalAmount);
                     }
                     personalRef.child("monthFood").setValue(totalAmount);
                 } else {
@@ -259,7 +259,7 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsHouseExpensesAmount.setText("Spent: " + totalAmount);
+                        analyticsHouseExpensesAmount.setText("Spent Ksh." + totalAmount);
                     }
                     personalRef.child("monthHouse").setValue(totalAmount);
                 } else {
@@ -296,7 +296,7 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsEntertainmentAmount.setText("Spent: " + totalAmount);
+                        analyticsEntertainmentAmount.setText("Spent Ksh." + totalAmount);
                     }
                     personalRef.child("monthEnt").setValue(totalAmount);
                 } else {
@@ -333,7 +333,7 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsEducationAmount.setText("Spent: " + totalAmount);
+                        analyticsEducationAmount.setText("Spent Ksh." + totalAmount);
                     }
                     personalRef.child("monthEdu").setValue(totalAmount);
                 } else {
@@ -370,7 +370,7 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsCharityAmount.setText("Spent: " + totalAmount);
+                        analyticsCharityAmount.setText("Spent Ksh." + totalAmount);
                     }
                     personalRef.child("monthChar").setValue(totalAmount);
                 } else {
@@ -407,7 +407,7 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsApparelAmount.setText("Spent: " + totalAmount);
+                        analyticsApparelAmount.setText("Spent Ksh." + totalAmount);
                     }
                     personalRef.child("monthApp").setValue(totalAmount);
                 } else {
@@ -444,7 +444,7 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsHealthAmount.setText("Spent: " + totalAmount);
+                        analyticsHealthAmount.setText("Spent Ksh." + totalAmount);
                     }
                     personalRef.child("monthHea").setValue(totalAmount);
                 } else {
@@ -481,7 +481,7 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsPersonalExpensesAmount.setText("Spent: " + totalAmount);
+                        analyticsPersonalExpensesAmount.setText("Spent Ksh." + totalAmount);
                     }
                     personalRef.child("monthPer").setValue(totalAmount);
                 } else {
@@ -518,7 +518,7 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsOtherAmount.setText("Spent: " + totalAmount);
+                        analyticsOtherAmount.setText("Spent Ksh." + totalAmount);
                     }
                     personalRef.child("monthOther").setValue(totalAmount);
                 } else {
@@ -556,8 +556,8 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
                         totalAmount += pTotal;
 
                     }
-                    totalBudgetAmountTextView.setText("Total Months's spending: $ " + totalAmount);
-                    monthSpentAmount.setText("Total Spent: $ " + totalAmount);
+                    totalBudgetAmountTextView.setText("Total Month's spending: Ksh." + totalAmount);
+                    monthSpentAmount.setText("Total Spent: Ksh." + totalAmount);
                 } else {
                     anyChartView.setVisibility(View.GONE);
                 }
