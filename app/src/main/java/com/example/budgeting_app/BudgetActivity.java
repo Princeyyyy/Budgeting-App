@@ -135,8 +135,7 @@ public class BudgetActivity extends AppCompatActivity {
         getApparelBudgetRatios();
         getHealthBudgetRatios();
         getPersonalBudgetRatios();
-        geOtherBudgetRatios();
-        getTotalRatios();
+        getOtherBudgetRatios();
     }
 
     private void addItems() {
@@ -691,7 +690,7 @@ public class BudgetActivity extends AppCompatActivity {
         });
     }
 
-    private void geOtherBudgetRatios() {
+    private void getOtherBudgetRatios() {
         Query query = budgetRef.orderByChild("item").equalTo("Other");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -724,41 +723,6 @@ public class BudgetActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private void getTotalRatios() {
-
-        int dayTransport = Integer.parseInt(String.valueOf(personalRef.child("dayTransRatio")));
-        int dayFood = Integer.parseInt(String.valueOf(personalRef.child("dayFoodRatio")));
-        int dayHouse = Integer.parseInt(String.valueOf(personalRef.child("dayHouseRatio")));
-        int dayEntertainment = Integer.parseInt(String.valueOf(personalRef.child("dayEntRatio")));
-        int dayEducation = Integer.parseInt(String.valueOf(personalRef.child("dayEduRatio")));
-        int dayCharity = Integer.parseInt(String.valueOf(personalRef.child("dayCharRatio")));
-        int dayApparel = Integer.parseInt(String.valueOf(personalRef.child("dayAppRatio")));
-        int dayHealth = Integer.parseInt(String.valueOf(personalRef.child("dayHealthRatio")));
-        int dayPersonal = Integer.parseInt(String.valueOf(personalRef.child("dayPerRatio")));
-        int dayOther = Integer.parseInt(String.valueOf(personalRef.child("dayOtherRatio")));
-
-        int dayTotal = dayTransport + dayFood + dayHouse + dayEntertainment + dayEducation + dayCharity + dayApparel + dayHealth + dayPersonal + dayOther;
-
-        personalRef.child("dailyBudget").setValue(dayTotal);
-
-
-        int weekTransport = Integer.parseInt(String.valueOf(personalRef.child("weekTransRatio")));
-        int weekFood = Integer.parseInt(String.valueOf(personalRef.child("weekFoodRatio")));
-        int weekHouse = Integer.parseInt(String.valueOf(personalRef.child("weekHouseRatio")));
-        int weekEntertainment = Integer.parseInt(String.valueOf(personalRef.child("weekEntRatio")));
-        int weekEducation = Integer.parseInt(String.valueOf(personalRef.child("weekEduRatio")));
-        int weekCharity = Integer.parseInt(String.valueOf(personalRef.child("weekCharRatio")));
-        int weekApparel = Integer.parseInt(String.valueOf(personalRef.child("weekAppRatio")));
-        int weekHealth = Integer.parseInt(String.valueOf(personalRef.child("weekHealthRatio")));
-        int weekPersonal = Integer.parseInt(String.valueOf(personalRef.child("weekPerRatio")));
-        int weekOther = Integer.parseInt(String.valueOf(personalRef.child("weekOtherRatio")));
-
-        int weekTotal = weekTransport + weekFood + weekHouse + weekEntertainment + weekEducation + weekCharity + weekApparel + weekHealth + weekPersonal + weekOther;
-
-        personalRef.child("weeklyBudget").setValue(weekTotal);
-
     }
 
 }
