@@ -21,10 +21,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Total Budget Amount: $0"
+        android:text="Total Budget Amount:"
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="25sp"
+        android:visibility="gone"
         android:textStyle="bold" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -37,14 +38,15 @@
             android:layout_height="match_parent" />
 
         <TextView
-            android:id="@+id/error"
-            android:layout_width="wrap_content"
+            android:id="@+id/disp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text="No budget has been entered!\nEnter new budget item to view them here"
             android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textSize="14sp"
-            android:visibility="gone"
-            android:text="@string/error"/>
+            android:textColor="#000"
+            android:textSize="15sp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab1"

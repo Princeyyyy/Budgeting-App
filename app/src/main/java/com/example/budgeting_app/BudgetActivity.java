@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -20,8 +19,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -40,8 +37,9 @@ import org.joda.time.Weeks;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -67,11 +65,19 @@ public class BudgetActivity extends AppCompatActivity {
 
     private Toolbar budgetToolbar;
 
+    private TextView display;
+
+    private List<Data> myDataList;
+
+    private BudgetItemsAdapter budgetItemsAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_budget);
         ButterKnife.bind(this);
+
+        display = findViewById(R.id.disp);
 
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -80,6 +86,11 @@ public class BudgetActivity extends AppCompatActivity {
         linearLayoutManager.setReverseLayout(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        myDataList = new ArrayList<>();
+        budgetItemsAdapter = new BudgetItemsAdapter(BudgetActivity.this, myDataList);
+        recyclerView.setAdapter(budgetItemsAdapter);
+
 
         budgetToolbar = findViewById(R.id.budgetToolbar);
         setSupportActionBar(budgetToolbar);
@@ -101,24 +112,28 @@ public class BudgetActivity extends AppCompatActivity {
         personalRef = FirebaseDatabase.getInstance().getReference("personal").child(mAuth.getCurrentUser().getUid());
         loader = new ProgressDialog(this);
 
-        budgetRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int totalAmount = 0;
+//        budgetRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                display.setVisibility(View.GONE);
+//                int totalAmount = 0;
+//
+//                for (DataSnapshot snap : snapshot.getChildren()) {
+//                    Data data = snap.getValue(Data.class);
+//                    totalAmount += data.getAmount();
+//                    String sTotal = "My Budget Ksh." + totalAmount;
+//                    totalBudgetAmountTextView.setText(sTotal);
+//                }
+//                totalBudgetAmountTextView.setVisibility(View.VISIBLE);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
-                for (DataSnapshot snap : snapshot.getChildren()) {
-                    Data data = snap.getValue(Data.class);
-                    totalAmount += data.getAmount();
-                    String sTotal = "My Budget Ksh." + totalAmount;
-                    totalBudgetAmountTextView.setText(sTotal);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        readBudgetItems();
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +154,47 @@ public class BudgetActivity extends AppCompatActivity {
         getPersonalBudgetRatios();
         getOtherBudgetRatios();
 //        getTotalBudgetRatios();
+    }
+
+    private void readBudgetItems() {
+        budgetRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                myDataList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Data data = dataSnapshot.getValue(Data.class);
+                    myDataList.add(data);
+                }
+
+                budgetItemsAdapter.notifyDataSetChanged();
+
+                if (myDataList.isEmpty()) {
+                    totalBudgetAmountTextView.setVisibility(View.GONE);
+                    display.setVisibility(View.VISIBLE);
+//                    progressBar.setVisibility(View.GONE);
+                } else {
+//                    progressBar.setVisibility(View.GONE);
+                    display.setVisibility(View.GONE);
+
+                    int totalAmount = 0;
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
+                        Object total = map.get("amount");
+                        int pTotal = Integer.parseInt(String.valueOf(total));
+                        totalAmount += pTotal;
+
+                        totalBudgetAmountTextView.setText("Budget Amount is Ksh." + totalAmount);
+                        totalBudgetAmountTextView.setVisibility(View.VISIBLE);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                display.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void addItems() {
@@ -220,163 +276,82 @@ public class BudgetActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        FirebaseRecyclerOptions<Data> options = new FirebaseRecyclerOptions.Builder<Data>()
-                .setQuery(budgetRef, Data.class)
-                .build();
-
-        FirebaseRecyclerAdapter<Data, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Data, MyViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull final Data model) {
-
-                holder.setItemAmount("Amount: ksh." + model.getAmount());
-                holder.setDate("Added On: " + model.getDate());
-                holder.setItemName("Item: " + model.getItem());
-
-                holder.notes.setVisibility(View.GONE);
-
-                switch (model.getItem()) {
-                    case "Transport":
-                        holder.imageView.setImageResource(R.drawable.ic_transport);
-                        break;
-                    case "Food":
-                        holder.imageView.setImageResource(R.drawable.ic_food);
-                        break;
-                    case "House":
-                        holder.imageView.setImageResource(R.drawable.ic_house);
-                        break;
-                    case "Entertainment":
-                        holder.imageView.setImageResource(R.drawable.ic_entertainment);
-                        break;
-                    case "Education":
-                        holder.imageView.setImageResource(R.drawable.ic_education);
-                        break;
-                    case "Charity":
-                        holder.imageView.setImageResource(R.drawable.ic_consultancy);
-                        break;
-                    case "Apparel":
-                        holder.imageView.setImageResource(R.drawable.ic_shirt);
-                        break;
-                    case "Health":
-                        holder.imageView.setImageResource(R.drawable.ic_health);
-                        break;
-                    case "Personal":
-                        holder.imageView.setImageResource(R.drawable.ic_personal);
-                        break;
-                    case "Other":
-                        holder.imageView.setImageResource(R.drawable.ic_other);
-                        break;
-                }
-
-                holder.myView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        post_key = getRef(position).getKey();
-                        item = model.getItem();
-                        amount = model.getAmount();
-                        updateData();
-                    }
-                });
-
-
-            }
-
-            @NonNull
-            @Override
-            public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.retreive_layout, parent, false);
-                return new MyViewHolder(view);
-            }
-        };
-
-        recyclerView.setAdapter(adapter);
-        adapter.startListening();
-        adapter.notifyDataSetChanged();
-    }
-
-    private void updateData() {
-        AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View mView = inflater.inflate(R.layout.update_layout, null);
-
-        myDialog.setView(mView);
-        final AlertDialog dialog = myDialog.create();
-
-        final TextView mItem = mView.findViewById(R.id.itemName);
-        final TextView mAmount = mView.findViewById(R.id.amount);
-        final TextView mNotes = mView.findViewById(R.id.note);
-
-        mNotes.setVisibility(View.GONE);
-
-        mItem.setText(item);
-
-        mAmount.setText(String.valueOf(amount));
-
-        Button delBut = mView.findViewById(R.id.btnDelete);
-        Button btnUpdate = mView.findViewById(R.id.btnUpdate);
-
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                amount = Integer.parseInt(mAmount.getText().toString());
-
-                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                Calendar cal = Calendar.getInstance();
-                String date = dateFormat.format(cal.getTime());
-
-                MutableDateTime epoch = new MutableDateTime();
-                epoch.setDate(0);
-                DateTime now = new DateTime();
-                Weeks weeks = Weeks.weeksBetween(epoch, now);
-                Months months = Months.monthsBetween(epoch, now);
-
-                String itemNday = item + date;
-                String itemNweek = item + weeks.getWeeks();
-                String itemNmonth = item + months.getMonths();
-
-                Data data = new Data(item, date, post_key, itemNday, itemNweek, itemNmonth, amount, weeks.getWeeks(), months.getMonths(), null);
-                budgetRef.child(post_key).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(BudgetActivity.this, "Updated successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(BudgetActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
-
-                dialog.dismiss();
-
-            }
-        });
-
-        delBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                budgetRef.child(post_key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(BudgetActivity.this, "Deleted  successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(BudgetActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
-
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//
+//        FirebaseRecyclerOptions<Data> options = new FirebaseRecyclerOptions.Builder<Data>()
+//                .setQuery(budgetRef, Data.class)
+//                .build();
+//
+//        FirebaseRecyclerAdapter<Data, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Data, MyViewHolder>(options) {
+//            @Override
+//            protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull final Data model) {
+//
+//                holder.setItemAmount("Amount: ksh." + model.getAmount());
+//                holder.setDate("Added On: " + model.getDate());
+//                holder.setItemName("Item: " + model.getItem());
+//
+//                holder.notes.setVisibility(View.GONE);
+//
+//                switch (model.getItem()) {
+//                    case "Transport":
+//                        holder.imageView.setImageResource(R.drawable.ic_transport);
+//                        break;
+//                    case "Food":
+//                        holder.imageView.setImageResource(R.drawable.ic_food);
+//                        break;
+//                    case "House":
+//                        holder.imageView.setImageResource(R.drawable.ic_house);
+//                        break;
+//                    case "Entertainment":
+//                        holder.imageView.setImageResource(R.drawable.ic_entertainment);
+//                        break;
+//                    case "Education":
+//                        holder.imageView.setImageResource(R.drawable.ic_education);
+//                        break;
+//                    case "Charity":
+//                        holder.imageView.setImageResource(R.drawable.ic_consultancy);
+//                        break;
+//                    case "Apparel":
+//                        holder.imageView.setImageResource(R.drawable.ic_shirt);
+//                        break;
+//                    case "Health":
+//                        holder.imageView.setImageResource(R.drawable.ic_health);
+//                        break;
+//                    case "Personal":
+//                        holder.imageView.setImageResource(R.drawable.ic_personal);
+//                        break;
+//                    case "Other":
+//                        holder.imageView.setImageResource(R.drawable.ic_other);
+//                        break;
+//                }
+//
+//                holder.myView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        post_key = getRef(position).getKey();
+//                        item = model.getItem();
+//                        amount = model.getAmount();
+//                        updateData();
+//                    }
+//                });
+//
+//
+//            }
+//
+//            @NonNull
+//            @Override
+//            public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.retreive_layout, parent, false);
+//                return new MyViewHolder(view);
+//            }
+//        };
+//
+//        recyclerView.setAdapter(adapter);
+//        adapter.startListening();
+//        adapter.notifyDataSetChanged();
+//    }
 
     private void getTransportBudgetRatios() {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
