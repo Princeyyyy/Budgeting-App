@@ -36,9 +36,8 @@ public class BudgetItemsAdapter extends RecyclerView.Adapter<BudgetItemsAdapter.
     private List<Data> myDataList;
     private String post_key = "";
     private String item = "";
-    private String note = "";
     private int amount = 0;
-    private DatabaseReference budgetRef, personalRef;
+    private DatabaseReference budgetRef;
     private FirebaseAuth mAuth;
 
 
@@ -62,7 +61,6 @@ public class BudgetItemsAdapter extends RecyclerView.Adapter<BudgetItemsAdapter.
         holder.item.setText("Item: " + data.getItem());
         holder.amount.setText("Amount: " + data.getAmount());
         holder.date.setText("Added On: " + data.getDate());
-        holder.notes.setText("Note: " + data.getNotes());
 
         switch (data.getItem()) {
             case "Transport":
@@ -103,7 +101,6 @@ public class BudgetItemsAdapter extends RecyclerView.Adapter<BudgetItemsAdapter.
                 post_key = data.getId();
                 item = data.getItem();
                 amount = data.getAmount();
-                note = data.getNotes();
                 updateData();
             }
         });
@@ -131,6 +128,9 @@ public class BudgetItemsAdapter extends RecyclerView.Adapter<BudgetItemsAdapter.
         Button delBut = mView.findViewById(R.id.btnDelete);
         Button btnUpdate = mView.findViewById(R.id.btnUpdate);
 
+        mAuth = FirebaseAuth.getInstance();
+        budgetRef = FirebaseDatabase.getInstance().getReference().child("budget").child(mAuth.getCurrentUser().getUid());
+
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,9 +150,6 @@ public class BudgetItemsAdapter extends RecyclerView.Adapter<BudgetItemsAdapter.
                 String itemNday = item + date;
                 String itemNweek = item + weeks.getWeeks();
                 String itemNmonth = item + months.getMonths();
-
-                mAuth = FirebaseAuth.getInstance();
-                budgetRef = FirebaseDatabase.getInstance().getReference().child("budget").child(mAuth.getCurrentUser().getUid());
 
                 Data data = new Data(item, date, post_key, itemNday, itemNweek, itemNmonth, amount, weeks.getWeeks(), months.getMonths(), null);
                 budgetRef.child(post_key).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -212,6 +209,7 @@ public class BudgetItemsAdapter extends RecyclerView.Adapter<BudgetItemsAdapter.
             date = itemView.findViewById(R.id.date);
             notes = itemView.findViewById(R.id.notes);
             imageView = itemView.findViewById(R.id.imageview);
+            notes.setVisibility(View.GONE);
         }
     }
 }

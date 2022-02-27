@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,6 +72,8 @@ public class BudgetActivity extends AppCompatActivity {
 
     private BudgetItemsAdapter budgetItemsAdapter;
 
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +81,7 @@ public class BudgetActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         display = findViewById(R.id.disp);
+        progressBar = findViewById(R.id.progressBar2);
 
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -111,27 +115,6 @@ public class BudgetActivity extends AppCompatActivity {
         budgetRef = FirebaseDatabase.getInstance().getReference().child("budget").child(mAuth.getCurrentUser().getUid());
         personalRef = FirebaseDatabase.getInstance().getReference("personal").child(mAuth.getCurrentUser().getUid());
         loader = new ProgressDialog(this);
-
-//        budgetRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                display.setVisibility(View.GONE);
-//                int totalAmount = 0;
-//
-//                for (DataSnapshot snap : snapshot.getChildren()) {
-//                    Data data = snap.getValue(Data.class);
-//                    totalAmount += data.getAmount();
-//                    String sTotal = "My Budget Ksh." + totalAmount;
-//                    totalBudgetAmountTextView.setText(sTotal);
-//                }
-//                totalBudgetAmountTextView.setVisibility(View.VISIBLE);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
 
         readBudgetItems();
 
@@ -171,9 +154,9 @@ public class BudgetActivity extends AppCompatActivity {
                 if (myDataList.isEmpty()) {
                     totalBudgetAmountTextView.setVisibility(View.GONE);
                     display.setVisibility(View.VISIBLE);
-//                    progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                 } else {
-//                    progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                     display.setVisibility(View.GONE);
 
                     int totalAmount = 0;
@@ -183,7 +166,7 @@ public class BudgetActivity extends AppCompatActivity {
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
 
-                        totalBudgetAmountTextView.setText("Budget Amount is Ksh." + totalAmount);
+                        totalBudgetAmountTextView.setText("Total Budget: Ksh." + totalAmount);
                         totalBudgetAmountTextView.setVisibility(View.VISIBLE);
 
                     }
@@ -276,83 +259,6 @@ public class BudgetActivity extends AppCompatActivity {
         dialog.show();
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//
-//        FirebaseRecyclerOptions<Data> options = new FirebaseRecyclerOptions.Builder<Data>()
-//                .setQuery(budgetRef, Data.class)
-//                .build();
-//
-//        FirebaseRecyclerAdapter<Data, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Data, MyViewHolder>(options) {
-//            @Override
-//            protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull final Data model) {
-//
-//                holder.setItemAmount("Amount: ksh." + model.getAmount());
-//                holder.setDate("Added On: " + model.getDate());
-//                holder.setItemName("Item: " + model.getItem());
-//
-//                holder.notes.setVisibility(View.GONE);
-//
-//                switch (model.getItem()) {
-//                    case "Transport":
-//                        holder.imageView.setImageResource(R.drawable.ic_transport);
-//                        break;
-//                    case "Food":
-//                        holder.imageView.setImageResource(R.drawable.ic_food);
-//                        break;
-//                    case "House":
-//                        holder.imageView.setImageResource(R.drawable.ic_house);
-//                        break;
-//                    case "Entertainment":
-//                        holder.imageView.setImageResource(R.drawable.ic_entertainment);
-//                        break;
-//                    case "Education":
-//                        holder.imageView.setImageResource(R.drawable.ic_education);
-//                        break;
-//                    case "Charity":
-//                        holder.imageView.setImageResource(R.drawable.ic_consultancy);
-//                        break;
-//                    case "Apparel":
-//                        holder.imageView.setImageResource(R.drawable.ic_shirt);
-//                        break;
-//                    case "Health":
-//                        holder.imageView.setImageResource(R.drawable.ic_health);
-//                        break;
-//                    case "Personal":
-//                        holder.imageView.setImageResource(R.drawable.ic_personal);
-//                        break;
-//                    case "Other":
-//                        holder.imageView.setImageResource(R.drawable.ic_other);
-//                        break;
-//                }
-//
-//                holder.myView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        post_key = getRef(position).getKey();
-//                        item = model.getItem();
-//                        amount = model.getAmount();
-//                        updateData();
-//                    }
-//                });
-//
-//
-//            }
-//
-//            @NonNull
-//            @Override
-//            public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.retreive_layout, parent, false);
-//                return new MyViewHolder(view);
-//            }
-//        };
-//
-//        recyclerView.setAdapter(adapter);
-//        adapter.startListening();
-//        adapter.notifyDataSetChanged();
-//    }
-
     private void getTransportBudgetRatios() {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         int currentMonth = calendar.get(Calendar.MONTH);
@@ -424,7 +330,7 @@ public class BudgetActivity extends AppCompatActivity {
                     int weekFoodRatio = pTotal / 4;
                     int monthFoodRatio = pTotal;
 
-                    personalRef.child("dayFoodRatio").setValue(dayFoodRatio);
+                    personalRef.child("dayFoodRatio").setValue(dayFoodRatio[0]);
                     personalRef.child("weekFoodRatio").setValue(weekFoodRatio);
                     personalRef.child("monthFoodRatio").setValue(monthFoodRatio);
 
@@ -468,7 +374,7 @@ public class BudgetActivity extends AppCompatActivity {
                     int weekHouseRatio = pTotal / 4;
                     int monthHouseRatio = pTotal;
 
-                    personalRef.child("dayHouseRatio").setValue(dayHouseRatio);
+                    personalRef.child("dayHouseRatio").setValue(dayHouseRatio[0]);
                     personalRef.child("weekHouseRatio").setValue(weekHouseRatio);
                     personalRef.child("monthHouseRatio").setValue(monthHouseRatio);
 
@@ -512,7 +418,7 @@ public class BudgetActivity extends AppCompatActivity {
                     int weekEntRatio = pTotal / 4;
                     int monthEntRatio = pTotal;
 
-                    personalRef.child("dayEntRatio").setValue(dayEntRatio);
+                    personalRef.child("dayEntRatio").setValue(dayEntRatio[0]);
                     personalRef.child("weekEntRatio").setValue(weekEntRatio);
                     personalRef.child("monthEntRatio").setValue(monthEntRatio);
 
@@ -556,7 +462,7 @@ public class BudgetActivity extends AppCompatActivity {
                     int weekEduRatio = pTotal / 4;
                     int monthEduRatio = pTotal;
 
-                    personalRef.child("dayEduRatio").setValue(dayEduRatio);
+                    personalRef.child("dayEduRatio").setValue(dayEduRatio[0]);
                     personalRef.child("weekEduRatio").setValue(weekEduRatio);
                     personalRef.child("monthEduRatio").setValue(monthEduRatio);
 
@@ -600,7 +506,7 @@ public class BudgetActivity extends AppCompatActivity {
                     int weekCharRatio = pTotal / 4;
                     int monthCharRatio = pTotal;
 
-                    personalRef.child("dayCharRatio").setValue(dayCharRatio);
+                    personalRef.child("dayCharRatio").setValue(dayCharRatio[0]);
                     personalRef.child("weekCharRatio").setValue(weekCharRatio);
                     personalRef.child("monthCharRatio").setValue(monthCharRatio);
 
@@ -644,7 +550,7 @@ public class BudgetActivity extends AppCompatActivity {
                     int weekAppRatio = pTotal / 4;
                     int monthAppRatio = pTotal;
 
-                    personalRef.child("dayAppRatio").setValue(dayAppRatio);
+                    personalRef.child("dayAppRatio").setValue(dayAppRatio[0]);
                     personalRef.child("weekAppRatio").setValue(weekAppRatio);
                     personalRef.child("monthAppRatio").setValue(monthAppRatio);
 
@@ -688,7 +594,7 @@ public class BudgetActivity extends AppCompatActivity {
                     int weekHealthRatio = pTotal / 4;
                     int monthHealthRatio = pTotal;
 
-                    personalRef.child("dayHealthRatio").setValue(dayHealthRatio);
+                    personalRef.child("dayHealthRatio").setValue(dayHealthRatio[0]);
                     personalRef.child("weekHealthRatio").setValue(weekHealthRatio);
                     personalRef.child("monthHealthRatio").setValue(monthHealthRatio);
 
@@ -732,7 +638,7 @@ public class BudgetActivity extends AppCompatActivity {
                     int weekPerRatio = pTotal / 4;
                     int monthPerRatio = pTotal;
 
-                    personalRef.child("dayPerRatio").setValue(dayPerRatio);
+                    personalRef.child("dayPerRatio").setValue(dayPerRatio[0]);
                     personalRef.child("weekPerRatio").setValue(weekPerRatio);
                     personalRef.child("monthPerRatio").setValue(monthPerRatio);
 
@@ -776,7 +682,7 @@ public class BudgetActivity extends AppCompatActivity {
                     int weekOtherRatio = pTotal / 4;
                     int monthOtherRatio = pTotal;
 
-                    personalRef.child("dayOtherRatio").setValue(dayOtherRatio);
+                    personalRef.child("dayOtherRatio").setValue(dayOtherRatio[0]);
                     personalRef.child("weekOtherRatio").setValue(weekOtherRatio);
                     personalRef.child("monthOtherRatio").setValue(monthOtherRatio);
 

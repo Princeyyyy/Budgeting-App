@@ -24,7 +24,7 @@
         android:text="Total Budget Amount:"
         android:textAlignment="center"
         android:textColor="#000"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:visibility="gone"
         android:textStyle="bold" />
 
@@ -45,8 +45,15 @@
             android:gravity="center"
             android:text="No budget has been entered!\nEnter new budget item to view them here"
             android:layout_gravity="center"
+            android:visibility="gone"
             android:textColor="#000"
             android:textSize="15sp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab1"

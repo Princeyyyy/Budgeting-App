@@ -658,12 +658,12 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                     data.add(new ValueDataEntry("Apparel", appTotal));
                     data.add(new ValueDataEntry("Health", heaTotal));
                     data.add(new ValueDataEntry("Personal", perTotal));
-                    data.add(new ValueDataEntry("other", othTotal));
+                    data.add(new ValueDataEntry("Other", othTotal));
 
 
                     pie.data(data);
 
-                    pie.title("Daily Analytics");
+                    pie.title("Today's Analytics");
 
                     pie.labels().position("outside");
 
@@ -852,7 +852,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                     }
 
 
-                    float monthPercent = (monthTotalSpentAmount / monthTotalSpentAmountRatio) * 100;
+                    int monthPercent = (int) ((monthTotalSpentAmount / monthTotalSpentAmountRatio) * 100);
                     if (monthPercent < 50) {
                         monthRatioSpending.setText(monthPercent + "%" + " used of " + monthTotalSpentAmountRatio + ". Status:");
                         monthRatioSpending_Image.setImageResource(R.drawable.green);
@@ -865,7 +865,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
 
                     }
 
-                    float transportPercent = (traTotal / traRatio) * 100;
+                    int transportPercent = (int) ((traTotal / traRatio) * 100);
                     if (transportPercent < 50) {
                         progress_ratio_transport.setText(transportPercent + "%" + " used of " + traRatio + ". Status:");
                         status_Image_transport.setImageResource(R.drawable.green);
@@ -878,7 +878,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
 
                     }
 
-                    float foodPercent = (foodTotal / foodRatio) * 100;
+                    int foodPercent = (int) ((foodTotal / foodRatio) * 100);
                     if (foodPercent < 50) {
                         progress_ratio_food.setText(foodPercent + "%" + " used of " + foodRatio + ". Status:");
                         status_Image_food.setImageResource(R.drawable.green);
@@ -891,7 +891,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
 
                     }
 
-                    float housePercent = (houseTotal / houseRatio) * 100;
+                    int housePercent = (int) ((houseTotal / houseRatio) * 100);
                     if (housePercent < 50) {
                         progress_ratio_house.setText(housePercent + "%" + " used of " + houseRatio + ". Status:");
                         status_Image_house.setImageResource(R.drawable.green);
@@ -904,7 +904,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
 
                     }
 
-                    float entPercent = (entTotal / entRatio) * 100;
+                    int entPercent = (int) ((entTotal / entRatio) * 100);
                     if (entPercent < 50) {
                         progress_ratio_ent.setText(entPercent + "%" + " used of " + entRatio + ". Status:");
                         status_Image_ent.setImageResource(R.drawable.green);
@@ -917,7 +917,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
 
                     }
 
-                    float eduPercent = (eduTotal / eduRatio) * 100;
+                    int eduPercent = (int) ((eduTotal / eduRatio) * 100);
                     if (eduPercent < 50) {
                         progress_ratio_edu.setText(eduPercent + "%" + " used of " + eduRatio + ". Status:");
                         status_Image_edu.setImageResource(R.drawable.green);
@@ -930,7 +930,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
 
                     }
 
-                    float chaPercent = (chaTotal / chaRatio) * 100;
+                    int chaPercent = (int) ((chaTotal / chaRatio) * 100);
                     if (chaPercent < 50) {
                         progress_ratio_cha.setText(chaPercent + "%" + " used of " + chaRatio + ". Status:");
                         status_Image_cha.setImageResource(R.drawable.green);
@@ -943,7 +943,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
 
                     }
 
-                    float appPercent = (appTotal / appRatio) * 100;
+                    int appPercent = (int) ((appTotal / appRatio) * 100);
                     if (appPercent < 50) {
                         progress_ratio_app.setText(appPercent + "%" + " used of " + appRatio + ". Status:");
                         status_Image_app.setImageResource(R.drawable.green);
@@ -956,7 +956,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
 
                     }
 
-                    float heaPercent = (heaTotal / heaRatio) * 100;
+                    int heaPercent = (int) ((heaTotal / heaRatio) * 100);
                     if (heaPercent < 50) {
                         progress_ratio_hea.setText(heaPercent + "%" + " used of " + heaRatio + ". Status:");
                         status_Image_hea.setImageResource(R.drawable.green);
@@ -970,7 +970,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                     }
 
 
-                    float perPercent = (perTotal / perRatio) * 100;
+                    int perPercent = (int) ((perTotal / perRatio) * 100);
                     if (perPercent < 50) {
                         progress_ratio_per.setText(perPercent + "%" + " used of " + perRatio + " . Status:");
                         status_Image_per.setImageResource(R.drawable.green);
@@ -983,7 +983,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                     }
 
 
-                    float otherPercent = (othTotal / othRatio) * 100;
+                    int otherPercent = (int) ((othTotal / othRatio) * 100);
                     if (otherPercent < 50) {
                         progress_ratio_oth.setText(otherPercent + "%" + " used of " + othRatio + ". Status:");
                         status_Image_oth.setImageResource(R.drawable.green);

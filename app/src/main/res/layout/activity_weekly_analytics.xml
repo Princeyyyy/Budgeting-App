@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="L 50 %"
+                android:text="L < 50 %"
                 android:textColor="#000"
                 android:textSize="11sp" />
 
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="2"
-                android:text=" G=50 % L=100 %"
+                android:text=" G > 50 &amp; L < 100 %"
                 android:textColor="#000"
                 android:textSize="11sp" />
 
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="G 100 %"
+                android:text="G > 100 %"
                 android:textColor="#000"
                 android:textSize="11sp" />
         </LinearLayout>
