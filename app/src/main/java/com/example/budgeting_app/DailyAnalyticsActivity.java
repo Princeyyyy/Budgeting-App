@@ -141,18 +141,17 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         //AnyChartView
         anyChartView = findViewById(R.id.anyChartView);
 
-        getTotalWeekTransportExpense();
-        getTotalWeekFoodExpense();
-        getTotalWeekHouseExpenses();
-        getTotalWeekEntertainmentExpenses();
-        getTotalWeekEducationExpenses();
-        getTotalWeekCharityExpenses();
-        getTotalWeekApparelExpenses();
-        getTotalWeekHealthExpenses();
-        getTotalWeekPersonalExpenses();
-        getTotalWeekOtherExpenses();
+        getTotalDayTransportExpense();
+        getTotalDayFoodExpense();
+        getTotalDayHouseExpenses();
+        getTotalDayEntertainmentExpenses();
+        getTotalDayEducationExpenses();
+        getTotalDayCharityExpenses();
+        getTotalDayApparelExpenses();
+        getTotalDayHealthExpenses();
+        getTotalDayPersonalExpenses();
+        getTotalDayOtherExpenses();
         getTotalDaySpending();
-        getTotalRatios();
 
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
@@ -166,7 +165,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         );
     }
 
-    private void getTotalWeekTransportExpense() {
+    private void getTotalDayTransportExpense() {
         MutableDateTime epoch = new MutableDateTime();
         epoch.setDate(0); //Set to Epoch time
         DateTime now = new DateTime();
@@ -206,7 +205,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
 
     }
 
-    private void getTotalWeekFoodExpense() {
+    private void getTotalDayFoodExpense() {
         MutableDateTime epoch = new MutableDateTime();
         epoch.setDate(0); //Set to Epoch time
         DateTime now = new DateTime();
@@ -243,7 +242,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void getTotalWeekHouseExpenses() {
+    private void getTotalDayHouseExpenses() {
         MutableDateTime epoch = new MutableDateTime();
         epoch.setDate(0); //Set to Epoch time
         DateTime now = new DateTime();
@@ -280,7 +279,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void getTotalWeekEntertainmentExpenses() {
+    private void getTotalDayEntertainmentExpenses() {
         MutableDateTime epoch = new MutableDateTime();
         epoch.setDate(0); //Set to Epoch time
         DateTime now = new DateTime();
@@ -317,7 +316,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void getTotalWeekEducationExpenses() {
+    private void getTotalDayEducationExpenses() {
         MutableDateTime epoch = new MutableDateTime();
         epoch.setDate(0); //Set to Epoch time
         DateTime now = new DateTime();
@@ -354,7 +353,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void getTotalWeekCharityExpenses() {
+    private void getTotalDayCharityExpenses() {
         MutableDateTime epoch = new MutableDateTime();
         epoch.setDate(0); //Set to Epoch time
         DateTime now = new DateTime();
@@ -391,7 +390,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void getTotalWeekApparelExpenses() {
+    private void getTotalDayApparelExpenses() {
         MutableDateTime epoch = new MutableDateTime();
         epoch.setDate(0); //Set to Epoch time
         DateTime now = new DateTime();
@@ -428,7 +427,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void getTotalWeekHealthExpenses() {
+    private void getTotalDayHealthExpenses() {
         MutableDateTime epoch = new MutableDateTime();
         epoch.setDate(0); //Set to Epoch time
         DateTime now = new DateTime();
@@ -465,7 +464,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void getTotalWeekPersonalExpenses() {
+    private void getTotalDayPersonalExpenses() {
         MutableDateTime epoch = new MutableDateTime();
         epoch.setDate(0); //Set to Epoch time
         DateTime now = new DateTime();
@@ -502,7 +501,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void getTotalWeekOtherExpenses() {
+    private void getTotalDayOtherExpenses() {
         MutableDateTime epoch = new MutableDateTime();
         epoch.setDate(0); //Set to Epoch time
         DateTime now = new DateTime();
@@ -537,41 +536,6 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                 Toast.makeText(DailyAnalyticsActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void getTotalRatios() {
-
-        int dayTransport = Integer.parseInt(String.valueOf(personalRef.child("dayTransRatio")));
-        int dayFood = Integer.parseInt(String.valueOf(personalRef.child("dayFoodRatio")));
-        int dayHouse = Integer.parseInt(String.valueOf(personalRef.child("dayHouseRatio")));
-        int dayEntertainment = Integer.parseInt(String.valueOf(personalRef.child("dayEntRatio")));
-        int dayEducation = Integer.parseInt(String.valueOf(personalRef.child("dayEduRatio")));
-        int dayCharity = Integer.parseInt(String.valueOf(personalRef.child("dayCharRatio")));
-        int dayApparel = Integer.parseInt(String.valueOf(personalRef.child("dayAppRatio")));
-        int dayHealth = Integer.parseInt(String.valueOf(personalRef.child("dayHealthRatio")));
-        int dayPersonal = Integer.parseInt(String.valueOf(personalRef.child("dayPerRatio")));
-        int dayOther = Integer.parseInt(String.valueOf(personalRef.child("dayOtherRatio")));
-
-        int dayTotal = dayTransport + dayFood + dayHouse + dayEntertainment + dayEducation + dayCharity + dayApparel + dayHealth + dayPersonal + dayOther;
-
-        personalRef.child("dailyBudget").setValue(dayTotal);
-
-
-        int weekTransport = Integer.parseInt(String.valueOf(personalRef.child("weekTransRatio")));
-        int weekFood = Integer.parseInt(String.valueOf(personalRef.child("weekFoodRatio")));
-        int weekHouse = Integer.parseInt(String.valueOf(personalRef.child("weekHouseRatio")));
-        int weekEntertainment = Integer.parseInt(String.valueOf(personalRef.child("weekEntRatio")));
-        int weekEducation = Integer.parseInt(String.valueOf(personalRef.child("weekEduRatio")));
-        int weekCharity = Integer.parseInt(String.valueOf(personalRef.child("weekCharRatio")));
-        int weekApparel = Integer.parseInt(String.valueOf(personalRef.child("weekAppRatio")));
-        int weekHealth = Integer.parseInt(String.valueOf(personalRef.child("weekHealthRatio")));
-        int weekPersonal = Integer.parseInt(String.valueOf(personalRef.child("weekPerRatio")));
-        int weekOther = Integer.parseInt(String.valueOf(personalRef.child("weekOtherRatio")));
-
-        int weekTotal = weekTransport + weekFood + weekHouse + weekEntertainment + weekEducation + weekCharity + weekApparel + weekHealth + weekPersonal + weekOther;
-
-        personalRef.child("weeklyBudget").setValue(weekTotal);
-
     }
 
     private void getTotalDaySpending() {
