@@ -204,7 +204,7 @@ public class TodaysSpendingActivity extends AppCompatActivity {
                     Toast.makeText(TodaysSpendingActivity.this, "Select a valid item", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    loader.setMessage("Adding a budget item");
+                    loader.setMessage("Adding expense item");
                     loader.setCanceledOnTouchOutside(false);
                     loader.show();
 

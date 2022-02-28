@@ -88,7 +88,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,12 +99,22 @@
                 <com.anychart.AnyChartView
                     android:id="@+id/anyChartView"
                     android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_marginTop="10dp" />
+
+                <Switch
+                    android:id="@+id/details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_height="500dp" />
+                    android:switchMinWidth="56dp"
+                    android:text="Details" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
@@ -165,7 +176,6 @@
                                     android:id="@+id/monthRatioSpending_Image"
                                     android:layout_width="0dp"
                                     android:layout_height="18dp"
-                                    android:layout_marginTop="5dp"
                                     android:layout_weight="1"
 
                                     />
@@ -185,12 +195,14 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/transportCard"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:elevation="10dp"
+                    android:visibility="gone"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="10dp">
 
@@ -245,7 +257,6 @@
                                     android:id="@+id/status_Image_transport"
                                     android:layout_width="0dp"
                                     android:layout_height="18dp"
-                                    android:layout_marginTop="5dp"
                                     android:layout_weight="1" />
                             </LinearLayout>
                         </LinearLayout>
@@ -262,12 +273,14 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/foodCard"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:elevation="10dp"
+                    android:visibility="gone"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="10dp">
 
@@ -322,7 +335,6 @@
                                     android:id="@+id/status_Image_food"
                                     android:layout_width="0dp"
                                     android:layout_height="18dp"
-                                    android:layout_marginTop="5dp"
                                     android:layout_weight="1" />
                             </LinearLayout>
                         </LinearLayout>
@@ -339,12 +351,14 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/houseCard"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:elevation="10dp"
+                    android:visibility="gone"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="10dp">
 
@@ -399,7 +413,6 @@
                                     android:id="@+id/status_Image_house"
                                     android:layout_width="0dp"
                                     android:layout_height="18dp"
-                                    android:layout_marginTop="5dp"
                                     android:layout_weight="1" />
                             </LinearLayout>
                         </LinearLayout>
@@ -418,12 +431,14 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/entertainmentCard"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:elevation="10dp"
+                    android:visibility="gone"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="10dp">
 
@@ -478,7 +493,6 @@
                                     android:id="@+id/status_Image_ent"
                                     android:layout_width="0dp"
                                     android:layout_height="18dp"
-                                    android:layout_marginTop="5dp"
                                     android:layout_weight="1" />
                             </LinearLayout>
                         </LinearLayout>
@@ -495,12 +509,14 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/educationCard"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:elevation="10dp"
+                    android:visibility="gone"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="10dp">
 
@@ -555,7 +571,6 @@
                                     android:id="@+id/status_Image_edu"
                                     android:layout_width="0dp"
                                     android:layout_height="18dp"
-                                    android:layout_marginTop="5dp"
                                     android:layout_weight="1" />
                             </LinearLayout>
                         </LinearLayout>
@@ -572,12 +587,14 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/charityCard"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:elevation="10dp"
+                    android:visibility="gone"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="10dp">
 
@@ -632,7 +649,6 @@
                                     android:id="@+id/status_Image_cha"
                                     android:layout_width="0dp"
                                     android:layout_height="18dp"
-                                    android:layout_marginTop="5dp"
                                     android:layout_weight="1" />
                             </LinearLayout>
                         </LinearLayout>
@@ -649,12 +665,14 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/apparelCard"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:elevation="10dp"
+                    android:visibility="gone"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="10dp">
 
@@ -709,7 +727,6 @@
                                     android:id="@+id/status_Image_app"
                                     android:layout_width="0dp"
                                     android:layout_height="18dp"
-                                    android:layout_marginTop="5dp"
                                     android:layout_weight="1" />
                             </LinearLayout>
                         </LinearLayout>
@@ -726,12 +743,14 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/healthCard"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:elevation="10dp"
+                    android:visibility="gone"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="10dp">
 
@@ -786,7 +805,6 @@
                                     android:id="@+id/status_Image_hea"
                                     android:layout_width="0dp"
                                     android:layout_height="18dp"
-                                    android:layout_marginTop="5dp"
                                     android:layout_weight="1" />
                             </LinearLayout>
                         </LinearLayout>
@@ -803,12 +821,14 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/personalCard"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:elevation="10dp"
+                    android:visibility="gone"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="10dp">
 
@@ -863,7 +883,6 @@
                                     android:id="@+id/status_Image_per"
                                     android:layout_width="0dp"
                                     android:layout_height="18dp"
-                                    android:layout_marginTop="5dp"
                                     android:layout_weight="1" />
                             </LinearLayout>
                         </LinearLayout>
@@ -880,12 +899,14 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/otherCard"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:elevation="10dp"
+                    android:visibility="gone"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="10dp">
 
@@ -940,7 +961,6 @@
                                     android:id="@+id/status_Image_oth"
                                     android:layout_width="0dp"
                                     android:layout_height="18dp"
-                                    android:layout_marginTop="5dp"
                                     android:layout_weight="1"
 
                                     />

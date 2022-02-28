@@ -3,12 +3,15 @@ package com.example.budgeting_app;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +44,8 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
 
     private Toolbar settingsToolbar;
 
+    private Switch details;
+
     private FirebaseAuth mAuth;
     private String onlineUserId = "";
     private DatabaseReference expensesRef, personalRef;
@@ -54,6 +59,8 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
     private AnyChartView anyChartView;
     private TextView progress_ratio_transport, progress_ratio_food, progress_ratio_house, progress_ratio_ent, progress_ratio_edu, progress_ratio_cha, progress_ratio_app, progress_ratio_hea, progress_ratio_per, progress_ratio_oth, monthRatioSpending;
     private ImageView status_Image_transport, status_Image_food, status_Image_house, status_Image_ent, status_Image_edu, status_Image_cha, status_Image_app, status_Image_hea, status_Image_per, status_Image_oth, monthRatioSpending_Image;
+
+    private CardView transportCard, foodCard, houseCard, entertainmentCard, educationCard, charityCard, apparelCard, healthCard, personalCard, otherCard;
 
 
     @Override
@@ -85,7 +92,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
 
         totalBudgetAmountTextView = findViewById(R.id.totalBudgetAmountTextView);
 
-        //general analytic
+        //General Analytics
         monthSpentAmount = findViewById(R.id.monthSpentAmount);
         linearLayoutAnalysis = findViewById(R.id.linearLayoutAnalysis);
         monthRatioSpending = findViewById(R.id.monthRatioSpending);
@@ -102,7 +109,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         analyticsPersonalExpensesAmount = findViewById(R.id.analyticsPersonalExpensesAmount);
         analyticsOtherAmount = findViewById(R.id.analyticsOtherAmount);
 
-        //Relative layouts views
+        //Relative Layouts Views
         linearLayoutTransport = findViewById(R.id.linearLayoutTransport);
         linearLayoutFood = findViewById(R.id.linearLayoutFood);
         linearLayoutFoodHouse = findViewById(R.id.linearLayoutFoodHouse);
@@ -140,6 +147,51 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
 
         //AnyChartView
         anyChartView = findViewById(R.id.anyChartView);
+
+        //Details
+        details = findViewById(R.id.details);
+
+        //CardViews
+        transportCard = findViewById(R.id.transportCard);
+        foodCard = findViewById(R.id.foodCard);
+        houseCard = findViewById(R.id.houseCard);
+        entertainmentCard = findViewById(R.id.entertainmentCard);
+        educationCard = findViewById(R.id.educationCard);
+        charityCard = findViewById(R.id.charityCard);
+        apparelCard = findViewById(R.id.apparelCard);
+        healthCard = findViewById(R.id.healthCard);
+        personalCard = findViewById(R.id.personalCard);
+        otherCard = findViewById(R.id.otherCard);
+
+
+        details.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    transportCard.setVisibility(View.VISIBLE);
+                    foodCard.setVisibility(View.VISIBLE);
+                    houseCard.setVisibility(View.VISIBLE);
+                    entertainmentCard.setVisibility(View.VISIBLE);
+                    educationCard.setVisibility(View.VISIBLE);
+                    charityCard.setVisibility(View.VISIBLE);
+                    apparelCard.setVisibility(View.VISIBLE);
+                    healthCard.setVisibility(View.VISIBLE);
+                    personalCard.setVisibility(View.VISIBLE);
+                    otherCard.setVisibility(View.VISIBLE);
+                }else {
+                    transportCard.setVisibility(View.GONE);
+                    foodCard.setVisibility(View.GONE);
+                    houseCard.setVisibility(View.GONE);
+                    entertainmentCard.setVisibility(View.GONE);
+                    educationCard.setVisibility(View.GONE);
+                    charityCard.setVisibility(View.GONE);
+                    apparelCard.setVisibility(View.GONE);
+                    healthCard.setVisibility(View.GONE);
+                    personalCard.setVisibility(View.GONE);
+                    otherCard.setVisibility(View.GONE);
+                }
+            }
+        });
 
         getTotalDayTransportExpense();
         getTotalDayFoodExpense();
