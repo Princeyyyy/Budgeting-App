@@ -6,7 +6,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -168,6 +170,45 @@ public class MainActivity extends AppCompatActivity {
         getWeekSpentAmount();
         getMonthSpentAmount();
         getSavings();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        resetBudget();
+    }
+
+    public void resetBudget() {
+
+        DatabaseReference budgetRef2;
+        FirebaseAuth mAuth2;
+
+        mAuth2 = FirebaseAuth.getInstance();
+        budgetRef2 = FirebaseDatabase.getInstance().getReference().child("budget").child(mAuth2.getCurrentUser().getUid());
+
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DATE);
+        int res = calendar.getActualMaximum(Calendar.DATE);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if (day == res) {
+            //Check if its the last day
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("reset", false);
+            editor.commit();
+        }
+
+        if (!prefs.getBoolean("reset", false) && day == 1) {
+            // Reset Budget
+            budgetRef2.removeValue();
+            Toast.makeText(this, "Budget Reset!!", Toast.LENGTH_LONG).show();
+
+            // Mark reset as done.
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("reset", true);
+            editor.commit();
+        }
     }
 
     private void getSavings() {
