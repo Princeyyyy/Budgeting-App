@@ -1,9 +1,12 @@
 package com.example.budgeting_app;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +41,9 @@ import org.joda.time.Weeks;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -137,6 +143,24 @@ public class BudgetActivity extends AppCompatActivity {
         getPersonalBudgetRatios();
         getOtherBudgetRatios();
 //        getTotalBudgetRatios();
+    }
+
+    @Override
+    protected void onStart() {
+
+        super.onStart();
+        final int DAY_OF_MONTH_TO_RESET_COUNT = 1;
+        final ZoneId timeZone = ZoneId.systemDefault();
+
+        LocalDate lastResetDate = LocalDate.of(2022, Month.FEBRUARY, 1);
+
+        LocalDate nextResetDate = lastResetDate.plusMonths(1).withDayOfMonth(DAY_OF_MONTH_TO_RESET_COUNT);
+        LocalDate today = LocalDate.now(timeZone);
+
+        if (!nextResetDate.isAfter(today)) {
+            Toast.makeText(this, "Budget has been reset!!!", Toast.LENGTH_SHORT).show();
+            budgetRef.removeValue();
+        }
     }
 
     private void readBudgetItems() {
