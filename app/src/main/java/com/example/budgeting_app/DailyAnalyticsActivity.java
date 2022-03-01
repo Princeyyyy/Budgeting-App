@@ -164,32 +164,29 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         otherCard = findViewById(R.id.otherCard);
 
 
-        details.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    transportCard.setVisibility(View.VISIBLE);
-                    foodCard.setVisibility(View.VISIBLE);
-                    houseCard.setVisibility(View.VISIBLE);
-                    entertainmentCard.setVisibility(View.VISIBLE);
-                    educationCard.setVisibility(View.VISIBLE);
-                    charityCard.setVisibility(View.VISIBLE);
-                    apparelCard.setVisibility(View.VISIBLE);
-                    healthCard.setVisibility(View.VISIBLE);
-                    personalCard.setVisibility(View.VISIBLE);
-                    otherCard.setVisibility(View.VISIBLE);
-                }else {
-                    transportCard.setVisibility(View.GONE);
-                    foodCard.setVisibility(View.GONE);
-                    houseCard.setVisibility(View.GONE);
-                    entertainmentCard.setVisibility(View.GONE);
-                    educationCard.setVisibility(View.GONE);
-                    charityCard.setVisibility(View.GONE);
-                    apparelCard.setVisibility(View.GONE);
-                    healthCard.setVisibility(View.GONE);
-                    personalCard.setVisibility(View.GONE);
-                    otherCard.setVisibility(View.GONE);
-                }
+        details.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                transportCard.setVisibility(View.VISIBLE);
+                foodCard.setVisibility(View.VISIBLE);
+                houseCard.setVisibility(View.VISIBLE);
+                entertainmentCard.setVisibility(View.VISIBLE);
+                educationCard.setVisibility(View.VISIBLE);
+                charityCard.setVisibility(View.VISIBLE);
+                apparelCard.setVisibility(View.VISIBLE);
+                healthCard.setVisibility(View.VISIBLE);
+                personalCard.setVisibility(View.VISIBLE);
+                otherCard.setVisibility(View.VISIBLE);
+            } else {
+                transportCard.setVisibility(View.GONE);
+                foodCard.setVisibility(View.GONE);
+                houseCard.setVisibility(View.GONE);
+                entertainmentCard.setVisibility(View.GONE);
+                educationCard.setVisibility(View.GONE);
+                charityCard.setVisibility(View.GONE);
+                apparelCard.setVisibility(View.GONE);
+                healthCard.setVisibility(View.GONE);
+                personalCard.setVisibility(View.GONE);
+                otherCard.setVisibility(View.GONE);
             }
         });
 
@@ -213,7 +210,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                         setStatusAndImageResource();
                     }
                 },
-                1000
+                0
         );
     }
 
