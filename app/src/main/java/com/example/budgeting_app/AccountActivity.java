@@ -64,13 +64,10 @@ public class AccountActivity extends AppCompatActivity {
 
         updateDetailsBtn = findViewById(R.id.updateDetailsBtn);
 
-        settingsToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AccountActivity.this, MainActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
-            }
+        settingsToolbar.setNavigationOnClickListener(view -> {
+            Intent intent = new Intent(AccountActivity.this, MainActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
         });
 
         logoutBtn = findViewById(R.id.logoutBtn);
@@ -110,51 +107,36 @@ public class AccountActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("State", MODE_PRIVATE);
         SharedPreferences.Editor preferences = sharedPreferences.edit();
         aSwitch.setChecked(sharedPreferences.getBoolean("isChecked", false));
-        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    preferences.putBoolean("isChecked", true);
-                } else {
-                    preferences.putBoolean("isChecked", false);
-                }
-                preferences.commit();
+        aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                preferences.putBoolean("isChecked", true);
+            } else {
+                preferences.putBoolean("isChecked", false);
             }
+            preferences.apply();
         });
 
 
-        updateDetailsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateUser();
-            }
-        });
+        updateDetailsBtn.setOnClickListener(view -> updateUser());
 
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new AlertDialog.Builder(AccountActivity.this)
-                        .setTitle("Personal Budgeting App")
-                        .setMessage("Are you sure you want to exit?")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                FirebaseAuth.getInstance().signOut();
-                                Intent intent = new Intent(AccountActivity.this, LoginActivity.class);
-                                startActivity(intent);
+        logoutBtn.setOnClickListener(view -> new AlertDialog.Builder(AccountActivity.this)
+                .setTitle("Personal Budgeting App")
+                .setMessage("Are you sure you want to exit?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", (dialog, id) -> {
+                    FirebaseAuth.getInstance().signOut();
+                    Intent intent = new Intent(AccountActivity.this, LoginActivity.class);
+                    startActivity(intent);
 
-                                SharedPreferences sharedPreferences3 = getSharedPreferences("State3", MODE_PRIVATE);
-                                SharedPreferences.Editor preferences3 = sharedPreferences3.edit();
-                                preferences3.putString("status", "logout");
-                                preferences3.commit();
+                    SharedPreferences sharedPreferences1 = getSharedPreferences("State", MODE_PRIVATE);
+                    SharedPreferences.Editor preferences1 = sharedPreferences1.edit();
+                    preferences1.putBoolean("isChecked", false);
+                    preferences1.apply();
 
-                                finish();
-                            }
-                        })
-                        .setNegativeButton("No", null)
-                        .show();
-            }
-        });
+                    finish();
+                })
+                .setNegativeButton("No", null)
+                .show());
     }
 
     private void updateUser() {
@@ -191,7 +173,7 @@ public class AccountActivity extends AppCompatActivity {
                 SharedPreferences sharedPreferences2 = getSharedPreferences("State2", MODE_PRIVATE);
                 SharedPreferences.Editor preferences2 = sharedPreferences2.edit();
                 preferences2.putString("pin", pin);
-                preferences2.commit();
+                preferences2.apply();
 
 
                 Toast.makeText(AccountActivity.this, "Account Update Successful", Toast.LENGTH_SHORT).show();
@@ -202,12 +184,7 @@ public class AccountActivity extends AppCompatActivity {
         });
 
 
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        cancelBtn.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
     }

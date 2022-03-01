@@ -41,28 +41,16 @@ public class Splash_ScreenActivity extends AppCompatActivity {
         boolean preferences = sharedPreferences.getBoolean("isChecked", false);
         String value = String.valueOf(preferences);
 
-//        SharedPreferences sharedPreferences2 = getSharedPreferences("State2", MODE_PRIVATE);
-//        String preferences2 = sharedPreferences2.getString("pin", "");
 
-        SharedPreferences sharedPreferences3 = getSharedPreferences("State3", MODE_PRIVATE);
-        String preferences3 = sharedPreferences3.getString("status", "");
-
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (preferences3.equals("logout")) {
-                    Intent intent = new Intent(Splash_ScreenActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                } else if (value.equals("true")) {
-                    Intent intent = new Intent(Splash_ScreenActivity.this, PassCodeActivity.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(Splash_ScreenActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                }
-                finish();
+        new Handler().postDelayed(() -> {
+            if (value.equals("true")) {
+                Intent intent = new Intent(Splash_ScreenActivity.this, LoginActivity.class);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(Splash_ScreenActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
+            finish();
         }, SPLASH);
     }
 }
