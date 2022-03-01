@@ -95,7 +95,7 @@ public class AccountActivity extends AppCompatActivity {
                 lname = user.getLname();
                 pin = user.getPasscode();
                 email = user.getEmail();
-                password = user.getPasscode();
+                password = user.getPassword();
             }
 
             @Override
@@ -108,7 +108,10 @@ public class AccountActivity extends AppCompatActivity {
         SharedPreferences.Editor preferences = sharedPreferences.edit();
         aSwitch.setChecked(sharedPreferences.getBoolean("isChecked", false));
         aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
+            if (isChecked && pin.equals("null")) {
+                Toast.makeText(this, "You need to set a pin first!!", Toast.LENGTH_SHORT).show();
+                aSwitch.setChecked(false);
+            } else if (isChecked) {
                 preferences.putBoolean("isChecked", true);
             } else {
                 preferences.putBoolean("isChecked", false);
@@ -159,28 +162,20 @@ public class AccountActivity extends AppCompatActivity {
         Button cancelBtn = view.findViewById(R.id.cancelBtn);
         Button updateButton = view.findViewById(R.id.update);
 
-        updateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fname = uFname.getText().toString().trim();
-                lname = uLname.getText().toString().trim();
-                pin = uPin.getText().toString().trim();
+        updateButton.setOnClickListener(v -> {
+            fname = uFname.getText().toString().trim();
+            lname = uLname.getText().toString().trim();
+            pin = uPin.getText().toString().trim();
 
-                updateData.child("fname").setValue(fname);
-                updateData.child("lname").setValue(lname);
-                updateData.child("passcode").setValue(pin);
-
-                SharedPreferences sharedPreferences2 = getSharedPreferences("State2", MODE_PRIVATE);
-                SharedPreferences.Editor preferences2 = sharedPreferences2.edit();
-                preferences2.putString("pin", pin);
-                preferences2.apply();
+            updateData.child("fname").setValue(fname);
+            updateData.child("lname").setValue(lname);
+            updateData.child("passcode").setValue(pin);
 
 
-                Toast.makeText(AccountActivity.this, "Account Update Successful", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AccountActivity.this, "Account Updated Successful", Toast.LENGTH_SHORT).show();
 
-                dialog.dismiss();
+            dialog.dismiss();
 
-            }
         });
 
 

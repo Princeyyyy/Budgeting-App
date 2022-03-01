@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
             //Check if its the last day
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean("reset", false);
-            editor.commit();
+            editor.apply();
         }
 
         if (!prefs.getBoolean("reset", false) && day == 1) {
@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
             // Mark reset as done.
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean("reset", true);
-            editor.commit();
+            editor.apply();
         }
     }
 
