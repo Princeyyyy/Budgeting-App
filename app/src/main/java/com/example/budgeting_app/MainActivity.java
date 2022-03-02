@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
     private int totalAmountBudgetB = 0;
     private int totalAmountBudgetC = 0;
 
+    private long pressedTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,54 +90,36 @@ public class MainActivity extends AppCompatActivity {
         expensesRef = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserID);
         personalRef = FirebaseDatabase.getInstance().getReference("personal").child(onlineUserID);
 
-        budgetCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, BudgetActivity.class);
-                startActivity(intent);
-            }
+        budgetCardView.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, BudgetActivity.class);
+            startActivity(intent);
         });
 
-        todayCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, TodaysSpendingActivity.class);
-                startActivity(intent);
-            }
+        todayCardView.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, TodaysSpendingActivity.class);
+            startActivity(intent);
         });
 
-        weekCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, WeeksSpendingActivity.class);
-                intent.putExtra("type", "week");
-                startActivity(intent);
-            }
+        weekCardView.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, WeeksSpendingActivity.class);
+            intent.putExtra("type", "week");
+            startActivity(intent);
         });
 
-        monthCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, WeeksSpendingActivity.class);
-                intent.putExtra("type", "month");
-                startActivity(intent);
-            }
+        monthCardView.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, WeeksSpendingActivity.class);
+            intent.putExtra("type", "month");
+            startActivity(intent);
         });
 
-        analyticsCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ChooseAnalyticsActivity.class);
-                startActivity(intent);
-            }
+        analyticsCardView.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, ChooseAnalyticsActivity.class);
+            startActivity(intent);
         });
 
-        historyCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
-                startActivity(intent);
-            }
+        historyCardView.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+            startActivity(intent);
         });
 
         budgetRef.addValueEventListener(new ValueEventListener() {
@@ -372,5 +356,24 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Back button listener.
+     * Will close the application if the back button pressed twice.
+     */
+    @Override
+    public void onBackPressed() {
+
+        if (pressedTime + 1000 > System.currentTimeMillis()) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        } else {
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+        }
+        pressedTime = System.currentTimeMillis();
     }
 }

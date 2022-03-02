@@ -102,13 +102,10 @@ public class BudgetActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("My Budget");
 
-        budgetToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(BudgetActivity.this, MainActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
-            }
+        budgetToolbar.setNavigationOnClickListener(view -> {
+            Intent intent = new Intent(BudgetActivity.this, MainActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
         });
 
         mAuth = FirebaseAuth.getInstance();
@@ -119,12 +116,7 @@ public class BudgetActivity extends AppCompatActivity {
         readBudgetItems();
 
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addItems();
-            }
-        });
+        fab.setOnClickListener(v -> addItems());
 
         getTransportBudgetRatios();
         getFoodBudgetRatios();
