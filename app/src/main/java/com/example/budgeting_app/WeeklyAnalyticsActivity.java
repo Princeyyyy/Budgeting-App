@@ -685,12 +685,12 @@ public class WeeklyAnalyticsActivity extends AppCompatActivity {
                     data.add(new ValueDataEntry("Apparel", appTotal));
                     data.add(new ValueDataEntry("Health", heaTotal));
                     data.add(new ValueDataEntry("Personal", perTotal));
-                    data.add(new ValueDataEntry("Other", othTotal));
+                    data.add(new ValueDataEntry("other", othTotal));
 
 
                     pie.data(data);
 
-                    pie.title("Week's Analytics");
+                    pie.title("Week Analytics");
 
                     pie.labels().position("outside");
 

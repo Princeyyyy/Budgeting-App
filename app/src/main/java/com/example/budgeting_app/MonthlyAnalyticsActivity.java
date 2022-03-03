@@ -6,10 +6,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -31,11 +29,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import org.joda.time.DateTime;
-import org.joda.time.Months;
-import org.joda.time.MutableDateTime;
-
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -189,17 +184,17 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
             }
         });
 
-        getTotalWeekTransportExpense();
-        getTotalMonthsFoodExpense();
-        getTotalMonthsHouseExpense();
+        getTotalMonthTransportExpense();
+        getTotalMonthFoodExpense();
+        getTotalMonthHouseExpense();
         getTotalMonthEntertainmentExpenses();
-        getTotalWeekEducationExpenses();
-        getTotalWeekCharityExpenses();
-        getTotalWeekApparelExpenses();
-        getTotalWeekHealthExpenses();
-        getTotalWeekPersonalExpenses();
-        getTotalWeekOtherExpenses();
-        getTotalWeekSpending();
+        getTotalMonthEducationExpenses();
+        getTotalMonthCharityExpenses();
+        getTotalMonthApparelExpenses();
+        getTotalMonthHealthExpenses();
+        getTotalMonthPersonalExpenses();
+        getTotalMonthOtherExpenses();
+        getTotalMonthSpending();
 
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
@@ -213,13 +208,11 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         );
     }
 
-    private void getTotalWeekTransportExpense() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Months months = Months.monthsBetween(epoch, now);
+    private void getTotalMonthTransportExpense() {
+        Calendar calendar = Calendar.getInstance();
+        String month = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
 
-        String itemNmonth = "Transport" + months.getMonths();
+        String itemNmonth = "Transport" + month;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNmonth").equalTo(itemNmonth);
@@ -252,13 +245,11 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
 
     }
 
-    private void getTotalMonthsFoodExpense() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Months months = Months.monthsBetween(epoch, now);
+    private void getTotalMonthFoodExpense() {
+        Calendar calendar = Calendar.getInstance();
+        String month = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
 
-        String itemNmonth = "Food" + months.getMonths();
+        String itemNmonth = "Food" + month;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNmonth").equalTo(itemNmonth);
@@ -289,13 +280,11 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void getTotalMonthsHouseExpense() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Months months = Months.monthsBetween(epoch, now);
+    private void getTotalMonthHouseExpense() {
+        Calendar calendar = Calendar.getInstance();
+        String month = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
 
-        String itemNmonth = "House Expenses" + months.getMonths();
+        String itemNmonth = "House Expenses" + month;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNmonth").equalTo(itemNmonth);
@@ -327,12 +316,10 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
     }
 
     private void getTotalMonthEntertainmentExpenses() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Months months = Months.monthsBetween(epoch, now);
+        Calendar calendar = Calendar.getInstance();
+        String month = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
 
-        String itemNmonth = "Entertainment" + months.getMonths();
+        String itemNmonth = "Entertainment" + month;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNmonth").equalTo(itemNmonth);
@@ -363,13 +350,11 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void getTotalWeekEducationExpenses() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Months months = Months.monthsBetween(epoch, now);
+    private void getTotalMonthEducationExpenses() {
+        Calendar calendar = Calendar.getInstance();
+        String month = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
 
-        String itemNmonth = "Education" + months.getMonths();
+        String itemNmonth = "Education" + month;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNmonth").equalTo(itemNmonth);
@@ -400,13 +385,11 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void getTotalWeekCharityExpenses() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Months months = Months.monthsBetween(epoch, now);
+    private void getTotalMonthCharityExpenses() {
+        Calendar calendar = Calendar.getInstance();
+        String month = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
 
-        String itemNmonth = "Charity" + months.getMonths();
+        String itemNmonth = "Charity" + month;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNmonth").equalTo(itemNmonth);
@@ -437,13 +420,11 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void getTotalWeekApparelExpenses() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Months months = Months.monthsBetween(epoch, now);
+    private void getTotalMonthApparelExpenses() {
+        Calendar calendar = Calendar.getInstance();
+        String month = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
 
-        String itemNmonth = "Apparel and Services" + months.getMonths();
+        String itemNmonth = "Apparel and Services" + month;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNmonth").equalTo(itemNmonth);
@@ -474,13 +455,11 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void getTotalWeekHealthExpenses() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Months months = Months.monthsBetween(epoch, now);
+    private void getTotalMonthHealthExpenses() {
+        Calendar calendar = Calendar.getInstance();
+        String month = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
 
-        String itemNmonth = "Health" + months.getMonths();
+        String itemNmonth = "Health" + month;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNmonth").equalTo(itemNmonth);
@@ -511,13 +490,11 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void getTotalWeekPersonalExpenses() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Months months = Months.monthsBetween(epoch, now);
+    private void getTotalMonthPersonalExpenses() {
+        Calendar calendar = Calendar.getInstance();
+        String month = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
 
-        String itemNmonth = "Personal Expenses" + months.getMonths();
+        String itemNmonth = "Personal Expenses" + month;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNmonth").equalTo(itemNmonth);
@@ -548,13 +525,11 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void getTotalWeekOtherExpenses() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Months months = Months.monthsBetween(epoch, now);
+    private void getTotalMonthOtherExpenses() {
+        Calendar calendar = Calendar.getInstance();
+        String month = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
 
-        String itemNmonth = "Other" + months.getMonths();
+        String itemNmonth = "Other" + month;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNmonth").equalTo(itemNmonth);
@@ -585,14 +560,12 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void getTotalWeekSpending() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Months months = Months.monthsBetween(epoch, now);
+    private void getTotalMonthSpending() {
+        Calendar calendar = Calendar.getInstance();
+        String month = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
-        Query query = reference.orderByChild("month").equalTo(months.getMonths());
+        Query query = reference.orderByChild("month").equalTo(month);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -706,12 +679,12 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
                     data.add(new ValueDataEntry("Apparel", appTotal));
                     data.add(new ValueDataEntry("Health", heaTotal));
                     data.add(new ValueDataEntry("Personal", perTotal));
-                    data.add(new ValueDataEntry("Other", othTotal));
+                    data.add(new ValueDataEntry("other", othTotal));
 
 
                     pie.data(data);
 
-                    pie.title("Month's Analytics");
+                    pie.title("Month Analytics");
 
                     pie.labels().position("outside");
 
