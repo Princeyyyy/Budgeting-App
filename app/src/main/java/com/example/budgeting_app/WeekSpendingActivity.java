@@ -26,17 +26,18 @@ import org.joda.time.MutableDateTime;
 import org.joda.time.Weeks;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-public class WeeksSpendingActivity extends AppCompatActivity {
+public class WeekSpendingActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TextView totalWeekAmountTextView;
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
 
-    private WeeksSpendingAdapter weeksSpendingAdapter;
+    private WeekSpendingAdapter weekSpendingAdapter;
     private List<Data> myDataList;
 
     private FirebaseAuth mAuth;
@@ -70,8 +71,8 @@ public class WeeksSpendingActivity extends AppCompatActivity {
 
 
         myDataList = new ArrayList<>();
-        weeksSpendingAdapter = new WeeksSpendingAdapter(WeeksSpendingActivity.this, myDataList);
-        recyclerView.setAdapter(weeksSpendingAdapter);
+        weekSpendingAdapter = new WeekSpendingAdapter(WeekSpendingActivity.this, myDataList);
+        recyclerView.setAdapter(weekSpendingAdapter);
 
         if (getIntent().getExtras() != null) {
             type = getIntent().getStringExtra("type");
@@ -93,7 +94,7 @@ public class WeeksSpendingActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(WeeksSpendingActivity.this, MainActivity.class);
+                Intent intent = new Intent(WeekSpendingActivity.this, MainActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
             }
@@ -103,13 +104,11 @@ public class WeeksSpendingActivity extends AppCompatActivity {
     }
 
     private void readMonthsSpendingItems() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0);
-        DateTime now = new DateTime();
-        Months months = Months.monthsBetween(epoch, now);
+        Calendar calendar = Calendar.getInstance();
+        String month = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
 
         expensesRef = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
-        Query query = expensesRef.orderByChild("month").equalTo(months.getMonths());
+        Query query = expensesRef.orderByChild("month").equalTo(month);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -119,7 +118,7 @@ public class WeeksSpendingActivity extends AppCompatActivity {
                     myDataList.add(data);
                 }
 
-                weeksSpendingAdapter.notifyDataSetChanged();
+                weekSpendingAdapter.notifyDataSetChanged();
 
                 if (myDataList.isEmpty()) {
                     totalWeekAmountTextView.setVisibility(View.GONE);
@@ -151,13 +150,11 @@ public class WeeksSpendingActivity extends AppCompatActivity {
     }
 
     private void readWeeksSpendingItems() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0);
-        DateTime now = new DateTime();
-        Weeks weeks = Weeks.weeksBetween(epoch, now);
+        Calendar calendar = Calendar.getInstance();
+        String week = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
 
         expensesRef = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
-        Query query = expensesRef.orderByChild("week").equalTo(weeks.getWeeks());
+        Query query = expensesRef.orderByChild("week").equalTo(week);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -167,7 +164,7 @@ public class WeeksSpendingActivity extends AppCompatActivity {
                     myDataList.add(data);
                 }
 
-                weeksSpendingAdapter.notifyDataSetChanged();
+                weekSpendingAdapter.notifyDataSetChanged();
 
                 if (myDataList.isEmpty()) {
                     totalWeekAmountTextView.setVisibility(View.GONE);

@@ -35,6 +35,7 @@ import org.joda.time.MutableDateTime;
 import org.joda.time.Weeks;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -214,12 +215,10 @@ public class WeeklyAnalyticsActivity extends AppCompatActivity {
     }
 
     private void getTotalWeekTransportExpense() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Weeks weeks = Weeks.weeksBetween(epoch, now);
+        Calendar calendar = Calendar.getInstance();
+        String week = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
 
-        String itemNweek = "Transport" + weeks.getWeeks();
+        String itemNweek = "Transport" + week;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNweek").equalTo(itemNweek);
@@ -253,12 +252,10 @@ public class WeeklyAnalyticsActivity extends AppCompatActivity {
     }
 
     private void getTotalWeekFoodExpense() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Weeks weeks = Weeks.weeksBetween(epoch, now);
+        Calendar calendar = Calendar.getInstance();
+        String week = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
 
-        String itemNweek = "Food" + weeks.getWeeks();
+        String itemNweek = "Food" + week;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNweek").equalTo(itemNweek);
@@ -290,12 +287,10 @@ public class WeeklyAnalyticsActivity extends AppCompatActivity {
     }
 
     private void getTotalWeekHouseExpenses() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Weeks weeks = Weeks.weeksBetween(epoch, now);
+        Calendar calendar = Calendar.getInstance();
+        String week = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
 
-        String itemNweek = "House Expenses" + weeks.getWeeks();
+        String itemNweek = "House Expenses" + week;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNweek").equalTo(itemNweek);
@@ -327,12 +322,10 @@ public class WeeklyAnalyticsActivity extends AppCompatActivity {
     }
 
     private void getTotalWeekEntertainmentExpenses() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Weeks weeks = Weeks.weeksBetween(epoch, now);
+        Calendar calendar = Calendar.getInstance();
+        String week = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
 
-        String itemNweek = "Entertainment" + weeks.getWeeks();
+        String itemNweek = "Entertainment" + week;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNweek").equalTo(itemNweek);
@@ -364,12 +357,10 @@ public class WeeklyAnalyticsActivity extends AppCompatActivity {
     }
 
     private void getTotalWeekEducationExpenses() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Weeks weeks = Weeks.weeksBetween(epoch, now);
+        Calendar calendar = Calendar.getInstance();
+        String week = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
 
-        String itemNweek = "Education" + weeks.getWeeks();
+        String itemNweek = "Education" + week;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNweek").equalTo(itemNweek);
@@ -401,12 +392,10 @@ public class WeeklyAnalyticsActivity extends AppCompatActivity {
     }
 
     private void getTotalWeekCharityExpenses() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Weeks weeks = Weeks.weeksBetween(epoch, now);
+        Calendar calendar = Calendar.getInstance();
+        String week = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
 
-        String itemNweek = "Charity" + weeks.getWeeks();
+        String itemNweek = "Charity" + week;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNweek").equalTo(itemNweek);
@@ -438,12 +427,10 @@ public class WeeklyAnalyticsActivity extends AppCompatActivity {
     }
 
     private void getTotalWeekApparelExpenses() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Weeks weeks = Weeks.weeksBetween(epoch, now);
+        Calendar calendar = Calendar.getInstance();
+        String week = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
 
-        String itemNweek = "Apparel and Services" + weeks.getWeeks();
+        String itemNweek = "Apparel and Services" + week;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNweek").equalTo(itemNweek);
@@ -475,12 +462,10 @@ public class WeeklyAnalyticsActivity extends AppCompatActivity {
     }
 
     private void getTotalWeekHealthExpenses() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Weeks weeks = Weeks.weeksBetween(epoch, now);
+        Calendar calendar = Calendar.getInstance();
+        String week = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
 
-        String itemNweek = "Health" + weeks.getWeeks();
+        String itemNweek = "Health" + week;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNweek").equalTo(itemNweek);
@@ -512,12 +497,10 @@ public class WeeklyAnalyticsActivity extends AppCompatActivity {
     }
 
     private void getTotalWeekPersonalExpenses() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Weeks weeks = Weeks.weeksBetween(epoch, now);
+        Calendar calendar = Calendar.getInstance();
+        String week = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
 
-        String itemNweek = "Personal Expenses" + weeks.getWeeks();
+        String itemNweek = "Personal Expenses" + week;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNweek").equalTo(itemNweek);
@@ -549,12 +532,10 @@ public class WeeklyAnalyticsActivity extends AppCompatActivity {
     }
 
     private void getTotalWeekOtherExpenses() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Weeks weeks = Weeks.weeksBetween(epoch, now);
+        Calendar calendar = Calendar.getInstance();
+        String week = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
 
-        String itemNweek = "Other" + weeks.getWeeks();
+        String itemNweek = "Other" + week;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("itemNweek").equalTo(itemNweek);
@@ -586,13 +567,11 @@ public class WeeklyAnalyticsActivity extends AppCompatActivity {
     }
 
     private void getTotalWeekSpending() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Weeks weeks = Weeks.weeksBetween(epoch, now);
+        Calendar calendar = Calendar.getInstance();
+        String week = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
-        Query query = reference.orderByChild("week").equalTo(weeks.getWeeks());
+        Query query = reference.orderByChild("week").equalTo(week);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

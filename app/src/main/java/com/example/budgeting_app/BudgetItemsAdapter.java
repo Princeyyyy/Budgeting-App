@@ -131,42 +131,35 @@ public class BudgetItemsAdapter extends RecyclerView.Adapter<BudgetItemsAdapter.
         mAuth = FirebaseAuth.getInstance();
         budgetRef = FirebaseDatabase.getInstance().getReference().child("budget").child(mAuth.getCurrentUser().getUid());
 
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnUpdate.setOnClickListener(view -> {
 
-                amount = Integer.parseInt(mAmount.getText().toString());
+            amount = Integer.parseInt(mAmount.getText().toString());
 
-                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                Calendar cal = Calendar.getInstance();
-                String date = dateFormat.format(cal.getTime());
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Calendar calendar = Calendar.getInstance();
+            String date = dateFormat.format(calendar.getTime());
 
-                MutableDateTime epoch = new MutableDateTime();
-                epoch.setDate(0);
-                DateTime now = new DateTime();
-                Weeks weeks = Weeks.weeksBetween(epoch, now);
-                Months months = Months.monthsBetween(epoch, now);
+            String itemNday = item + date;
+            String itemNweek = item + calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
+            String itemNmonth = item + calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
+            String week = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
+            String month = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
 
-                String itemNday = item + date;
-                String itemNweek = item + weeks.getWeeks();
-                String itemNmonth = item + months.getMonths();
-
-                Data data = new Data(item, date, post_key, itemNday, itemNweek, itemNmonth, amount, weeks.getWeeks(), months.getMonths(), null);
-                budgetRef.child(post_key).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(mContext, "Updated successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(mContext, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                        }
-
+            Data data = new Data(item, date, post_key, itemNday, itemNweek, itemNmonth, week, month, amount, null);
+            budgetRef.child(post_key).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(mContext, "Updated successfully", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(mContext, task.getException().toString(), Toast.LENGTH_SHORT).show();
                     }
-                });
 
-                dialog.dismiss();
+                }
+            });
 
-            }
+            dialog.dismiss();
+
         });
 
         delBut.setOnClickListener(new View.OnClickListener() {

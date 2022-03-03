@@ -26,8 +26,8 @@
             android:exported="false" />
         <activity android:name=".DailyAnalyticsActivity" />
         <activity android:name=".ChooseAnalyticsActivity" />
-        <activity android:name=".WeeksSpendingActivity" />
-        <activity android:name=".TodaysSpendingActivity" />
+        <activity android:name=".WeekSpendingActivity" />
+        <activity android:name=".TodaySpendingActivity" />
         <activity android:name=".BudgetActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".RegistrationActivity" />

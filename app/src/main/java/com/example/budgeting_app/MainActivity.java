@@ -12,7 +12,6 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -96,18 +96,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         todayCardView.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, TodaysSpendingActivity.class);
+            Intent intent = new Intent(MainActivity.this, TodaySpendingActivity.class);
             startActivity(intent);
         });
 
         weekCardView.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, WeeksSpendingActivity.class);
+            Intent intent = new Intent(MainActivity.this, WeekSpendingActivity.class);
             intent.putExtra("type", "week");
             startActivity(intent);
         });
 
         monthCardView.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, WeeksSpendingActivity.class);
+            Intent intent = new Intent(MainActivity.this, WeekSpendingActivity.class);
             intent.putExtra("type", "month");
             startActivity(intent);
         });
@@ -228,13 +228,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getMonthSpentAmount() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Months months = Months.monthsBetween(epoch, now);
+        Calendar calendar = Calendar.getInstance();
+        String month = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserID);
-        Query query = reference.orderByChild("month").equalTo(months.getMonths());
+        Query query = reference.orderByChild("month").equalTo(month);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -260,13 +258,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getWeekSpentAmount() {
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0); //Set to Epoch time
-        DateTime now = new DateTime();
-        Weeks weeks = Weeks.weeksBetween(epoch, now);
+        Calendar calendar = Calendar.getInstance();
+        String week = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserID);
-        Query query = reference.orderByChild("week").equalTo(weeks.getWeeks());
+        Query query = reference.orderByChild("week").equalTo(week);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -290,8 +286,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void getTodaySpentAmount() {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Calendar cal = Calendar.getInstance();
-        String date = dateFormat.format(cal.getTime());
+        Calendar calendar = Calendar.getInstance();
+        String date = dateFormat.format(calendar.getTime());
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserID);
         Query query = reference.orderByChild("date").equalTo(date);
         query.addValueEventListener(new ValueEventListener() {

@@ -141,30 +141,23 @@ public class TodayItemsAdapter extends RecyclerView.Adapter<TodayItemsAdapter.Vi
 
 
                 DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                Calendar cal = Calendar.getInstance();
-                String date = dateFormat.format(cal.getTime());
-
-                MutableDateTime epoch = new MutableDateTime();
-                epoch.setDate(0);
-                DateTime now = new DateTime();
-                Weeks weeks = Weeks.weeksBetween(epoch, now);
-                Months months = Months.monthsBetween(epoch, now);
+                Calendar calendar = Calendar.getInstance();
+                String date = dateFormat.format(calendar.getTime());
 
                 String itemNday = item + date;
-                String itemNweek = item + weeks.getWeeks();
-                String itemNmonth = item + months.getMonths();
+                String itemNweek = item + calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
+                String itemNmonth = item + calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
+                String week = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
+                String month = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
 
-                Data data = new Data(item, date, post_key, itemNday, itemNweek, itemNmonth, amount, weeks.getWeeks(), months.getMonths(), note);
+                Data data = new Data(item, date, post_key, itemNday, itemNweek, itemNmonth, week, month, amount, note);
 
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                reference.child(post_key).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(mContext, "Item Updated successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(mContext, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                        }
+                reference.child(post_key).setValue(data).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(mContext, "Item Updated successfully", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(mContext, task.getException().toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -173,24 +166,21 @@ public class TodayItemsAdapter extends RecyclerView.Adapter<TodayItemsAdapter.Vi
             }
         });
 
-        delBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                reference.child(post_key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(mContext, "Item Deleted successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(mContext, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                        }
-
+        delBut.setOnClickListener(view -> {
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            reference.child(post_key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(mContext, "Item Deleted successfully", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(mContext, task.getException().toString(), Toast.LENGTH_SHORT).show();
                     }
-                });
 
-                dialog.dismiss();
-            }
+                }
+            });
+
+            dialog.dismiss();
         });
 
         dialog.show();

@@ -43,7 +43,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-public class TodaysSpendingActivity extends AppCompatActivity {
+public class TodaySpendingActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TextView totalAmountSpentOn;
@@ -77,7 +77,7 @@ public class TodaysSpendingActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(TodaysSpendingActivity.this, MainActivity.class);
+                Intent intent = new Intent(TodaySpendingActivity.this, MainActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
             }
@@ -101,7 +101,7 @@ public class TodaysSpendingActivity extends AppCompatActivity {
         recyclerView2.setLayoutManager(linearLayoutManager);
 
         myDataList = new ArrayList<>();
-        todayItemsAdapter = new TodayItemsAdapter(TodaysSpendingActivity.this, myDataList);
+        todayItemsAdapter = new TodayItemsAdapter(TodaySpendingActivity.this, myDataList);
         recyclerView2.setAdapter(todayItemsAdapter);
 
         readItems();
@@ -182,71 +182,56 @@ public class TodaysSpendingActivity extends AppCompatActivity {
 
         note.setVisibility(View.VISIBLE);
 
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        save.setOnClickListener(v -> {
 
-                String Amount = amount.getText().toString();
-                String Item = itemSpinner.getSelectedItem().toString();
-                String notes = note.getText().toString();
+            String Amount = amount.getText().toString();
+            String Item = itemSpinner.getSelectedItem().toString();
+            String notes = note.getText().toString();
 
-                if (TextUtils.isEmpty(Amount)) {
-                    amount.setError("Amount is Required");
-                    return;
-                }
-
-                if (Item.equals("Select Item")) {
-                    Toast.makeText(TodaysSpendingActivity.this, "Select a valid item", Toast.LENGTH_SHORT).show();
-                    return;
-
-                }
-                if (notes.equals("Select Item")) {
-                    Toast.makeText(TodaysSpendingActivity.this, "Select a valid item", Toast.LENGTH_SHORT).show();
-                    return;
-                } else {
-                    loader.setMessage("Adding expense item");
-                    loader.setCanceledOnTouchOutside(false);
-                    loader.show();
-
-                    String id = expensesRef.push().getKey();
-                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                    Calendar cal = Calendar.getInstance();
-                    String date = dateFormat.format(cal.getTime());
-
-                    MutableDateTime epoch = new MutableDateTime();
-                    epoch.setDate(0);
-                    DateTime now = new DateTime();
-                    Months months = Months.monthsBetween(epoch, now);
-                    Weeks weeks = Weeks.weeksBetween(epoch, now);
-
-                    String itemNday = Item + date;
-                    String itemNweek = Item + weeks.getWeeks();
-                    String itemNmonth = Item + months.getMonths();
-
-                    Data data = new Data(Item, date, id, itemNday, itemNweek, itemNmonth, Integer.parseInt(Amount), weeks.getWeeks(), months.getMonths(), notes);
-                    expensesRef.child(id).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(TodaysSpendingActivity.this, "Today's Expense added successfully", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(TodaysSpendingActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                            }
-
-                            loader.dismiss();
-                        }
-                    });
-                }
-                dialog.dismiss();
+            if (TextUtils.isEmpty(Amount)) {
+                amount.setError("Amount is Required");
+                return;
             }
+
+            if (Item.equals("Select Item")) {
+                Toast.makeText(TodaySpendingActivity.this, "Select a valid item", Toast.LENGTH_SHORT).show();
+                return;
+
+            }
+            if (notes.equals("Select Item")) {
+                Toast.makeText(TodaySpendingActivity.this, "Select a valid item", Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                loader.setMessage("Adding expense item");
+                loader.setCanceledOnTouchOutside(false);
+                loader.show();
+
+                String id = expensesRef.push().getKey();
+                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                Calendar calendar = Calendar.getInstance();
+                String date = dateFormat.format(calendar.getTime());
+
+                String itemNday = Item + date;
+                String itemNweek = Item + calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
+                String itemNmonth = Item + calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
+                String week = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
+                String month = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
+
+                Data data = new Data(Item, date, id, itemNday, itemNweek, itemNmonth, week, month, Integer.parseInt(Amount), notes);
+                expensesRef.child(id).setValue(data).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(TodaySpendingActivity.this, "Today's Expense added successfully", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(TodaySpendingActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    loader.dismiss();
+                });
+            }
+            dialog.dismiss();
         });
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        cancel.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
     }

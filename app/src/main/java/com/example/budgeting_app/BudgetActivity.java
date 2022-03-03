@@ -246,20 +246,16 @@ public class BudgetActivity extends AppCompatActivity {
 
                 String id = budgetRef.push().getKey();
                 DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                Calendar cal = Calendar.getInstance();
-                String date = dateFormat.format(cal.getTime());
-
-                MutableDateTime epoch = new MutableDateTime();
-                epoch.setDate(0);
-                DateTime now = new DateTime();
-                Weeks weeks = Weeks.weeksBetween(epoch, now);
-                Months months = Months.monthsBetween(epoch, now);
+                Calendar calendar = Calendar.getInstance();
+                String date = dateFormat.format(calendar.getTime());
 
                 String itemNday = budgetItem + date;
-                String itemNweek = budgetItem + weeks.getWeeks();
-                String itemNmonth = budgetItem + months.getMonths();
+                String itemNweek = budgetItem + calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
+                String itemNmonth = budgetItem + calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
+                String week = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR);
+                String month = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
 
-                Data data = new Data(budgetItem, date, id, itemNday, itemNweek, itemNmonth, Integer.parseInt(budgetAmount), weeks.getWeeks(), months.getMonths(), null);
+                Data data = new Data(budgetItem, date, id, itemNday, itemNweek, itemNmonth, week, month, Integer.parseInt(budgetAmount), null);
                 budgetRef.child(id).setValue(data).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(BudgetActivity.this, "Budget Item added successfully", Toast.LENGTH_SHORT).show();
