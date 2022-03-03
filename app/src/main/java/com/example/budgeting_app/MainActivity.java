@@ -327,11 +327,11 @@ public class MainActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmountBudget += pTotal;
-                        budgetTv.setText("Ksh." + String.valueOf(totalAmountBudget));
+                        budgetTv.setText("Ksh." + totalAmountBudget);
                     }
                 } else {
                     totalAmountBudget = 0;
-                    budgetTv.setText("Ksh." + String.valueOf(0));
+                    budgetTv.setText("Ksh." + 0);
                 }
             }
 

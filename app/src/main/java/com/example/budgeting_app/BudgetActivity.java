@@ -39,6 +39,7 @@ import org.joda.time.Weeks;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -98,6 +99,18 @@ public class BudgetActivity extends AppCompatActivity {
     int dayPersonal = 0;
     int dayOther = 0;
     int dailyTotal = 0;
+
+    int weekTransport = 0;
+    int weekFood = 0;
+    int weekHouse = 0;
+    int weekEntertainment = 0;
+    int weekEducation = 0;
+    int weekCharity = 0;
+    int weekApparel = 0;
+    int weekHealth = 0;
+    int weekPersonal = 0;
+    int weekOther = 0;
+    int weeklyTotal = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -890,6 +903,197 @@ public class BudgetActivity extends AppCompatActivity {
                 }
                 dailyTotal += dayOther;
                 personalRef.child("dailyBudget").setValue(dailyTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        //Getting Totals for Week Ratios
+        personalRef.child("weekTransRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    weekTransport += tTotal;
+                } else {
+                    weekTransport = 0;
+                }
+                weeklyTotal += weekTransport;
+                personalRef.child("weeklyBudget").setValue(weeklyTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        personalRef.child("weekFoodRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    weekFood += tTotal;
+                } else {
+                    weekFood = 0;
+                }
+                weeklyTotal += weekFood;
+                personalRef.child("weeklyBudget").setValue(weeklyTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        personalRef.child("weekHouseRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    weekHouse += tTotal;
+                } else {
+                    weekHouse = 0;
+                }
+                weeklyTotal += weekHouse;
+                personalRef.child("weeklyBudget").setValue(weeklyTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        personalRef.child("weekEntRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    weekEntertainment += tTotal;
+                } else {
+                    weekEntertainment = 0;
+                }
+                weeklyTotal += weekEntertainment;
+                personalRef.child("weeklyBudget").setValue(weeklyTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        personalRef.child("weekEduRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    weekEducation += tTotal;
+                } else {
+                    weekEducation = 0;
+                }
+                weeklyTotal += weekEducation;
+                personalRef.child("weeklyBudget").setValue(weeklyTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        personalRef.child("weekCharRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    weekCharity += tTotal;
+                } else {
+                    weekCharity = 0;
+                }
+                weeklyTotal += weekCharity;
+                personalRef.child("weeklyBudget").setValue(weeklyTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        personalRef.child("weekAppRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    weekApparel += tTotal;
+                } else {
+                    weekApparel = 0;
+                }
+                weeklyTotal += weekApparel;
+                personalRef.child("weeklyBudget").setValue(weeklyTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        personalRef.child("weekHealthRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    weekHealth += tTotal;
+                } else {
+                    weekHealth = 0;
+                }
+                weeklyTotal += weekHealth;
+                personalRef.child("weeklyBudget").setValue(weeklyTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        personalRef.child("weekPerRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    weekPersonal += tTotal;
+                } else {
+                    weekPersonal = 0;
+                }
+                weeklyTotal += weekPersonal;
+                personalRef.child("weeklyBudget").setValue(weeklyTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        personalRef.child("weekOtherRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    weekOther += tTotal;
+                } else {
+                    weekOther = 0;
+                }
+                weeklyTotal += weekOther;
+                personalRef.child("weeklyBudget").setValue(weeklyTotal);
             }
 
             @Override

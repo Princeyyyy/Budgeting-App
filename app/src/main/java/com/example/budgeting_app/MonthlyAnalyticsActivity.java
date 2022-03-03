@@ -820,79 +820,78 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
                     }
 
 
-                    //GETTING RATIOS
-
-                    float traRatio;
+                    //Getting Ratios
+                    int traRatio;
                     if (snapshot.hasChild("monthTransRatio")) {
                         traRatio = Integer.parseInt(snapshot.child("monthTransRatio").getValue().toString());
                     } else {
                         traRatio = 0;
                     }
 
-                    float foodRatio;
+                    int foodRatio;
                     if (snapshot.hasChild("monthFoodRatio")) {
                         foodRatio = Integer.parseInt(snapshot.child("monthFoodRatio").getValue().toString());
                     } else {
                         foodRatio = 0;
                     }
 
-                    float houseRatio;
+                    int houseRatio;
                     if (snapshot.hasChild("monthHouseRatio")) {
                         houseRatio = Integer.parseInt(snapshot.child("monthHouseRatio").getValue().toString());
                     } else {
                         houseRatio = 0;
                     }
 
-                    float entRatio;
+                    int entRatio;
                     if (snapshot.hasChild("monthEntRatio")) {
                         entRatio = Integer.parseInt(snapshot.child("monthEntRatio").getValue().toString());
                     } else {
                         entRatio = 0;
                     }
 
-                    float eduRatio;
+                    int eduRatio;
                     if (snapshot.hasChild("monthEduRatio")) {
                         eduRatio = Integer.parseInt(snapshot.child("monthEduRatio").getValue().toString());
                     } else {
                         eduRatio = 0;
                     }
 
-                    float chaRatio;
+                    int chaRatio;
                     if (snapshot.hasChild("monthCharRatio")) {
                         chaRatio = Integer.parseInt(snapshot.child("monthCharRatio").getValue().toString());
                     } else {
                         chaRatio = 0;
                     }
 
-                    float appRatio;
+                    int appRatio;
                     if (snapshot.hasChild("monthAppRatio")) {
                         appRatio = Integer.parseInt(snapshot.child("monthAppRatio").getValue().toString());
                     } else {
                         appRatio = 0;
                     }
 
-                    float heaRatio;
+                    int heaRatio;
                     if (snapshot.hasChild("monthHealthRatio")) {
                         heaRatio = Integer.parseInt(snapshot.child("monthHealthRatio").getValue().toString());
                     } else {
                         heaRatio = 0;
                     }
 
-                    float perRatio;
+                    int perRatio;
                     if (snapshot.hasChild("monthPerRatio")) {
                         perRatio = Integer.parseInt(snapshot.child("monthPerRatio").getValue().toString());
                     } else {
                         perRatio = 0;
                     }
 
-                    float othRatio;
+                    int othRatio;
                     if (snapshot.hasChild("monthOtherRatio")) {
                         othRatio = Integer.parseInt(snapshot.child("monthOtherRatio").getValue().toString());
                     } else {
                         othRatio = 0;
                     }
 
-                    float monthTotalSpentAmountRatio;
+                    int monthTotalSpentAmountRatio;
                     if (snapshot.hasChild("budget")) {
                         monthTotalSpentAmountRatio = Integer.parseInt(snapshot.child("budget").getValue().toString());
                     } else {
@@ -902,13 +901,13 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
 
                     int monthPercent = (int) ((monthTotalSpentAmount / monthTotalSpentAmountRatio) * 100);
                     if (monthPercent < 50) {
-                        monthRatioSpending.setText(monthPercent + " %" + " used of " + monthTotalSpentAmountRatio + ". Status:");
+                        monthRatioSpending.setText(monthPercent + " %" + " used of " + monthTotalSpentAmountRatio + "\nStatus:");
                         monthRatioSpending_Image.setImageResource(R.drawable.green);
                     } else if (monthPercent >= 50 && monthPercent < 100) {
-                        monthRatioSpending.setText(monthPercent + " %" + " used of " + monthTotalSpentAmountRatio + ". Status:");
+                        monthRatioSpending.setText(monthPercent + " %" + " used of " + monthTotalSpentAmountRatio + "\nStatus:");
                         monthRatioSpending_Image.setImageResource(R.drawable.brown);
                     } else {
-                        monthRatioSpending.setText(monthPercent + " %" + " used of " + monthTotalSpentAmountRatio + ". Status:");
+                        monthRatioSpending.setText(monthPercent + " %" + " used of " + monthTotalSpentAmountRatio + "\nStatus:");
                         monthRatioSpending_Image.setImageResource(R.drawable.red);
 
                     }
@@ -916,104 +915,104 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
 
                     int transportPercent = (int) ((traTotal / traRatio) * 100);
                     if (transportPercent < 50) {
-                        progress_ratio_transport.setText(transportPercent + " %" + " used of " + traRatio + ". Status:");
+                        progress_ratio_transport.setText(transportPercent + " %" + " used of " + traRatio + "\nStatus:");
                         status_Image_transport.setImageResource(R.drawable.green);
                     } else if (transportPercent >= 50 && transportPercent < 100) {
-                        progress_ratio_transport.setText(transportPercent + " %" + " used of " + traRatio + ". Status:");
+                        progress_ratio_transport.setText(transportPercent + " %" + " used of " + traRatio + "\nStatus:");
                         status_Image_transport.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_transport.setText(transportPercent + " %" + " used of " + traRatio + ". Status:");
+                        progress_ratio_transport.setText(transportPercent + " %" + " used of " + traRatio + "\nStatus:");
                         status_Image_transport.setImageResource(R.drawable.red);
 
                     }
 
                     int foodPercent = (int) ((foodTotal / foodRatio) * 100);
                     if (foodPercent < 50) {
-                        progress_ratio_food.setText(foodPercent + " %" + " used of " + foodRatio + ". Status:");
+                        progress_ratio_food.setText(foodPercent + " %" + " used of " + foodRatio + "\nStatus:");
                         status_Image_food.setImageResource(R.drawable.green);
                     } else if (foodPercent >= 50 && foodPercent < 100) {
-                        progress_ratio_food.setText(foodPercent + " %" + " used of " + foodRatio + ". Status:");
+                        progress_ratio_food.setText(foodPercent + " %" + " used of " + foodRatio + "\nStatus:");
                         status_Image_food.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_food.setText(foodPercent + " %" + " used of " + foodRatio + ". Status:");
+                        progress_ratio_food.setText(foodPercent + " %" + " used of " + foodRatio + "\nStatus:");
                         status_Image_food.setImageResource(R.drawable.red);
 
                     }
 
                     int housePercent = (int) ((houseTotal / houseRatio) * 100);
                     if (housePercent < 50) {
-                        progress_ratio_house.setText(housePercent + " %" + " used of " + houseRatio + ". Status:");
+                        progress_ratio_house.setText(housePercent + " %" + " used of " + houseRatio + "\nStatus:");
                         status_Image_house.setImageResource(R.drawable.green);
                     } else if (housePercent >= 50 && housePercent < 100) {
-                        progress_ratio_house.setText(housePercent + " %" + " used of " + houseRatio + ". Status:");
+                        progress_ratio_house.setText(housePercent + " %" + " used of " + houseRatio + "\nStatus:");
                         status_Image_house.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_house.setText(housePercent + " %" + " used of " + houseRatio + ". Status:");
+                        progress_ratio_house.setText(housePercent + " %" + " used of " + houseRatio + "\nStatus:");
                         status_Image_house.setImageResource(R.drawable.red);
 
                     }
 
                     int entPercent = (int) ((entTotal / entRatio) * 100);
                     if (entPercent < 50) {
-                        progress_ratio_ent.setText(entPercent + " %" + " used of " + entRatio + ". Status:");
+                        progress_ratio_ent.setText(entPercent + " %" + " used of " + entRatio + "\nStatus:");
                         status_Image_ent.setImageResource(R.drawable.green);
                     } else if (entPercent >= 50 && entPercent < 100) {
-                        progress_ratio_ent.setText(entPercent + " %" + " used of " + entRatio + ". Status:");
+                        progress_ratio_ent.setText(entPercent + " %" + " used of " + entRatio + "\nStatus:");
                         status_Image_ent.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_ent.setText(entPercent + " %" + " used of " + entRatio + ". Status:");
+                        progress_ratio_ent.setText(entPercent + " %" + " used of " + entRatio + "\nStatus:");
                         status_Image_ent.setImageResource(R.drawable.red);
 
                     }
 
                     int eduPercent = (int) ((eduTotal / eduRatio) * 100);
                     if (eduPercent < 50) {
-                        progress_ratio_edu.setText(eduPercent + " %" + " used of " + eduRatio + ". Status:");
+                        progress_ratio_edu.setText(eduPercent + " %" + " used of " + eduRatio + "\nStatus:");
                         status_Image_edu.setImageResource(R.drawable.green);
                     } else if (eduPercent >= 50 && eduPercent < 100) {
-                        progress_ratio_edu.setText(eduPercent + " %" + " used of " + eduRatio + ". Status:");
+                        progress_ratio_edu.setText(eduPercent + " %" + " used of " + eduRatio + "\nStatus:");
                         status_Image_edu.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_edu.setText(eduPercent + " %" + " used of " + eduRatio + ". Status:");
+                        progress_ratio_edu.setText(eduPercent + " %" + " used of " + eduRatio + "\nStatus:");
                         status_Image_edu.setImageResource(R.drawable.red);
 
                     }
 
                     int chaPercent = (int) ((chaTotal / chaRatio) * 100);
                     if (chaPercent < 50) {
-                        progress_ratio_cha.setText(chaPercent + " %" + " used of " + chaRatio + ". Status:");
+                        progress_ratio_cha.setText(chaPercent + " %" + " used of " + chaRatio + "\nStatus:");
                         status_Image_cha.setImageResource(R.drawable.green);
                     } else if (chaPercent >= 50 && chaPercent < 100) {
-                        progress_ratio_cha.setText(chaPercent + " %" + " used of " + chaRatio + ". Status:");
+                        progress_ratio_cha.setText(chaPercent + " %" + " used of " + chaRatio + "\nStatus:");
                         status_Image_cha.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_cha.setText(chaPercent + " %" + " used of " + chaRatio + ". Status:");
+                        progress_ratio_cha.setText(chaPercent + " %" + " used of " + chaRatio + "\nStatus:");
                         status_Image_cha.setImageResource(R.drawable.red);
 
                     }
 
                     int appPercent = (int) ((appTotal / appRatio) * 100);
                     if (appPercent < 50) {
-                        progress_ratio_app.setText(appPercent + " %" + " used of " + appRatio + ". Status:");
+                        progress_ratio_app.setText(appPercent + " %" + " used of " + appRatio + "\nStatus:");
                         status_Image_app.setImageResource(R.drawable.green);
                     } else if (appPercent >= 50 && appPercent < 100) {
-                        progress_ratio_app.setText(appPercent + " %" + " used of " + appRatio + ". Status:");
+                        progress_ratio_app.setText(appPercent + " %" + " used of " + appRatio + "\nStatus:");
                         status_Image_app.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_app.setText(appPercent + " %" + " used of " + appRatio + ". Status:");
+                        progress_ratio_app.setText(appPercent + " %" + " used of " + appRatio + "\nStatus:");
                         status_Image_app.setImageResource(R.drawable.red);
 
                     }
 
                     int heaPercent = (int) ((heaTotal / heaRatio) * 100);
                     if (heaPercent < 50) {
-                        progress_ratio_hea.setText(heaPercent + " %" + " used of " + heaRatio + ". Status:");
+                        progress_ratio_hea.setText(heaPercent + " %" + " used of " + heaRatio + "\nStatus:");
                         status_Image_hea.setImageResource(R.drawable.green);
                     } else if (heaPercent >= 50 && heaPercent < 100) {
-                        progress_ratio_hea.setText(heaPercent + " %" + " used of " + heaRatio + ". Status:");
+                        progress_ratio_hea.setText(heaPercent + " %" + " used of " + heaRatio + "\nStatus:");
                         status_Image_hea.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_hea.setText(heaPercent + " %" + " used of " + heaRatio + ". Status:");
+                        progress_ratio_hea.setText(heaPercent + " %" + " used of " + heaRatio + "\nStatus:");
                         status_Image_hea.setImageResource(R.drawable.red);
 
                     }
@@ -1021,26 +1020,26 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
 
                     int perPercent = (int) ((perTotal / perRatio) * 100);
                     if (perPercent < 50) {
-                        progress_ratio_per.setText(perPercent + " %" + " used of " + perRatio + " . Status:");
+                        progress_ratio_per.setText(perPercent + " %" + " used of " + perRatio + "\nStatus:");
                         status_Image_per.setImageResource(R.drawable.green);
                     } else if (perPercent >= 50 && perPercent < 100) {
-                        progress_ratio_per.setText(perPercent + " %" + " used of " + perRatio + " . Status:");
+                        progress_ratio_per.setText(perPercent + " %" + " used of " + perRatio + "\nStatus:");
                         status_Image_per.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_per.setText(perPercent + " %" + " used of " + perRatio + " . Status:");
+                        progress_ratio_per.setText(perPercent + " %" + " used of " + perRatio + "\nStatus:");
                         status_Image_per.setImageResource(R.drawable.red);
                     }
 
 
                     int otherPercent = (int) ((othTotal / othRatio) * 100);
                     if (otherPercent < 50) {
-                        progress_ratio_oth.setText(otherPercent + " %" + " used of " + othRatio + ". Status:");
+                        progress_ratio_oth.setText(otherPercent + " %" + " used of " + othRatio + "\nStatus:");
                         status_Image_oth.setImageResource(R.drawable.green);
                     } else if (otherPercent >= 50 && otherPercent < 100) {
-                        progress_ratio_oth.setText(otherPercent + " %" + " used of " + othRatio + ". Status:");
+                        progress_ratio_oth.setText(otherPercent + " %" + " used of " + othRatio + "\nStatus:");
                         status_Image_oth.setImageResource(R.drawable.brown);
                     } else {
-                        progress_ratio_oth.setText(otherPercent + " %" + " used of " + othRatio + ". Status:");
+                        progress_ratio_oth.setText(otherPercent + " %" + " used of " + othRatio + "\nStatus:");
                         status_Image_oth.setImageResource(R.drawable.red);
 
                     }
