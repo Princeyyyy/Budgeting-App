@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -48,6 +49,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BudgetActivity extends AppCompatActivity {
+    public static final String TAG = BudgetActivity.class.getSimpleName();
 
 
     @BindView(R.id.fab1)
@@ -73,6 +75,29 @@ public class BudgetActivity extends AppCompatActivity {
     private BudgetItemsAdapter budgetItemsAdapter;
 
     private ProgressBar progressBar;
+
+    int dayTransRatio = 0;
+    private int dayFoodRatio = 0;
+    private int dayHouseRatio = 0;
+    private int dayEntRatio = 0;
+    private int dayEduRatio = 0;
+    private int dayCharRatio = 0;
+    private int dayAppRatio = 0;
+    private int dayHealthRatio = 0;
+    private int dayPerRatio = 0;
+    private int dayOtherRatio = 0;
+
+    int dayTransport = 0;
+    int dayFood = 0;
+    int dayHouse = 0;
+    int dayEntertainment = 0;
+    int dayEducation = 0;
+    int dayCharity = 0;
+    int dayApparel = 0;
+    int dayHealth = 0;
+    int dayPersonal = 0;
+    int dayOther = 0;
+    int dailyTotal = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +153,7 @@ public class BudgetActivity extends AppCompatActivity {
         getHealthBudgetRatios();
         getPersonalBudgetRatios();
         getOtherBudgetRatios();
-//        getTotalBudgetRatios();
+        getTotalBudgetRatios();
     }
 
     private void readBudgetItems() {
@@ -187,66 +212,55 @@ public class BudgetActivity extends AppCompatActivity {
         final Button cancel = myView.findViewById(R.id.cancel);
         final Button save = myView.findViewById(R.id.save);
 
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        save.setOnClickListener(v -> {
 
-                String budgetAmount = amount.getText().toString();
-                String budgetItem = itemSpinner.getSelectedItem().toString();
+            String budgetAmount = amount.getText().toString();
+            String budgetItem = itemSpinner.getSelectedItem().toString();
 
-                if (TextUtils.isEmpty(budgetAmount)) {
-                    amount.setError("Amount is Required");
-                    return;
-                }
-
-                if (budgetItem.equals("Select Item")) {
-                    Toast.makeText(BudgetActivity.this, "Select a valid item", Toast.LENGTH_SHORT).show();
-                    return;
-
-                } else {
-                    loader.setMessage("Adding a budget item");
-                    loader.setCanceledOnTouchOutside(false);
-                    loader.show();
-
-                    String id = budgetRef.push().getKey();
-                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                    Calendar cal = Calendar.getInstance();
-                    String date = dateFormat.format(cal.getTime());
-
-                    MutableDateTime epoch = new MutableDateTime();
-                    epoch.setDate(0);
-                    DateTime now = new DateTime();
-                    Weeks weeks = Weeks.weeksBetween(epoch, now);
-                    Months months = Months.monthsBetween(epoch, now);
-
-                    String itemNday = budgetItem + date;
-                    String itemNweek = budgetItem + weeks.getWeeks();
-                    String itemNmonth = budgetItem + months.getMonths();
-
-                    Data data = new Data(budgetItem, date, id, itemNday, itemNweek, itemNmonth, Integer.parseInt(budgetAmount), weeks.getWeeks(), months.getMonths(), null);
-                    budgetRef.child(id).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(BudgetActivity.this, "Budget Item added successfully", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(BudgetActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                            }
-
-                            loader.dismiss();
-                        }
-                    });
-                }
-                dialog.dismiss();
+            if (TextUtils.isEmpty(budgetAmount)) {
+                amount.setError("Amount is Required");
+                return;
             }
+
+            if (budgetItem.equals("Select Item")) {
+                Toast.makeText(BudgetActivity.this, "Select a valid item", Toast.LENGTH_SHORT).show();
+                return;
+
+            } else {
+                loader.setMessage("Adding a budget item");
+                loader.setCanceledOnTouchOutside(false);
+                loader.show();
+
+                String id = budgetRef.push().getKey();
+                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                Calendar cal = Calendar.getInstance();
+                String date = dateFormat.format(cal.getTime());
+
+                MutableDateTime epoch = new MutableDateTime();
+                epoch.setDate(0);
+                DateTime now = new DateTime();
+                Weeks weeks = Weeks.weeksBetween(epoch, now);
+                Months months = Months.monthsBetween(epoch, now);
+
+                String itemNday = budgetItem + date;
+                String itemNweek = budgetItem + weeks.getWeeks();
+                String itemNmonth = budgetItem + months.getMonths();
+
+                Data data = new Data(budgetItem, date, id, itemNday, itemNweek, itemNmonth, Integer.parseInt(budgetAmount), weeks.getWeeks(), months.getMonths(), null);
+                budgetRef.child(id).setValue(data).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(BudgetActivity.this, "Budget Item added successfully", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(BudgetActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    loader.dismiss();
+                });
+            }
+            dialog.dismiss();
         });
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        cancel.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
     }
@@ -254,7 +268,6 @@ public class BudgetActivity extends AppCompatActivity {
     private void getTransportBudgetRatios() {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         int currentMonth = calendar.get(Calendar.MONTH);
-        final int[] dayTransRatio = {0};
 
         Query query = budgetRef.orderByChild("item").equalTo("Transport");
         query.addValueEventListener(new ValueEventListener() {
@@ -269,16 +282,16 @@ public class BudgetActivity extends AppCompatActivity {
                     }
 
                     if (currentMonth == 0 || currentMonth == 2 || currentMonth == 4 || currentMonth == 6 || currentMonth == 7 || currentMonth == 9 || currentMonth == 11) {
-                        dayTransRatio[0] = pTotal / 30;
+                        dayTransRatio = pTotal / 30;
                     } else if (currentMonth == 3 || currentMonth == 5 || currentMonth == 8 || currentMonth == 10) {
-                        dayTransRatio[0] = pTotal / 30;
+                        dayTransRatio = pTotal / 30;
                     } else if (currentMonth == 1) {
-                        dayTransRatio[0] = pTotal / 28;
+                        dayTransRatio = pTotal / 28;
                     }
                     int weekTransRatio = pTotal / 4;
                     int monthTransRatio = pTotal;
 
-                    personalRef.child("dayTransRatio").setValue(dayTransRatio[0]);
+                    personalRef.child("dayTransRatio").setValue(dayTransRatio);
                     personalRef.child("weekTransRatio").setValue(weekTransRatio);
                     personalRef.child("monthTransRatio").setValue(monthTransRatio);
 
@@ -299,7 +312,7 @@ public class BudgetActivity extends AppCompatActivity {
     private void getFoodBudgetRatios() {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         int currentMonth = calendar.get(Calendar.MONTH);
-        final int[] dayFoodRatio = {0};
+
         Query query = budgetRef.orderByChild("item").equalTo("Food");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -313,16 +326,16 @@ public class BudgetActivity extends AppCompatActivity {
                     }
 
                     if (currentMonth == 0 || currentMonth == 2 || currentMonth == 4 || currentMonth == 6 || currentMonth == 7 || currentMonth == 9 || currentMonth == 11) {
-                        dayFoodRatio[0] = pTotal / 30;
+                        dayFoodRatio = pTotal / 30;
                     } else if (currentMonth == 3 || currentMonth == 5 || currentMonth == 8 || currentMonth == 10) {
-                        dayFoodRatio[0] = pTotal / 30;
+                        dayFoodRatio = pTotal / 30;
                     } else if (currentMonth == 1) {
-                        dayFoodRatio[0] = pTotal / 28;
+                        dayFoodRatio = pTotal / 28;
                     }
                     int weekFoodRatio = pTotal / 4;
                     int monthFoodRatio = pTotal;
 
-                    personalRef.child("dayFoodRatio").setValue(dayFoodRatio[0]);
+                    personalRef.child("dayFoodRatio").setValue(dayFoodRatio);
                     personalRef.child("weekFoodRatio").setValue(weekFoodRatio);
                     personalRef.child("monthFoodRatio").setValue(monthFoodRatio);
 
@@ -343,7 +356,7 @@ public class BudgetActivity extends AppCompatActivity {
     private void getHouseBudgetRatios() {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         int currentMonth = calendar.get(Calendar.MONTH);
-        final int[] dayHouseRatio = {0};
+
         Query query = budgetRef.orderByChild("item").equalTo("House");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -357,16 +370,16 @@ public class BudgetActivity extends AppCompatActivity {
                     }
 
                     if (currentMonth == 0 || currentMonth == 2 || currentMonth == 4 || currentMonth == 6 || currentMonth == 7 || currentMonth == 9 || currentMonth == 11) {
-                        dayHouseRatio[0] = pTotal / 30;
+                        dayHouseRatio = pTotal / 30;
                     } else if (currentMonth == 3 || currentMonth == 5 || currentMonth == 8 || currentMonth == 10) {
-                        dayHouseRatio[0] = pTotal / 30;
+                        dayHouseRatio = pTotal / 30;
                     } else if (currentMonth == 1) {
-                        dayHouseRatio[0] = pTotal / 28;
+                        dayHouseRatio = pTotal / 28;
                     }
                     int weekHouseRatio = pTotal / 4;
                     int monthHouseRatio = pTotal;
 
-                    personalRef.child("dayHouseRatio").setValue(dayHouseRatio[0]);
+                    personalRef.child("dayHouseRatio").setValue(dayHouseRatio);
                     personalRef.child("weekHouseRatio").setValue(weekHouseRatio);
                     personalRef.child("monthHouseRatio").setValue(monthHouseRatio);
 
@@ -387,7 +400,7 @@ public class BudgetActivity extends AppCompatActivity {
     private void getEntertainmentBudgetRatios() {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         int currentMonth = calendar.get(Calendar.MONTH);
-        final int[] dayEntRatio = {0};
+
         Query query = budgetRef.orderByChild("item").equalTo("Entertainment");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -401,16 +414,16 @@ public class BudgetActivity extends AppCompatActivity {
                     }
 
                     if (currentMonth == 0 || currentMonth == 2 || currentMonth == 4 || currentMonth == 6 || currentMonth == 7 || currentMonth == 9 || currentMonth == 11) {
-                        dayEntRatio[0] = pTotal / 30;
+                        dayEntRatio = pTotal / 30;
                     } else if (currentMonth == 3 || currentMonth == 5 || currentMonth == 8 || currentMonth == 10) {
-                        dayEntRatio[0] = pTotal / 30;
+                        dayEntRatio = pTotal / 30;
                     } else if (currentMonth == 1) {
-                        dayEntRatio[0] = pTotal / 28;
+                        dayEntRatio = pTotal / 28;
                     }
                     int weekEntRatio = pTotal / 4;
                     int monthEntRatio = pTotal;
 
-                    personalRef.child("dayEntRatio").setValue(dayEntRatio[0]);
+                    personalRef.child("dayEntRatio").setValue(dayEntRatio);
                     personalRef.child("weekEntRatio").setValue(weekEntRatio);
                     personalRef.child("monthEntRatio").setValue(monthEntRatio);
 
@@ -431,7 +444,7 @@ public class BudgetActivity extends AppCompatActivity {
     private void getEducationBudgetRatios() {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         int currentMonth = calendar.get(Calendar.MONTH);
-        final int[] dayEduRatio = {0};
+
         Query query = budgetRef.orderByChild("item").equalTo("Education");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -445,16 +458,16 @@ public class BudgetActivity extends AppCompatActivity {
                     }
 
                     if (currentMonth == 0 || currentMonth == 2 || currentMonth == 4 || currentMonth == 6 || currentMonth == 7 || currentMonth == 9 || currentMonth == 11) {
-                        dayEduRatio[0] = pTotal / 30;
+                        dayEduRatio = pTotal / 30;
                     } else if (currentMonth == 3 || currentMonth == 5 || currentMonth == 8 || currentMonth == 10) {
-                        dayEduRatio[0] = pTotal / 30;
+                        dayEduRatio = pTotal / 30;
                     } else if (currentMonth == 1) {
-                        dayEduRatio[0] = pTotal / 28;
+                        dayEduRatio = pTotal / 28;
                     }
                     int weekEduRatio = pTotal / 4;
                     int monthEduRatio = pTotal;
 
-                    personalRef.child("dayEduRatio").setValue(dayEduRatio[0]);
+                    personalRef.child("dayEduRatio").setValue(dayEduRatio);
                     personalRef.child("weekEduRatio").setValue(weekEduRatio);
                     personalRef.child("monthEduRatio").setValue(monthEduRatio);
 
@@ -475,7 +488,7 @@ public class BudgetActivity extends AppCompatActivity {
     private void getCharityBudgetRatios() {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         int currentMonth = calendar.get(Calendar.MONTH);
-        final int[] dayCharRatio = {0};
+
         Query query = budgetRef.orderByChild("item").equalTo("Charity");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -489,16 +502,16 @@ public class BudgetActivity extends AppCompatActivity {
                     }
 
                     if (currentMonth == 0 || currentMonth == 2 || currentMonth == 4 || currentMonth == 6 || currentMonth == 7 || currentMonth == 9 || currentMonth == 11) {
-                        dayCharRatio[0] = pTotal / 30;
+                        dayCharRatio = pTotal / 30;
                     } else if (currentMonth == 3 || currentMonth == 5 || currentMonth == 8 || currentMonth == 10) {
-                        dayCharRatio[0] = pTotal / 30;
+                        dayCharRatio = pTotal / 30;
                     } else if (currentMonth == 1) {
-                        dayCharRatio[0] = pTotal / 28;
+                        dayCharRatio = pTotal / 28;
                     }
                     int weekCharRatio = pTotal / 4;
                     int monthCharRatio = pTotal;
 
-                    personalRef.child("dayCharRatio").setValue(dayCharRatio[0]);
+                    personalRef.child("dayCharRatio").setValue(dayCharRatio);
                     personalRef.child("weekCharRatio").setValue(weekCharRatio);
                     personalRef.child("monthCharRatio").setValue(monthCharRatio);
 
@@ -519,7 +532,7 @@ public class BudgetActivity extends AppCompatActivity {
     private void getApparelBudgetRatios() {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         int currentMonth = calendar.get(Calendar.MONTH);
-        final int[] dayAppRatio = {0};
+
         Query query = budgetRef.orderByChild("item").equalTo("Apparel");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -533,16 +546,16 @@ public class BudgetActivity extends AppCompatActivity {
                     }
 
                     if (currentMonth == 0 || currentMonth == 2 || currentMonth == 4 || currentMonth == 6 || currentMonth == 7 || currentMonth == 9 || currentMonth == 11) {
-                        dayAppRatio[0] = pTotal / 30;
+                        dayAppRatio = pTotal / 30;
                     } else if (currentMonth == 3 || currentMonth == 5 || currentMonth == 8 || currentMonth == 10) {
-                        dayAppRatio[0] = pTotal / 30;
+                        dayAppRatio = pTotal / 30;
                     } else if (currentMonth == 1) {
-                        dayAppRatio[0] = pTotal / 28;
+                        dayAppRatio = pTotal / 28;
                     }
                     int weekAppRatio = pTotal / 4;
                     int monthAppRatio = pTotal;
 
-                    personalRef.child("dayAppRatio").setValue(dayAppRatio[0]);
+                    personalRef.child("dayAppRatio").setValue(dayAppRatio);
                     personalRef.child("weekAppRatio").setValue(weekAppRatio);
                     personalRef.child("monthAppRatio").setValue(monthAppRatio);
 
@@ -563,7 +576,7 @@ public class BudgetActivity extends AppCompatActivity {
     private void getHealthBudgetRatios() {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         int currentMonth = calendar.get(Calendar.MONTH);
-        final int[] dayHealthRatio = {0};
+
         Query query = budgetRef.orderByChild("item").equalTo("Health");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -577,16 +590,16 @@ public class BudgetActivity extends AppCompatActivity {
                     }
 
                     if (currentMonth == 0 || currentMonth == 2 || currentMonth == 4 || currentMonth == 6 || currentMonth == 7 || currentMonth == 9 || currentMonth == 11) {
-                        dayHealthRatio[0] = pTotal / 30;
+                        dayHealthRatio = pTotal / 30;
                     } else if (currentMonth == 3 || currentMonth == 5 || currentMonth == 8 || currentMonth == 10) {
-                        dayHealthRatio[0] = pTotal / 30;
+                        dayHealthRatio = pTotal / 30;
                     } else if (currentMonth == 1) {
-                        dayHealthRatio[0] = pTotal / 28;
+                        dayHealthRatio = pTotal / 28;
                     }
                     int weekHealthRatio = pTotal / 4;
                     int monthHealthRatio = pTotal;
 
-                    personalRef.child("dayHealthRatio").setValue(dayHealthRatio[0]);
+                    personalRef.child("dayHealthRatio").setValue(dayHealthRatio);
                     personalRef.child("weekHealthRatio").setValue(weekHealthRatio);
                     personalRef.child("monthHealthRatio").setValue(monthHealthRatio);
 
@@ -607,7 +620,7 @@ public class BudgetActivity extends AppCompatActivity {
     private void getPersonalBudgetRatios() {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         int currentMonth = calendar.get(Calendar.MONTH);
-        final int[] dayPerRatio = {0};
+
         Query query = budgetRef.orderByChild("item").equalTo("Personal");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -621,16 +634,16 @@ public class BudgetActivity extends AppCompatActivity {
                     }
 
                     if (currentMonth == 0 || currentMonth == 2 || currentMonth == 4 || currentMonth == 6 || currentMonth == 7 || currentMonth == 9 || currentMonth == 11) {
-                        dayPerRatio[0] = pTotal / 30;
+                        dayPerRatio = pTotal / 30;
                     } else if (currentMonth == 3 || currentMonth == 5 || currentMonth == 8 || currentMonth == 10) {
-                        dayPerRatio[0] = pTotal / 30;
+                        dayPerRatio = pTotal / 30;
                     } else if (currentMonth == 1) {
-                        dayPerRatio[0] = pTotal / 28;
+                        dayPerRatio = pTotal / 28;
                     }
                     int weekPerRatio = pTotal / 4;
                     int monthPerRatio = pTotal;
 
-                    personalRef.child("dayPerRatio").setValue(dayPerRatio[0]);
+                    personalRef.child("dayPerRatio").setValue(dayPerRatio);
                     personalRef.child("weekPerRatio").setValue(weekPerRatio);
                     personalRef.child("monthPerRatio").setValue(monthPerRatio);
 
@@ -651,7 +664,7 @@ public class BudgetActivity extends AppCompatActivity {
     private void getOtherBudgetRatios() {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         int currentMonth = calendar.get(Calendar.MONTH);
-        final int[] dayOtherRatio = {0};
+
         Query query = budgetRef.orderByChild("item").equalTo("Other");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -665,16 +678,16 @@ public class BudgetActivity extends AppCompatActivity {
                     }
 
                     if (currentMonth == 0 || currentMonth == 2 || currentMonth == 4 || currentMonth == 6 || currentMonth == 7 || currentMonth == 9 || currentMonth == 11) {
-                        dayOtherRatio[0] = pTotal / 30;
+                        dayOtherRatio = pTotal / 30;
                     } else if (currentMonth == 3 || currentMonth == 5 || currentMonth == 8 || currentMonth == 10) {
-                        dayOtherRatio[0] = pTotal / 30;
+                        dayOtherRatio = pTotal / 30;
                     } else if (currentMonth == 1) {
-                        dayOtherRatio[0] = pTotal / 28;
+                        dayOtherRatio = pTotal / 28;
                     }
                     int weekOtherRatio = pTotal / 4;
                     int monthOtherRatio = pTotal;
 
-                    personalRef.child("dayOtherRatio").setValue(dayOtherRatio[0]);
+                    personalRef.child("dayOtherRatio").setValue(dayOtherRatio);
                     personalRef.child("weekOtherRatio").setValue(weekOtherRatio);
                     personalRef.child("monthOtherRatio").setValue(monthOtherRatio);
 
@@ -694,36 +707,196 @@ public class BudgetActivity extends AppCompatActivity {
 
     private void getTotalBudgetRatios() {
 
-        int dayTransport = Integer.parseInt(String.valueOf(personalRef.child("dayTransRatio")));
-        int dayFood = Integer.parseInt(String.valueOf(personalRef.child("dayFoodRatio")));
-        int dayHouse = Integer.parseInt(String.valueOf(personalRef.child("dayHouseRatio")));
-        int dayEntertainment = Integer.parseInt(String.valueOf(personalRef.child("dayEntRatio")));
-        int dayEducation = Integer.parseInt(String.valueOf(personalRef.child("dayEduRatio")));
-        int dayCharity = Integer.parseInt(String.valueOf(personalRef.child("dayCharRatio")));
-        int dayApparel = Integer.parseInt(String.valueOf(personalRef.child("dayAppRatio")));
-        int dayHealth = Integer.parseInt(String.valueOf(personalRef.child("dayHealthRatio")));
-        int dayPersonal = Integer.parseInt(String.valueOf(personalRef.child("dayPerRatio")));
-        int dayOther = Integer.parseInt(String.valueOf(personalRef.child("dayOtherRatio")));
+        //Getting Totals for Day Ratios
+        personalRef.child("dayTransRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    dayTransport += tTotal;
+                } else {
+                    dayTransport = 0;
+                }
+                dailyTotal += dayTransport;
+                personalRef.child("dailyBudget").setValue(dailyTotal);
+            }
 
-        int dayTotal = dayTransport + dayFood + dayHouse + dayEntertainment + dayEducation + dayCharity + dayApparel + dayHealth + dayPersonal + dayOther;
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-        personalRef.child("dailyBudget").setValue(dayTotal);
+            }
+        });
 
+        personalRef.child("dayFoodRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    dayFood += tTotal;
+                } else {
+                    dayFood = 0;
+                }
+                dailyTotal += dayFood;
+                personalRef.child("dailyBudget").setValue(dailyTotal);
+            }
 
-        int weekTransport = Integer.parseInt(String.valueOf(personalRef.child("weekTransRatio")));
-        int weekFood = Integer.parseInt(String.valueOf(personalRef.child("weekFoodRatio")));
-        int weekHouse = Integer.parseInt(String.valueOf(personalRef.child("weekHouseRatio")));
-        int weekEntertainment = Integer.parseInt(String.valueOf(personalRef.child("weekEntRatio")));
-        int weekEducation = Integer.parseInt(String.valueOf(personalRef.child("weekEduRatio")));
-        int weekCharity = Integer.parseInt(String.valueOf(personalRef.child("weekCharRatio")));
-        int weekApparel = Integer.parseInt(String.valueOf(personalRef.child("weekAppRatio")));
-        int weekHealth = Integer.parseInt(String.valueOf(personalRef.child("weekHealthRatio")));
-        int weekPersonal = Integer.parseInt(String.valueOf(personalRef.child("weekPerRatio")));
-        int weekOther = Integer.parseInt(String.valueOf(personalRef.child("weekOtherRatio")));
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-        int weekTotal = weekTransport + weekFood + weekHouse + weekEntertainment + weekEducation + weekCharity + weekApparel + weekHealth + weekPersonal + weekOther;
+            }
+        });
 
-        personalRef.child("weeklyBudget").setValue(weekTotal);
+        personalRef.child("dayHouseRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    dayHouse += tTotal;
+                } else {
+                    dayHouse = 0;
+                }
+                dailyTotal += dayHouse;
+                personalRef.child("dailyBudget").setValue(dailyTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        personalRef.child("dayEntRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    dayEntertainment += tTotal;
+                } else {
+                    dayEntertainment = 0;
+                }
+                dailyTotal += dayEntertainment;
+                personalRef.child("dailyBudget").setValue(dailyTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        personalRef.child("dayEduRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    dayEducation += tTotal;
+                } else {
+                    dayEducation = 0;
+                }
+                dailyTotal += dayEducation;
+                personalRef.child("dailyBudget").setValue(dailyTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        personalRef.child("dayCharRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    dayCharity += tTotal;
+                } else {
+                    dayCharity = 0;
+                }
+                dailyTotal += dayCharity;
+                personalRef.child("dailyBudget").setValue(dailyTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        personalRef.child("dayAppRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    dayApparel += tTotal;
+                } else {
+                    dayApparel = 0;
+                }
+                dailyTotal += dayApparel;
+                personalRef.child("dailyBudget").setValue(dailyTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        personalRef.child("dayHealthRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    dayHealth += tTotal;
+                } else {
+                    dayHealth = 0;
+                }
+                dailyTotal += dayHealth;
+                personalRef.child("dailyBudget").setValue(dailyTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        personalRef.child("dayPerRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    dayPersonal += tTotal;
+                } else {
+                    dayPersonal = 0;
+                }
+                dailyTotal += dayPersonal;
+                personalRef.child("dailyBudget").setValue(dailyTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        personalRef.child("dayOtherRatio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int tTotal = snapshot.getValue(Integer.class);
+                    dayOther += tTotal;
+                } else {
+                    dayOther = 0;
+                }
+                dailyTotal += dayOther;
+                personalRef.child("dailyBudget").setValue(dailyTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 
