@@ -164,11 +164,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void resetBudget() {
 
-        DatabaseReference budgetRef2;
+        DatabaseReference budgetRef2, personal2;
         FirebaseAuth mAuth2;
 
         mAuth2 = FirebaseAuth.getInstance();
         budgetRef2 = FirebaseDatabase.getInstance().getReference().child("budget").child(mAuth2.getCurrentUser().getUid());
+        personal2 = FirebaseDatabase.getInstance().getReference().child("personal").child(mAuth2.getCurrentUser().getUid());
 
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DATE);
@@ -186,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
         if (!prefs.getBoolean("reset", false) && day == 1) {
             // Reset Budget
             budgetRef2.removeValue();
+            personal2.removeValue();
             Toast.makeText(this, "Budget Reset!!", Toast.LENGTH_LONG).show();
 
             // Mark reset as done.
