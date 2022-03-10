@@ -10,7 +10,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BlurMaskFilter;
 import android.graphics.ColorSpace;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.view.LayoutInflater;
@@ -176,6 +178,11 @@ public class AccountActivity extends AppCompatActivity {
                 pin = user.getPasscode();
                 email = user.getEmail();
                 password = user.getPassword();
+
+                userPassword.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+                float radius = userPassword.getTextSize() / 3;
+                BlurMaskFilter filter = new BlurMaskFilter(radius, BlurMaskFilter.Blur.NORMAL);
+                userPassword.getPaint().setMaskFilter(filter);
             }
 
             @Override
