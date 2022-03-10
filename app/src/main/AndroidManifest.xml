@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BudgetingApp">
         <activity
+            android:name=".DashboardActivity"
+            android:exported="true" >
+
+        </activity>
+        <activity
             android:name=".PassCodeActivity"
             android:exported="false" />
         <activity
@@ -34,12 +39,14 @@
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".Splash_ScreenActivity"
-            android:exported="true">
+            android:exported="true" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 

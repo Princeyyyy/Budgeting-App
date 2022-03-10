@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="Budget And Spending">
+        <menu>
+            <item
+                android:id="@+id/budget"
+                android:icon="@drawable/ic_new_money"
+                android:title="My Budget" />
+            <item
+                android:id="@+id/today"
+                android:icon="@drawable/ic_baseline_today_24"
+                android:title="Today" />
+            <item
+                android:id="@+id/week"
+                android:icon="@drawable/ic_baseline_view_week_24"
+                android:title="Week" />
+            <item
+                android:id="@+id/month"
+                android:icon="@drawable/ic_baseline_calendar_today_24"
+                android:title="Month" />
+            <item
+                android:id="@+id/history"
+                android:icon="@drawable/ic_history"
+                android:title="History" />
+        </menu>
+    </item>
+
+    <item android:title="Analytics">
+        <menu>
+            <item
+                android:id="@+id/todayAnalytics"
+                android:icon="@drawable/ic_baseline_today_24"
+                android:title="Today's Analytics" />
+            <item
+                android:id="@+id/weekAnalytics"
+                android:icon="@drawable/ic_baseline_view_week_24"
+                android:title="Week's Analytics" />
+            <item
+                android:id="@+id/monthAnalytics"
+                android:icon="@drawable/ic_baseline_calendar_today_24"
+                android:title="Month Analytics" />
+        </menu>
+    </item>
+
+    <item android:title="Account">
+        <menu>
+            <item
+                android:id="@+id/profile"
+                android:icon="@drawable/ic_person"
+                android:title="My Account" />
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_baseline_cancel_24"
+                android:title="LogOut" />
+        </menu>
+    </item>
+
+</menu>
