@@ -89,53 +89,61 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Budgeting App");
 
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer);
-        NavigationView navigationView = findViewById(R.id.navigation);
+        NavigationView navigationView = findViewById(R.id.main_navigation);
         navigationView.setNavigationItemSelectedListener(menuItem -> {
             int menuId = menuItem.getItemId();
 
             switch (menuId) {
+                case R.id.main:
+                    Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(mainIntent);
+                    break;
                 case R.id.budget:
-                    Intent budgetIntent = new Intent(MainActivity.this, BudgetActivity.class);
+                    Intent budgetIntent = new Intent(getApplicationContext(), BudgetActivity.class);
                     startActivity(budgetIntent);
                     break;
                 case R.id.today:
-                    Intent todayIntent = new Intent(MainActivity.this, TodaySpendingActivity.class);
+                    Intent todayIntent = new Intent(getApplicationContext(), TodaySpendingActivity.class);
                     startActivity(todayIntent);
                     break;
                 case R.id.week:
-                    Intent weekIntent = new Intent(MainActivity.this, WeekSpendingActivity.class);
+                    Intent weekIntent = new Intent(getApplicationContext(), WeekSpendingActivity.class);
                     weekIntent.putExtra("type", "week");
                     startActivity(weekIntent);
                     break;
                 case R.id.month:
-                    Intent monthIntent = new Intent(MainActivity.this, WeekSpendingActivity.class);
+                    Intent monthIntent = new Intent(getApplicationContext(), WeekSpendingActivity.class);
                     monthIntent.putExtra("type", "month");
                     startActivity(monthIntent);
                     break;
                 case R.id.todayAnalytics:
-                    Intent todayAnalyticsIntent = new Intent(MainActivity.this, DailyAnalyticsActivity.class);
+                    Intent todayAnalyticsIntent = new Intent(getApplicationContext(), DailyAnalyticsActivity.class);
                     startActivity(todayAnalyticsIntent);
                     break;
                 case R.id.weekAnalytics:
-                    Intent weekAnalyticsIntent = new Intent(MainActivity.this, WeeklyAnalyticsActivity.class);
+                    Intent weekAnalyticsIntent = new Intent(getApplicationContext(), WeeklyAnalyticsActivity.class);
                     startActivity(weekAnalyticsIntent);
                     break;
                 case R.id.monthAnalytics:
-                    Intent monthAnalyticsIntent = new Intent(MainActivity.this, MonthlyAnalyticsActivity.class);
+                    Intent monthAnalyticsIntent = new Intent(getApplicationContext(), MonthlyAnalyticsActivity.class);
                     startActivity(monthAnalyticsIntent);
                     break;
+                case R.id.history:
+                    Intent historyIntent = new Intent(getApplicationContext(), HistoryActivity.class);
+                    startActivity(historyIntent);
+                    break;
                 case R.id.profile:
-                    Intent profileIntent = new Intent(MainActivity.this, AccountActivity.class);
+                    Intent profileIntent = new Intent(getApplicationContext(), AccountActivity.class);
                     startActivity(profileIntent);
                     break;
                 case R.id.logout:
-                    new AlertDialog.Builder(this)
+                    new android.app.AlertDialog.Builder(this)
                             .setTitle("Personal Budgeting App")
                             .setMessage("Are you sure you want to exit?")
                             .setCancelable(false)
                             .setPositiveButton("Yes", (dialog, id) -> {
                                 FirebaseAuth.getInstance().signOut();
-                                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                                 startActivity(intent);
 
                                 SharedPreferences sharedPreferences1 = getSharedPreferences("State", MODE_PRIVATE);

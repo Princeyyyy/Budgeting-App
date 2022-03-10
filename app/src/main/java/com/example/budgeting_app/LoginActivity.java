@@ -81,11 +81,6 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
-
-                                SharedPreferences sharedPreferences3 = getSharedPreferences("State3", MODE_PRIVATE);
-                                SharedPreferences.Editor preferences3 = sharedPreferences3.edit();
-                                preferences3.putString("status", "login");
-                                preferences3.commit();
                                 finish();
                                 progressDialog.dismiss();
                             } else {

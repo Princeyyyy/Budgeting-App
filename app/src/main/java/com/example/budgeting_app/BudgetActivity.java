@@ -2,6 +2,7 @@ package com.example.budgeting_app;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,15 +16,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,7 +54,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BudgetActivity extends AppCompatActivity {
-    public static final String TAG = BudgetActivity.class.getSimpleName();
 
 
     @BindView(R.id.fab1)
@@ -67,7 +70,7 @@ public class BudgetActivity extends AppCompatActivity {
     private String item = "";
     private int amount = 0;
 
-    private Toolbar budgetToolbar;
+    private Toolbar toolbar;
 
     private TextView display;
 
@@ -112,6 +115,8 @@ public class BudgetActivity extends AppCompatActivity {
     int weekOther = 0;
     int weeklyTotal = 0;
 
+    private DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,17 +139,92 @@ public class BudgetActivity extends AppCompatActivity {
         recyclerView.setAdapter(budgetItemsAdapter);
 
 
-        budgetToolbar = findViewById(R.id.budgetToolbar);
-        setSupportActionBar(budgetToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar = findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.ic_baseline_menu_24);
         getSupportActionBar().setTitle("My Budget");
 
-        budgetToolbar.setNavigationOnClickListener(view -> {
-            Intent intent = new Intent(BudgetActivity.this, MainActivity.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
+        drawerLayout = (DrawerLayout) findViewById(R.id.budget_drawer);
+        NavigationView navigationView = findViewById(R.id.budget_navigation);
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            int menuId = menuItem.getItemId();
+
+            switch (menuId) {
+                case R.id.main:
+                    Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(mainIntent);
+                    break;
+                case R.id.budget:
+                    Intent budgetIntent = new Intent(getApplicationContext(), BudgetActivity.class);
+                    startActivity(budgetIntent);
+                    break;
+                case R.id.today:
+                    Intent todayIntent = new Intent(getApplicationContext(), TodaySpendingActivity.class);
+                    startActivity(todayIntent);
+                    break;
+                case R.id.week:
+                    Intent weekIntent = new Intent(getApplicationContext(), WeekSpendingActivity.class);
+                    weekIntent.putExtra("type", "week");
+                    startActivity(weekIntent);
+                    break;
+                case R.id.month:
+                    Intent monthIntent = new Intent(getApplicationContext(), WeekSpendingActivity.class);
+                    monthIntent.putExtra("type", "month");
+                    startActivity(monthIntent);
+                    break;
+                case R.id.todayAnalytics:
+                    Intent todayAnalyticsIntent = new Intent(getApplicationContext(), DailyAnalyticsActivity.class);
+                    startActivity(todayAnalyticsIntent);
+                    break;
+                case R.id.weekAnalytics:
+                    Intent weekAnalyticsIntent = new Intent(getApplicationContext(), WeeklyAnalyticsActivity.class);
+                    startActivity(weekAnalyticsIntent);
+                    break;
+                case R.id.monthAnalytics:
+                    Intent monthAnalyticsIntent = new Intent(getApplicationContext(), MonthlyAnalyticsActivity.class);
+                    startActivity(monthAnalyticsIntent);
+                    break;
+                case R.id.history:
+                    Intent historyIntent = new Intent(getApplicationContext(), HistoryActivity.class);
+                    startActivity(historyIntent);
+                    break;
+                case R.id.profile:
+                    Intent profileIntent = new Intent(getApplicationContext(), AccountActivity.class);
+                    startActivity(profileIntent);
+                    break;
+                case R.id.logout:
+                    new android.app.AlertDialog.Builder(this)
+                            .setTitle("Personal Budgeting App")
+                            .setMessage("Are you sure you want to exit?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", (dialog, id) -> {
+                                FirebaseAuth.getInstance().signOut();
+                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(intent);
+
+                                SharedPreferences sharedPreferences1 = getSharedPreferences("State", MODE_PRIVATE);
+                                SharedPreferences.Editor preferences1 = sharedPreferences1.edit();
+                                preferences1.putBoolean("isChecked", false);
+                                preferences1.apply();
+
+                                finish();
+                            })
+                            .setNegativeButton("No", null)
+                            .show();
+                    break;
+                default:
+                    setContentView(R.layout.activity_main);
+                    break;
+            }
+            drawerLayout.closeDrawers();
+            return true;
         });
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Drawer_open, R.string.Drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
         mAuth = FirebaseAuth.getInstance();
         budgetRef = FirebaseDatabase.getInstance().getReference().child("budget").child(mAuth.getCurrentUser().getUid());

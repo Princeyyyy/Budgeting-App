@@ -4,8 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <item android:title="Budget And Spending">
+    <item android:title="Budget and Spending">
         <menu>
+            <item
+                android:id="@+id/main"
+                android:icon="@drawable/ic_baseline_home_24"
+                android:title="Home" />
             <item
                 android:id="@+id/budget"
                 android:icon="@drawable/ic_new_money"

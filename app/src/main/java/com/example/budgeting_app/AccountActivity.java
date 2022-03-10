@@ -1,8 +1,10 @@
 package com.example.budgeting_app;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -25,6 +27,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,7 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AccountActivity extends AppCompatActivity {
 
-    private Toolbar settingsToolbar;
+    private Toolbar toolbar;
     private TextView userFName, userLName, userEmail, userPassword, userPin;
     private Button logoutBtn, updateDetailsBtn;
     private Switch aSwitch;
@@ -49,26 +52,103 @@ public class AccountActivity extends AppCompatActivity {
     String email;
     String password;
 
+    private DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
 
-        aSwitch = findViewById(R.id.enableEncryption);
-
-        settingsToolbar = findViewById(R.id.my_Feed_Toolbar);
-        setSupportActionBar(settingsToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar = findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.ic_baseline_menu_24);
         getSupportActionBar().setTitle("My Account");
 
-        updateDetailsBtn = findViewById(R.id.updateDetailsBtn);
+        drawerLayout = (DrawerLayout) findViewById(R.id.account_drawer);
+        NavigationView navigationView = findViewById(R.id.account_navigation);
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            int menuId = menuItem.getItemId();
 
-        settingsToolbar.setNavigationOnClickListener(view -> {
-            Intent intent = new Intent(AccountActivity.this, MainActivity.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_left, R.anim.stay);
+            switch (menuId) {
+                case R.id.main:
+                    Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(mainIntent);
+                    break;
+                case R.id.budget:
+                    Intent budgetIntent = new Intent(getApplicationContext(), BudgetActivity.class);
+                    startActivity(budgetIntent);
+                    break;
+                case R.id.today:
+                    Intent todayIntent = new Intent(getApplicationContext(), TodaySpendingActivity.class);
+                    startActivity(todayIntent);
+                    break;
+                case R.id.week:
+                    Intent weekIntent = new Intent(getApplicationContext(), WeekSpendingActivity.class);
+                    weekIntent.putExtra("type", "week");
+                    startActivity(weekIntent);
+                    break;
+                case R.id.month:
+                    Intent monthIntent = new Intent(getApplicationContext(), WeekSpendingActivity.class);
+                    monthIntent.putExtra("type", "month");
+                    startActivity(monthIntent);
+                    break;
+                case R.id.todayAnalytics:
+                    Intent todayAnalyticsIntent = new Intent(getApplicationContext(), DailyAnalyticsActivity.class);
+                    startActivity(todayAnalyticsIntent);
+                    break;
+                case R.id.weekAnalytics:
+                    Intent weekAnalyticsIntent = new Intent(getApplicationContext(), WeeklyAnalyticsActivity.class);
+                    startActivity(weekAnalyticsIntent);
+                    break;
+                case R.id.monthAnalytics:
+                    Intent monthAnalyticsIntent = new Intent(getApplicationContext(), MonthlyAnalyticsActivity.class);
+                    startActivity(monthAnalyticsIntent);
+                    break;
+                case R.id.history:
+                    Intent historyIntent = new Intent(getApplicationContext(), HistoryActivity.class);
+                    startActivity(historyIntent);
+                    break;
+                case R.id.profile:
+                    Intent profileIntent = new Intent(getApplicationContext(), AccountActivity.class);
+                    startActivity(profileIntent);
+                    break;
+                case R.id.logout:
+                    new android.app.AlertDialog.Builder(this)
+                            .setTitle("Personal Budgeting App")
+                            .setMessage("Are you sure you want to exit?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", (dialog, id) -> {
+                                FirebaseAuth.getInstance().signOut();
+                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(intent);
+
+                                SharedPreferences sharedPreferences1 = getSharedPreferences("State", MODE_PRIVATE);
+                                SharedPreferences.Editor preferences1 = sharedPreferences1.edit();
+                                preferences1.putBoolean("isChecked", false);
+                                preferences1.apply();
+
+                                finish();
+                            })
+                            .setNegativeButton("No", null)
+                            .show();
+                    break;
+                default:
+                    setContentView(R.layout.activity_main);
+                    break;
+            }
+            drawerLayout.closeDrawers();
+            return true;
         });
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Drawer_open, R.string.Drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        aSwitch = findViewById(R.id.enableEncryption);
+
+        updateDetailsBtn = findViewById(R.id.updateDetailsBtn);
 
         logoutBtn = findViewById(R.id.logoutBtn);
         userFName = findViewById(R.id.userFName);
