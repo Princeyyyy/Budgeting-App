@@ -131,6 +131,10 @@ public class WeekSpendingActivity extends AppCompatActivity {
                             .setNegativeButton("No", null)
                             .show();
                     break;
+                case R.id.about:
+                    Intent aboutIntent = new Intent(getApplicationContext(), AboutActivity.class);
+                    startActivity(aboutIntent);
+                    break;
                 default:
                     setContentView(R.layout.activity_main);
                     break;
@@ -167,14 +171,12 @@ public class WeekSpendingActivity extends AppCompatActivity {
                 setSupportActionBar(toolbar);
                 getSupportActionBar().setDisplayShowTitleEnabled(true);
                 getSupportActionBar().setDisplayShowHomeEnabled(true);
-                getSupportActionBar().setIcon(R.drawable.ic_baseline_menu_24);
                 getSupportActionBar().setTitle("Week's Spending");
                 readWeeksSpendingItems();
             } else if (type.equals("month")) {
                 setSupportActionBar(toolbar);
                 getSupportActionBar().setDisplayShowTitleEnabled(true);
                 getSupportActionBar().setDisplayShowHomeEnabled(true);
-                getSupportActionBar().setIcon(R.drawable.ic_baseline_menu_24);
                 getSupportActionBar().setTitle("Month's Spending");
                 readMonthsSpendingItems();
             }

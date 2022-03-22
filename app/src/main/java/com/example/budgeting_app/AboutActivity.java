@@ -3,13 +3,12 @@ package com.example.budgeting_app;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,33 +16,30 @@ import com.google.firebase.auth.FirebaseAuth;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ChooseAnalyticsActivity extends AppCompatActivity {
+public class AboutActivity extends AppCompatActivity {
 
-    @BindView(R.id.analyticsTodayCardView)
-    CardView analyticsTodayCardView;
-    @BindView(R.id.analyticsWeekCardView)
-    CardView analyticsWeekCardView;
-    @BindView(R.id.analyticsMonthCardView)
-    CardView analyticsMonthCardView;
+    @BindView(R.id.aboutText)
+    TextView aboutText;
 
     private Toolbar toolbar;
-
     private DrawerLayout drawerLayout;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_analytics);
+        setContentView(R.layout.activity_about_avtivity);
         ButterKnife.bind(this);
 
         toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Choose Analytics");
+        getSupportActionBar().setTitle("About");
 
-        drawerLayout = findViewById(R.id.choose_drawer);
-        NavigationView navigationView = findViewById(R.id.choose_navigation);
+        drawerLayout = findViewById(R.id.about_drawer);
+        NavigationView navigationView = findViewById(R.id.about_navigation);
         navigationView.setNavigationItemSelectedListener(menuItem -> {
             int menuId = menuItem.getItemId();
 
@@ -126,19 +122,15 @@ public class ChooseAnalyticsActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        analyticsTodayCardView.setOnClickListener(view -> {
-            Intent intent = new Intent(ChooseAnalyticsActivity.this, DailyAnalyticsActivity.class);
-            startActivity(intent);
-        });
+        String about;
 
-        analyticsWeekCardView.setOnClickListener(view -> {
-            Intent intent = new Intent(ChooseAnalyticsActivity.this, WeeklyAnalyticsActivity.class);
-            startActivity(intent);
-        });
-
-        analyticsMonthCardView.setOnClickListener(view -> {
-            Intent intent = new Intent(ChooseAnalyticsActivity.this, MonthlyAnalyticsActivity.class);
-            startActivity(intent);
-        });
+        about = "Budgeting App!!\n" +
+                "The application is made and designed to help users who need a way to manage their finance expenditure and keep a record.\n" +
+                "Users set their monthly budget and as they go about their spending, they key in their expenses to keep track of them.\n" +
+                "A user has the ability to view or edit any budget items and expense at their convenience.\n" +
+                "Likewise, they can set when their monthly budge is meant to reset according to their view.\n" +
+                "During the month, users will be able to view their spending against their budget through the given analytical screen.\n" +
+                "A User may set a pin to protect their application details from outsiders.\n" +
+                "Enjoy!!!";
     }
 }

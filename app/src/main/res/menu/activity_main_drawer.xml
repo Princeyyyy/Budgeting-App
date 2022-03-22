@@ -63,4 +63,13 @@
         </menu>
     </item>
 
+    <item android:title="About">
+        <menu>
+            <item
+                android:id="@+id/about"
+                android:icon="@drawable/ic_baseline_create_24"
+                android:title="About App" />
+        </menu>
+    </item>
+
 </menu>

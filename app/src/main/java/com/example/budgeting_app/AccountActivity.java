@@ -153,6 +153,10 @@ public class AccountActivity extends AppCompatActivity implements DatePickerDial
                             .setNegativeButton("No", null)
                             .show();
                     break;
+                case R.id.about:
+                    Intent aboutIntent = new Intent(getApplicationContext(), AboutActivity.class);
+                    startActivity(aboutIntent);
+                    break;
                 default:
                     setContentView(R.layout.activity_main);
                     break;
@@ -213,7 +217,7 @@ public class AccountActivity extends AppCompatActivity implements DatePickerDial
         aSwitch.setChecked(sharedPreferences.getBoolean("isChecked", false));
         aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked && pin.equals("null")) {
-                Toast.makeText(this, "You need to set a pin first!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "You need to set a passcode first!!", Toast.LENGTH_SHORT).show();
                 aSwitch.setChecked(false);
             } else if (isChecked) {
                 preferences.putBoolean("isChecked", true);

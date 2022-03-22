@@ -134,6 +134,10 @@ public class HistoryActivity extends AppCompatActivity implements DatePickerDial
                             .setNegativeButton("No", null)
                             .show();
                     break;
+                case R.id.about:
+                    Intent aboutIntent = new Intent(getApplicationContext(), AboutActivity.class);
+                    startActivity(aboutIntent);
+                    break;
                 default:
                     setContentView(R.layout.activity_main);
                     break;

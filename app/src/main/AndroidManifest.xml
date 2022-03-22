@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.budgeting_app">
-
     <!-- permission required to automatically restart a repeating alarm if the user reboots the device -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name = "android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BudgetingApp">
-
+        <activity
+            android:name=".AboutActivity"
+            android:exported="false" />
         <activity
             android:name=".PassCodeActivity"
             android:exported="false" />
@@ -39,16 +40,15 @@
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".Splash_ScreenActivity"
-            android:exported="true" >
-
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <receiver android:name= ".MyNotificationPublisher" />
+
+        <receiver android:name=".MyNotificationPublisher" />
     </application>
 
 </manifest>
