@@ -2,9 +2,9 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/history_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/history_drawer"
     tools:context=".HistoryActivity">
 
     <LinearLayout
@@ -12,10 +12,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/content_layout"
+        <include
             android:id="@+id/content"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent" />
+            layout="@layout/content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -26,27 +27,23 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <CalendarView
+                    android:id="@+id/calendar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="0dp" />
+
                 <TextView
+                    android:id="@+id/show"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="10dp"
                     android:gravity="center"
-                    android:textColor="#000"
                     android:text="@string/date_search"
+                    android:textColor="#000"
                     android:textSize="14sp" />
-
-                <Button
-                    android:id="@+id/search"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginStart="100dp"
-                    android:layout_marginEnd="100dp"
-                    android:text="Search"
-                    android:textAllCaps="false"
-                    android:textColor="#fff" />
 
                 <TextView
                     android:id="@+id/historyTotalAmountSpent"
@@ -57,7 +54,7 @@
                     android:gravity="center_horizontal"
                     android:text="0.00"
                     android:textColor="#000"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:visibility="gone" />
 
@@ -69,7 +66,7 @@
                     android:layout_margin="10dp"
                     android:gravity="center"
                     android:textColor="#000"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -77,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="20dp"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
             </LinearLayout>
 

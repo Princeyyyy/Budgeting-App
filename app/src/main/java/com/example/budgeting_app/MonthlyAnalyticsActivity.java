@@ -72,10 +72,9 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_baseline_menu_24);
         getSupportActionBar().setTitle("Month's Analytics");
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.month_analytics_drawer);
+        drawerLayout = findViewById(R.id.month_analytics_drawer);
         NavigationView navigationView = findViewById(R.id.month_analytics_navigation);
         navigationView.setNavigationItemSelectedListener(menuItem -> {
             int menuId = menuItem.getItemId();

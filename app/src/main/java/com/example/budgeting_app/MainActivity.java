@@ -85,10 +85,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_baseline_menu_24);
         getSupportActionBar().setTitle("Budgeting App");
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer);
+        drawerLayout = findViewById(R.id.main_drawer);
         NavigationView navigationView = findViewById(R.id.main_navigation);
         navigationView.setNavigationItemSelectedListener(menuItem -> {
             int menuId = menuItem.getItemId();

@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.budgeting_app">
 
+    <!-- permission required to automatically restart a repeating alarm if the user reboots the device -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name = "android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,11 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BudgetingApp">
-        <activity
-            android:name=".DashboardActivity"
-            android:exported="true" >
 
-        </activity>
         <activity
             android:name=".PassCodeActivity"
             android:exported="false" />
@@ -48,6 +48,7 @@
             </intent-filter>
 
         </activity>
+        <receiver android:name= ".MyNotificationPublisher" />
     </application>
 
 </manifest>

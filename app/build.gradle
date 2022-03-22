@@ -52,8 +52,8 @@ dependencies {
     //Firebase
     implementation platform('com.google.firebase:firebase-bom:28.1.0')
     implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-auth:21.0.1'
-    implementation 'com.google.firebase:firebase-database:20.0.3'
+    implementation 'com.google.firebase:firebase-auth:21.0.2'
+    implementation 'com.google.firebase:firebase-database:20.0.4'
     implementation 'com.firebaseui:firebase-ui-database:6.0.2'
 
     implementation 'joda-time:joda-time:2.10.6'

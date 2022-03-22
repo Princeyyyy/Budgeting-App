@@ -40,10 +40,9 @@ public class ChooseAnalyticsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_baseline_menu_24);
         getSupportActionBar().setTitle("Choose Analytics");
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.choose_drawer);
+        drawerLayout = findViewById(R.id.choose_drawer);
         NavigationView navigationView = findViewById(R.id.choose_navigation);
         navigationView.setNavigationItemSelectedListener(menuItem -> {
             int menuId = menuItem.getItemId();

@@ -38,5 +38,5 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="Drawer_open">Drawer Open</string>
     <string name="Drawer_close">Drawer Close</string>
-    <string name="date_search">Search for a date below to view its entries!!</string>
+    <string name="date_search">Select a date above to view its entries!!</string>
 </resources>

@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,8 +46,8 @@ public class HistoryActivity extends AppCompatActivity implements DatePickerDial
 
     private Toolbar toolbar;
 
-    private Button search;
-    private TextView historyTotalAmountSpent;
+    private CalendarView calendar;
+    private TextView historyTotalAmountSpent,show;
 
     private TextView displayError;
 
@@ -63,10 +64,9 @@ public class HistoryActivity extends AppCompatActivity implements DatePickerDial
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_baseline_menu_24);
         getSupportActionBar().setTitle("History");
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.history_drawer);
+        drawerLayout = findViewById(R.id.history_drawer);
         NavigationView navigationView = findViewById(R.id.history_navigation);
         navigationView.setNavigationItemSelectedListener(menuItem -> {
             int menuId = menuItem.getItemId();
@@ -146,9 +146,8 @@ public class HistoryActivity extends AppCompatActivity implements DatePickerDial
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-
-        search = findViewById(R.id.search);
         historyTotalAmountSpent = findViewById(R.id.historyTotalAmountSpent);
+        show = findViewById(R.id.show);
 
         mAuth = FirebaseAuth.getInstance();
         onlineUserId = mAuth.getCurrentUser().getUid();
@@ -164,7 +163,59 @@ public class HistoryActivity extends AppCompatActivity implements DatePickerDial
         todayItemsAdapter2 = new TodayItemsAdapter(HistoryActivity.this, myDataList);
         recyclerView.setAdapter(todayItemsAdapter2);
 
-        search.setOnClickListener(view -> showDatePickerDialog());
+        calendar = findViewById(R.id.calendar);
+
+        // Add Listener in calendar
+        calendar.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            int months = month + 1;
+            String padded = String.format("%02d", dayOfMonth);
+            String date = padded + "-" + "0" + months + "-" + year;
+
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
+            Query query = reference.orderByChild("date").equalTo(date);
+            query.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    myDataList.clear();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Data data = snapshot.getValue(Data.class);
+                        myDataList.add(data);
+                    }
+
+                    todayItemsAdapter2.notifyDataSetChanged();
+
+                    if (myDataList.isEmpty()) {
+                        historyTotalAmountSpent.setVisibility(View.GONE);
+                        show.setVisibility(View.GONE);
+                        displayError.setText("No data was entered on this day\nKindly pick another day");
+                        displayError.setVisibility(View.VISIBLE);
+                    } else {
+                        show.setVisibility(View.GONE);
+                        displayError.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+
+                        int totalAmount = 0;
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            Map<String, Object> map = (Map<String, Object>) ds.getValue();
+                            Object total = map.get("amount");
+                            int pTotal = Integer.parseInt(String.valueOf(total));
+                            totalAmount += pTotal;
+                            if (totalAmount > 0) {
+                                historyTotalAmountSpent.setText("This day you spent Ksh." + totalAmount);
+                                historyTotalAmountSpent.setVisibility(View.VISIBLE);
+                            }
+
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(HistoryActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
+
     }
 
     private void showDatePickerDialog() {

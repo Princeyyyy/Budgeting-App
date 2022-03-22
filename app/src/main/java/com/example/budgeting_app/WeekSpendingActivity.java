@@ -63,7 +63,7 @@ public class WeekSpendingActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar2);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.week_drawer);
+        drawerLayout = findViewById(R.id.week_drawer);
         NavigationView navigationView = findViewById(R.id.week_navigation);
         navigationView.setNavigationItemSelectedListener(menuItem -> {
             int menuId = menuItem.getItemId();

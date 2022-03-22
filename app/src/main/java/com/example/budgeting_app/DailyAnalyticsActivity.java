@@ -77,10 +77,9 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_baseline_menu_24);
         getSupportActionBar().setTitle("Today's Analytics");
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.daily_analytics_drawer);
+        drawerLayout = findViewById(R.id.daily_analytics_drawer);
         NavigationView navigationView = findViewById(R.id.daily_analytics_navigation);
         navigationView.setNavigationItemSelectedListener(menuItem -> {
             int menuId = menuItem.getItemId();
