@@ -18,6 +18,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <ProgressBar
+            android:id="@+id/load2"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:max="100"
+            android:backgroundTint="@color/white"
+            android:indeterminateTint="@color/register_bk_color"
+            android:visibility="invisible"/>
+
         <TextView
             android:id="@+id/totalAmountSpentOn"
             android:layout_width="match_parent"

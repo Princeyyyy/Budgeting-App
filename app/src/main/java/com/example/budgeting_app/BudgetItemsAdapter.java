@@ -146,11 +146,25 @@ public class BudgetItemsAdapter extends RecyclerView.Adapter<BudgetItemsAdapter.
             String month = calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH);
 
             Data data = new Data(item, date, post_key, itemNday, itemNweek, itemNmonth, week, month, amount, null);
-            budgetRef.child(post_key).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+            budgetRef.child(post_key).setValue(data).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Toast.makeText(mContext, "Updated successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(mContext, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                }
+
+            });
+
+            dialog.dismiss();
+
+        });
+
+        delBut.setOnClickListener(view -> {
+            budgetRef.child(post_key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        Toast.makeText(mContext, "Updated successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Deleted successfully", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(mContext, task.getException().toString(), Toast.LENGTH_SHORT).show();
                     }
@@ -159,26 +173,6 @@ public class BudgetItemsAdapter extends RecyclerView.Adapter<BudgetItemsAdapter.
             });
 
             dialog.dismiss();
-
-        });
-
-        delBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                budgetRef.child(post_key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(mContext, "Deleted successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(mContext, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
-
-                dialog.dismiss();
-            }
         });
 
         dialog.show();

@@ -222,17 +222,6 @@ public class HistoryActivity extends AppCompatActivity implements DatePickerDial
 
     }
 
-    private void showDatePickerDialog() {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                this,
-                this,
-                Calendar.getInstance().get(Calendar.YEAR),
-                Calendar.getInstance().get(Calendar.MONTH),
-                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-        );
-        datePickerDialog.show();
-    }
-
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
 

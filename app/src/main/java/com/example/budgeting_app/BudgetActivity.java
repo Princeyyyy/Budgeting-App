@@ -63,7 +63,6 @@ public class BudgetActivity extends AppCompatActivity {
 
     private DatabaseReference budgetRef, personalRef;
     private FirebaseAuth mAuth;
-    private ProgressDialog loader;
     private RecyclerView recyclerView;
 
     private String post_key = "";
@@ -117,6 +116,8 @@ public class BudgetActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
 
+    private ProgressBar load;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,6 +128,8 @@ public class BudgetActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar2);
 
         recyclerView = findViewById(R.id.recyclerView);
+
+        load = findViewById(R.id.load);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
@@ -232,7 +235,6 @@ public class BudgetActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         budgetRef = FirebaseDatabase.getInstance().getReference().child("budget").child(mAuth.getCurrentUser().getUid());
         personalRef = FirebaseDatabase.getInstance().getReference("personal").child(mAuth.getCurrentUser().getUid());
-        loader = new ProgressDialog(this);
 
         readBudgetItems();
 
@@ -323,9 +325,7 @@ public class BudgetActivity extends AppCompatActivity {
                 return;
 
             } else {
-                loader.setMessage("Adding a budget item");
-                loader.setCanceledOnTouchOutside(false);
-                loader.show();
+                load.setVisibility(View.VISIBLE);
 
                 String id = budgetRef.push().getKey();
                 DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -346,7 +346,7 @@ public class BudgetActivity extends AppCompatActivity {
                         Toast.makeText(BudgetActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                     }
 
-                    loader.dismiss();
+                    load.setVisibility(View.INVISIBLE);
                 });
             }
             dialog.dismiss();

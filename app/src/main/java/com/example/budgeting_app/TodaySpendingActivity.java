@@ -51,10 +51,9 @@ public class TodaySpendingActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TextView totalAmountSpentOn;
-    private ProgressBar progressBar;
+    private ProgressBar progressBar, load;
     private RecyclerView recyclerView2;
     private FloatingActionButton fab;
-    private ProgressDialog loader;
 
     private FirebaseAuth mAuth;
     private String onlineUserId = "";
@@ -73,6 +72,8 @@ public class TodaySpendingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_todays_spending);
 
         display = findViewById(R.id.display);
+
+        load = findViewById(R.id.load2);
 
         toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
@@ -168,7 +169,6 @@ public class TodaySpendingActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
 
         fab = findViewById(R.id.fab);
-        loader = new ProgressDialog(this);
 
         mAuth = FirebaseAuth.getInstance();
         onlineUserId = mAuth.getCurrentUser().getUid();
@@ -278,9 +278,7 @@ public class TodaySpendingActivity extends AppCompatActivity {
                 Toast.makeText(TodaySpendingActivity.this, "Select a valid item", Toast.LENGTH_SHORT).show();
                 return;
             } else {
-                loader.setMessage("Adding expense item");
-                loader.setCanceledOnTouchOutside(false);
-                loader.show();
+                load.setVisibility(View.VISIBLE);
 
                 String id = expensesRef.push().getKey();
                 DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -301,7 +299,7 @@ public class TodaySpendingActivity extends AppCompatActivity {
                         Toast.makeText(TodaySpendingActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                     }
 
-                    loader.dismiss();
+                    load.setVisibility(View.INVISIBLE);
                 });
             }
             dialog.dismiss();
