@@ -39,8 +39,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    implementation 'androidx.navigation:navigation-fragment:2.4.1'
-    implementation 'androidx.navigation:navigation-ui:2.4.1'
+    implementation 'androidx.navigation:navigation-fragment:2.4.2'
+    implementation 'androidx.navigation:navigation-ui:2.4.2'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
@@ -52,14 +52,20 @@ dependencies {
     //Firebase
     implementation platform('com.google.firebase:firebase-bom:28.1.0')
     implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-auth:21.0.2'
+    implementation 'com.google.firebase:firebase-auth:21.0.3'
     implementation 'com.google.firebase:firebase-database:20.0.4'
     implementation 'com.firebaseui:firebase-ui-database:6.0.2'
 
+    //JodaTime
     implementation 'joda-time:joda-time:2.10.6'
 
+    //AnyChart
     implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
     implementation("androidx.multidex:multidex:2.0.1")
 
+    //Passcode
     implementation 'com.hanks:passcodeview:0.1.2'
+
+    //Carousel
+    implementation 'com.synnapps:carouselview:0.1.4'
 }

@@ -12,17 +12,17 @@ import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.synnapps.carouselview.CarouselView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AboutActivity extends AppCompatActivity {
 
-    @BindView(R.id.aboutText)
-    TextView aboutText;
-
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
+
+    CarouselView carouselView;
 
 
 
@@ -31,6 +31,8 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_avtivity);
         ButterKnife.bind(this);
+
+        carouselView = findViewById(R.id.carouselView);
 
         toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
@@ -121,16 +123,5 @@ public class AboutActivity extends AppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Drawer_open, R.string.Drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
-        String about;
-
-        about = "Budgeting App!!\n" +
-                "The application is made and designed to help users who need a way to manage their finance expenditure and keep a record.\n" +
-                "Users set their monthly budget and as they go about their spending, they key in their expenses to keep track of them.\n" +
-                "A user has the ability to view or edit any budget items and expense at their convenience.\n" +
-                "Likewise, they can set when their monthly budge is meant to reset according to their view.\n" +
-                "During the month, users will be able to view their spending against their budget through the given analytical screen.\n" +
-                "A User may set a pin to protect their application details from outsiders.\n" +
-                "Enjoy!!!";
     }
 }
