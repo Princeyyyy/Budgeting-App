@@ -87,6 +87,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/regEmail" />
 
+    <ImageView
+        android:id="@+id/regshow"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/ic_show_pwd"
+        android:layout_marginTop="7dp"
+        app:layout_constraintEnd_toEndOf="@+id/regPassword"
+        app:layout_constraintTop_toTopOf="@+id/regPassword" />
+
     <Button
         android:id="@+id/btnReg"
         android:layout_width="0dp"

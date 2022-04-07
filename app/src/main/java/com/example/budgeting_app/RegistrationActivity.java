@@ -7,9 +7,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private DatabaseReference users;
 
+    private ImageView shownhide;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,56 +53,59 @@ public class RegistrationActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
 
-        gotoLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onLoginClick(v);
+        //Show/Hide Password
+        shownhide = findViewById(R.id.regshow);
+        shownhide.setImageResource(R.drawable.ic_show_pwd);
+        shownhide.setOnClickListener(view -> {
+            if (regPassword.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())) {
+                //If password is visible the hide it
+                regPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                //Change Icon
+                shownhide.setImageResource(R.drawable.ic_show_pwd);
+            } else {
+                //Show password
+                regPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                //Change Icon
+                shownhide.setImageResource(R.drawable.ic_hide_pwd);
             }
         });
 
-        btnReg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = regEmail.getText().toString();
-                String password = regPassword.getText().toString();
+        gotoLogin.setOnClickListener(this::onLoginClick);
 
-                if (TextUtils.isEmpty(email)) {
-                    regEmail.setError("Email is Required");
-                }
+        btnReg.setOnClickListener(v -> {
+            String email = regEmail.getText().toString();
+            String password = regPassword.getText().toString();
 
-                if (TextUtils.isEmpty(password)) {
-                    regPassword.setError("Password is Required");
-                } else {
+            if (TextUtils.isEmpty(email)) {
+                regEmail.setError("Email is Required");
+            }
 
-                    progressDialog.setMessage("Registration in Progress");
-                    progressDialog.setCanceledOnTouchOutside(false);
-                    progressDialog.show();
+            if (TextUtils.isEmpty(password)) {
+                regPassword.setError("Password is Required");
+            } else {
 
-                    UserDetails userDetails = new UserDetails("null", "null", email, password, "null");
-                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-                                progressDialog.dismiss();
+                progressDialog.setMessage("Registration in Progress");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
 
-                                users = FirebaseDatabase.getInstance().getReference().child("user-details").child(mAuth.getCurrentUser().getUid());
+                UserDetails userDetails = new UserDetails("null", "null", email, password, "null");
+                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                        progressDialog.dismiss();
 
-                                users.setValue(userDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        //Do nothing
-                                    }
-                                });
-                            } else {
-                                Toast.makeText(RegistrationActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                                progressDialog.dismiss();
-                            }
-                        }
-                    });
-                }
+                        users = FirebaseDatabase.getInstance().getReference().child("user-details").child(mAuth.getCurrentUser().getUid());
+
+                        users.setValue(userDetails).addOnCompleteListener(task1 -> {
+                            //Do nothing
+                        });
+                    } else {
+                        Toast.makeText(RegistrationActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }
+                });
             }
         });
     }

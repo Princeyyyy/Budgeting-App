@@ -174,25 +174,25 @@
 
             </RelativeLayout>
 
-<!--            <RelativeLayout-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1">-->
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
-<!--                <Button-->
-<!--                    android:id="@+id/passwordUpdate"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="2dp"-->
-<!--                    android:layout_marginTop="2dp"-->
-<!--                    android:layout_marginEnd="2dp"-->
-<!--                    android:layout_marginBottom="2dp"-->
-<!--                    android:text="Update Account Password"-->
-<!--                    android:textAllCaps="false"-->
-<!--                    android:textColor="#000"-->
-<!--                    android:textStyle="bold" />-->
+                <Button
+                    android:id="@+id/resetPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="Update Email or Password"
+                    android:textAllCaps="false"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
 
-<!--            </RelativeLayout>-->
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 
