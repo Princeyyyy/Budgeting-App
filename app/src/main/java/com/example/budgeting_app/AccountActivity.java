@@ -21,6 +21,8 @@ import android.graphics.ColorSpace;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,6 +75,8 @@ public class AccountActivity extends AppCompatActivity implements DatePickerDial
     private final static String default_notification_channel_id = "default";
 
     private Button btnDate;
+
+    private ImageView show;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,11 +204,6 @@ public class AccountActivity extends AppCompatActivity implements DatePickerDial
                 pin = user.getPasscode();
                 email = user.getEmail();
                 password = user.getPassword();
-
-                userPassword.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-                float radius = userPassword.getTextSize() / 3;
-                BlurMaskFilter filter = new BlurMaskFilter(radius, BlurMaskFilter.Blur.NORMAL);
-                userPassword.getPaint().setMaskFilter(filter);
             }
 
             @Override
