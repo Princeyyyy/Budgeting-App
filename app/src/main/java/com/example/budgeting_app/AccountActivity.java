@@ -7,27 +7,21 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.app.AlarmManager;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Notification;
-import android.app.PendingIntent;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BlurMaskFilter;
-import android.graphics.ColorSpace;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,10 +29,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -47,10 +37,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 public class AccountActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
@@ -77,6 +64,8 @@ public class AccountActivity extends AppCompatActivity implements DatePickerDial
     private Button btnDate;
 
     private ImageView show;
+
+    private int day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -309,9 +298,35 @@ public class AccountActivity extends AppCompatActivity implements DatePickerDial
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-        int months = month + 1;
-        String date = dayOfMonth + "-" + months + "-" + year;
+        day = dayOfMonth;
+//        int months = month + 1;
+//        String date = dayOfMonth + "-" + months + "-" + year;
+//        Toast.makeText(this, "Reset will happen every " + date, Toast.LENGTH_SHORT).show();
+        informResetDateNotification();
+    }
 
-        Toast.makeText(this, "Reset will happen every " + date, Toast.LENGTH_SHORT).show();
+    private void informResetDateNotification() {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My Notifications", NotificationManager.IMPORTANCE_MAX);
+            // Configure the notification channel.
+            notificationChannel.setDescription("Budgeting App Reset Date");
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.RED);
+            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+            notificationChannel.enableVibration(true);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
+        notificationBuilder.setAutoCancel(true)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.image2)
+                .setTicker("Budgeting App")
+                //.setPriority(Notification.PRIORITY_MAX)
+                .setContentTitle("Budgeting App")
+                .setContentText("Reset date has been set for " + day + " of every month")
+                .setContentInfo("Budget Reset Date");
+        notificationManager.notify(1, notificationBuilder.build());
     }
 }
