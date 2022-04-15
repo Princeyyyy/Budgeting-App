@@ -1,4 +1,4 @@
-package com.example.budgeting_app;
+package com.example.budgeting_app.models;
 
 public class Data {
 

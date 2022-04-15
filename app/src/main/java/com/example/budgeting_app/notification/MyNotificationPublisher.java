@@ -1,4 +1,4 @@
-package com.example.budgeting_app;
+package com.example.budgeting_app.notification;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -7,7 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import static com.example.budgeting_app.AccountActivity.NOTIFICATION_CHANNEL_ID;
+import static com.example.budgeting_app.ui.AccountActivity.NOTIFICATION_CHANNEL_ID;
 
 public class MyNotificationPublisher extends BroadcastReceiver {
     public static String NOTIFICATION_ID = "notification-id";

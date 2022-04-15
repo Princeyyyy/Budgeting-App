@@ -5,7 +5,7 @@
     android:id="@+id/budget_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BudgetActivity">
+    tools:context=".ui.BudgetActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

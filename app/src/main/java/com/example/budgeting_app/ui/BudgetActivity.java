@@ -1,11 +1,9 @@
-package com.example.budgeting_app;
+package com.example.budgeting_app.ui;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -24,8 +22,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.example.budgeting_app.R;
+import com.example.budgeting_app.adapters.BudgetItemsAdapter;
+import com.example.budgeting_app.models.Data;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,30 +35,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import org.joda.time.DateTime;
-import org.joda.time.Months;
-import org.joda.time.MutableDateTime;
-import org.joda.time.Weeks;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class BudgetActivity extends AppCompatActivity {
 
-
-    @BindView(R.id.fab1)
-    FloatingActionButton fab;
-    @BindView(R.id.totalBudgetAmountTextView)
-    TextView totalBudgetAmountTextView;
+    private FloatingActionButton fab;
+    private TextView totalBudgetAmountTextView;
 
     private DatabaseReference budgetRef, personalRef;
     private FirebaseAuth mAuth;
@@ -122,7 +109,9 @@ public class BudgetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_budget);
-        ButterKnife.bind(this);
+
+        fab = findViewById(R.id.fab1);
+        totalBudgetAmountTextView = findViewById(R.id.totalBudgetAmountTextView);
 
         display = findViewById(R.id.disp);
         progressBar = findViewById(R.id.progressBar2);

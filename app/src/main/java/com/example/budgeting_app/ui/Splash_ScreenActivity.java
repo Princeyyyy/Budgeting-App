@@ -1,6 +1,5 @@
-package com.example.budgeting_app;
+package com.example.budgeting_app.ui;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -8,40 +7,31 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import com.example.budgeting_app.R;
 
 public class Splash_ScreenActivity extends AppCompatActivity {
 
     private static int SPLASH = 3000;
     Animation animation;
-    @BindView(R.id.appName)
-    TextView appName;
-    @BindView(R.id.appImage)
-    ImageView appImage;
+
+    private TextView appName;
+    private ImageView appImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash_screen);
-        ButterKnife.bind(this);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        appName = findViewById(R.id.appName);
+        appImage = findViewById(R.id.appImage);
 
         animation = AnimationUtils.loadAnimation(this, R.anim.animation);
         appImage.setAnimation(animation);

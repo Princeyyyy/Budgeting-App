@@ -1,4 +1,4 @@
-package com.example.budgeting_app;
+package com.example.budgeting_app.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,16 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.budgeting_app.models.Data;
+import com.example.budgeting_app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import org.joda.time.DateTime;
-import org.joda.time.Months;
-import org.joda.time.MutableDateTime;
-import org.joda.time.Weeks;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

@@ -1,47 +1,46 @@
-package com.example.budgeting_app;
+package com.example.budgeting_app.ui;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.TextView;
 
+import com.example.budgeting_app.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.synnapps.carouselview.CarouselView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+public class ChooseAnalyticsActivity extends AppCompatActivity {
 
-public class AboutActivity extends AppCompatActivity {
+    private CardView analyticsTodayCardView;
+    private CardView analyticsWeekCardView;
+    private CardView analyticsMonthCardView;
 
     private Toolbar toolbar;
+
     private DrawerLayout drawerLayout;
-
-    CarouselView carouselView;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_avtivity);
-        ButterKnife.bind(this);
+        setContentView(R.layout.activity_choose_analytics);
 
-        carouselView = findViewById(R.id.carouselView);
+        analyticsTodayCardView = findViewById(R.id.analyticsTodayCardView);
+        analyticsWeekCardView = findViewById(R.id.analyticsWeekCardView);
+        analyticsMonthCardView = findViewById(R.id.analyticsMonthCardView);
 
         toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("About");
+        getSupportActionBar().setTitle("Choose Analytics");
 
-        drawerLayout = findViewById(R.id.about_drawer);
-        NavigationView navigationView = findViewById(R.id.about_navigation);
+        drawerLayout = findViewById(R.id.choose_drawer);
+        NavigationView navigationView = findViewById(R.id.choose_navigation);
         navigationView.setNavigationItemSelectedListener(menuItem -> {
             int menuId = menuItem.getItemId();
 
@@ -123,5 +122,20 @@ public class AboutActivity extends AppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Drawer_open, R.string.Drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+        analyticsTodayCardView.setOnClickListener(view -> {
+            Intent intent = new Intent(ChooseAnalyticsActivity.this, DailyAnalyticsActivity.class);
+            startActivity(intent);
+        });
+
+        analyticsWeekCardView.setOnClickListener(view -> {
+            Intent intent = new Intent(ChooseAnalyticsActivity.this, WeeklyAnalyticsActivity.class);
+            startActivity(intent);
+        });
+
+        analyticsMonthCardView.setOnClickListener(view -> {
+            Intent intent = new Intent(ChooseAnalyticsActivity.this, MonthlyAnalyticsActivity.class);
+            startActivity(intent);
+        });
     }
 }

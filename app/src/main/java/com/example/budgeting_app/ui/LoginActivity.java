@@ -1,13 +1,11 @@
-package com.example.budgeting_app;
+package com.example.budgeting_app.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.text.method.TransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,28 +13,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.budgeting_app.R;
 import com.google.firebase.auth.FirebaseAuth;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity {
 
-    @BindView(R.id.logEmail)
-    EditText logEmail;
-    @BindView(R.id.logPassword)
-    EditText logPassword;
-    @BindView(R.id.btnLogin)
-    Button logBtn;
-    @BindView(R.id.gotoRegister)
-    TextView gotoRegister;
+    private EditText logEmail;
+    private EditText logPassword;
+    private Button logBtn;
+    private TextView gotoRegister;
+
 
     private FirebaseAuth mAuth;
     private ProgressDialog progressDialog;
@@ -46,7 +34,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
+
+        logEmail = findViewById(R.id.logEmail);
+        logPassword = findViewById(R.id.logPassword);
+        logBtn = findViewById(R.id.btnLogin);
+        gotoRegister = findViewById(R.id.gotoRegister);
 
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);

@@ -1,6 +1,5 @@
-package com.example.budgeting_app;
+package com.example.budgeting_app.ui;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -16,30 +15,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.budgeting_app.R;
+import com.example.budgeting_app.models.UserDetails;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class RegistrationActivity extends AppCompatActivity {
 
-    @BindView(R.id.regEmail)
-    EditText regEmail;
-    @BindView(R.id.regPassword)
-    EditText regPassword;
-    @BindView(R.id.btnReg)
-    Button btnReg;
-    @BindView(R.id.gotoLogin)
-    TextView gotoLogin;
+    private EditText regEmail;
+    private EditText regPassword;
+    private Button btnReg;
+    private TextView gotoLogin;
 
     private FirebaseAuth mAuth;
     private ProgressDialog progressDialog;
-
     private DatabaseReference users;
 
     private ImageView shownhide;
@@ -48,7 +38,11 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        ButterKnife.bind(this);
+
+        regEmail = findViewById(R.id.regEmail);
+        regPassword = findViewById(R.id.regPassword);
+        btnReg = findViewById(R.id.btnReg);
+        gotoLogin = findViewById(R.id.gotoLogin);
 
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);

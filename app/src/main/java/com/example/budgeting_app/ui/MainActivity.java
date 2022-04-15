@@ -1,4 +1,4 @@
-package com.example.budgeting_app;
+package com.example.budgeting_app.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.budgeting_app.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,36 +27,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import org.joda.time.DateTime;
-import org.joda.time.Months;
-import org.joda.time.MutableDateTime;
-import org.joda.time.Weeks;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Month;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Objects;
-import java.util.TimeZone;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.budgetCardView)
-    CardView budgetCardView;
-    @BindView(R.id.todayCardView)
-    CardView todayCardView;
-    @BindView(R.id.weekCardView)
-    CardView weekCardView;
-    @BindView(R.id.monthCardView)
-    CardView monthCardView;
-    @BindView(R.id.analyticsCardView)
-    CardView analyticsCardView;
-    @BindView(R.id.historyCardView)
-    CardView historyCardView;
+    private CardView budgetCardView;
+    private CardView todayCardView;
+    private CardView weekCardView;
+    private CardView monthCardView;
+    private CardView analyticsCardView;
+    private CardView historyCardView;
 
     private Toolbar toolbar;
 
@@ -79,7 +63,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+
+        budgetCardView = findViewById(R.id.budgetCardView);
+        todayCardView = findViewById(R.id.todayCardView);
+        weekCardView = findViewById(R.id.weekCardView);
+        monthCardView = findViewById(R.id.monthCardView);
+        analyticsCardView = findViewById(R.id.analyticsCardView);
+        historyCardView = findViewById(R.id.historyCardView);
 
         toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
