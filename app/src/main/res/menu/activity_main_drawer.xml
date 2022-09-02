@@ -72,4 +72,12 @@
         </menu>
     </item>
 
+    <item android:title="Version">
+        <menu>
+            <item
+                android:id="@+id/version"
+                android:title="Version 1.0.1" />
+        </menu>
+    </item>
+
 </menu>
