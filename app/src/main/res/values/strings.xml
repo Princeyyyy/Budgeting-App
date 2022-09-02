@@ -3,8 +3,8 @@
     <string name="top_icon">Top Icon</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="login">LOGIN</string>
-    <string name="register">REGISTER</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
     <string name="or">OR</string>
     <string name="google_icon">google icon</string>
     <string name="facebook_icon">facebook icon</string>
@@ -47,4 +47,5 @@
         During the month, users will be able to view their spending against their budget through the given analytical screen.\n
         A User may set a pin to protect their application details from outsiders.\n
         Enjoy!!!</string>
+    <string name="create_your_new_account_here">Create Your New Account Here!</string>
 </resources>

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +30,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private TextView gotoLogin;
 
     private FirebaseAuth mAuth;
-    private ProgressDialog progressDialog;
+    private ProgressBar load;
     private DatabaseReference users;
 
     private ImageView shownhide;
@@ -45,7 +46,7 @@ public class RegistrationActivity extends AppCompatActivity {
         gotoLogin = findViewById(R.id.gotoLogin);
 
         mAuth = FirebaseAuth.getInstance();
-        progressDialog = new ProgressDialog(this);
+        load = findViewById(R.id.register_load);
 
         //Show/Hide Password
         shownhide = findViewById(R.id.regshow);
@@ -77,10 +78,9 @@ public class RegistrationActivity extends AppCompatActivity {
             if (TextUtils.isEmpty(password)) {
                 regPassword.setError("Password is Required");
             } else {
-
-                progressDialog.setMessage("Registration in Progress");
-                progressDialog.setCanceledOnTouchOutside(false);
-                progressDialog.show();
+                load.setVisibility(View.VISIBLE);
+                btnReg.setEnabled(false);
+                btnReg.setText("Creating your account");
 
                 UserDetails userDetails = new UserDetails("null", "null", email, password, "null");
                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
@@ -88,7 +88,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
-                        progressDialog.dismiss();
+                        load.setVisibility(View.INVISIBLE);
 
                         users = FirebaseDatabase.getInstance().getReference().child("user-details").child(mAuth.getCurrentUser().getUid());
 
@@ -97,7 +97,9 @@ public class RegistrationActivity extends AppCompatActivity {
                         });
                     } else {
                         Toast.makeText(RegistrationActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
+                        load.setVisibility(View.INVISIBLE);
+                        btnReg.setText("Register");
+                        btnReg.setEnabled(true);
                     }
                 });
             }

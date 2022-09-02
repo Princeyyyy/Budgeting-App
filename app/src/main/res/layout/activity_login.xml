@@ -50,6 +50,17 @@
         app:layout_constraintStart_toStartOf="@+id/topView"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ProgressBar
+        android:id="@+id/login_load"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:max="100"
+        android:backgroundTint="@color/white"
+        android:indeterminateTint="@color/white"
+        android:visibility="invisible"/>
+
     <EditText
         android:id="@+id/logEmail"
         android:layout_width="0dp"
@@ -109,6 +120,7 @@
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logPassword" />

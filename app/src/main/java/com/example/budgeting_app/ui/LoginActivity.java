@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private FirebaseAuth mAuth;
-    private ProgressDialog progressDialog;
+    private ProgressBar load;
     private ImageView shownhide;
 
     @Override
@@ -41,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         gotoRegister = findViewById(R.id.gotoRegister);
 
         mAuth = FirebaseAuth.getInstance();
-        progressDialog = new ProgressDialog(this);
+        load = findViewById(R.id.login_load);
 
         //Show/Hide Password
         shownhide = findViewById(R.id.logshow);
@@ -78,20 +79,21 @@ public class LoginActivity extends AppCompatActivity {
             if (TextUtils.isEmpty(passwordString)) {
                 logPassword.setError("Password is Required");
             } else {
-
-                progressDialog.setMessage("Login in Progress");
-                progressDialog.setCanceledOnTouchOutside(false);
-                progressDialog.show();
+                load.setVisibility(View.VISIBLE);
+                logBtn.setEnabled(false);
+                logBtn.setText("Logging in");
 
                 mAuth.signInWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
-                        progressDialog.dismiss();
+                        load.setVisibility(View.INVISIBLE);
                     } else {
                         Toast.makeText(LoginActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
+                        load.setVisibility(View.INVISIBLE);
+                        logBtn.setText("Log in");
+                        logBtn.setEnabled(true);
                     }
                 });
             }

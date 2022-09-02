@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="48dp"
-        android:text="Create Your New Account Here!"
+        android:text="@string/create_your_new_account_here"
         android:textColor="@android:color/white"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -49,6 +49,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/topView"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/register_load"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:max="100"
+        android:backgroundTint="@color/white"
+        android:indeterminateTint="@color/white"
+        android:visibility="invisible"/>
 
     <EditText
         android:id="@+id/regEmail"
@@ -109,6 +120,7 @@
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/regPassword" />
